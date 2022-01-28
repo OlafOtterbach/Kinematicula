@@ -23,6 +23,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ./Kinematicula/Kinematicula.csproj
     - name: Build
-      run: dotnet build ./Kinematicula/Kinematicula.csproj --no-restore --configuration Release
+      run: dotnet build ./Kinematicula.sln --no-restore --configuration Release
     - name: Test
       run: dotnet test ./Kinematicula.sln --no-build --verbosity normal
