@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Kinematicula.Mathematics;
+﻿using Kinematicula.Mathematics;
 
 namespace Kinematicula.Graphics
 {

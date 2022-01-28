@@ -6,7 +6,7 @@ using Kinematicula.Kinematics.DirectForwardSolving;
 using Kinematicula.Kinematics.DirectInverseSolving;
 using Kinematicula.Mathematics;
 
-namespace CylinderDemonstration
+namespace SpiritAutomataDemonstration
 {
     public static class SeedScene
     {

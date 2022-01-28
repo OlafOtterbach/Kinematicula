@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using HiddenLineViewerApi;
 
-namespace CylinderDemonstration.Controllers
+namespace SpiritAutomataDemonstration.Controllers
 {
     public class HomeController : Controller
     {
