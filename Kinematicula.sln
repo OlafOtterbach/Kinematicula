@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kinematicula.Test", "Kinema
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CylinderDemonstration", "Demonstrations\CylinderDemonstration\CylinderDemonstration.csproj", "{EF953D94-CC57-4A92-8CB8-D3AA325685ED}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HiddenLineViewerApi", "Demonstrations\HiddenLineViewerApi\HiddenLineViewerApi.csproj", "{5880C922-8D1A-4C61-905D-8891BD968EAF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpiritAutomataDemonstration", "Demonstrations\SpiritAutomataDemonstration\SpiritAutomataDemonstration.csproj", "{796F12A6-75D5-4CD4-A279-AB0459C3BE81}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{EF953D94-CC57-4A92-8CB8-D3AA325685ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF953D94-CC57-4A92-8CB8-D3AA325685ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF953D94-CC57-4A92-8CB8-D3AA325685ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5880C922-8D1A-4C61-905D-8891BD968EAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5880C922-8D1A-4C61-905D-8891BD968EAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5880C922-8D1A-4C61-905D-8891BD968EAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5880C922-8D1A-4C61-905D-8891BD968EAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{796F12A6-75D5-4CD4-A279-AB0459C3BE81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{796F12A6-75D5-4CD4-A279-AB0459C3BE81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{796F12A6-75D5-4CD4-A279-AB0459C3BE81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{796F12A6-75D5-4CD4-A279-AB0459C3BE81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
