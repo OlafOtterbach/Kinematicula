@@ -35,7 +35,6 @@ namespace SpiritAutomataDemonstration
             var rotationAxisConstraint = new RotationAxisConstraint(socketToArmAnchor, armToSocketAnchor, 0.0.DegToRad(), -720.0.DegToRad(), +720.0.DegToRad());
             arm.AddSensor(new CylinderSensor(new Vector3D(0, 0, 1)));
 
-
             // Crank grip
             var grip = Cylinder.Create(10, 50, 50);
             scene.AddBody(grip);
