@@ -54,7 +54,7 @@ namespace SpiritAutomataDemonstration
 
 
 
-            // Left rail
+            // left rail
             var leftRail = Cuboid.Create(100, 100, 1200);
             leftRail.Name = "left rail";
             scene.AddBody(leftRail);
@@ -62,7 +62,7 @@ namespace SpiritAutomataDemonstration
                 = new FixedConstraint(new Anchor(firstPillar, Matrix44D.CreateTranslation(new Vector3D(0, 0, 250))),
                                       new Anchor(leftRail, Matrix44D.CreateTranslation(new Vector3D(0, 550, -50))));
 
-            // Right rail
+            // right rail
             var rightRail = Cuboid.Create(100, 100, 1200);
             rightRail.Name = "right rail";
             scene.AddBody(rightRail);
@@ -71,11 +71,26 @@ namespace SpiritAutomataDemonstration
                                       new Anchor(rightRail, Matrix44D.CreateTranslation(new Vector3D(0, 550, -50))));
 
 
-            //// waggon on rails
-            //var waggon = Cuboid.Create(1000, 100, 100);
-            //waggon.Name = "waggon";
-            //scene.AddBody(waggon);
+            // waggon rail
+            var waggonRail = Cuboid.Create(1200, 100, 100);
+            waggonRail.Name = "waggon rail";
+            waggonRail.AddSensor(new LinearSensor(new Vector3D(0, 1, 0)));
+            scene.AddBody(waggonRail);
 
+            var leftRailToWaggonRaillinearConstraint = new LinearAxisConstraint(
+                new Anchor(leftRail, Matrix44D.CreateCoordinateSystem(new Position3D(0,550,50), new Vector3D(0,-1,0), new Vector3D(0,0,1))),
+                new Anchor(waggonRail, Matrix44D.CreateCoordinateSystem(new Position3D(550, 0, -50), new Vector3D(0, 1, 0), new Vector3D(0, 0, 1))), 0,0,1000);
+
+            // waggon
+            var waggon = Cuboid.Create(100, 100, 100);
+            waggon.Name = "rail";
+            waggon.AddSensor(new LinearSensor(new Vector3D(1, 0, 0)));
+            scene.AddBody(waggon);
+            var waggonRailToWaggonlinearConstraint = new LinearAxisConstraint(
+                new Anchor(waggonRail, Matrix44D.CreateCoordinateSystem(new Position3D(0, 50, 0), new Vector3D(-1, 0, 0), new Vector3D(0, 0, 1))),
+                new Anchor(waggon, Matrix44D.CreateCoordinateSystem(new Position3D(0, 50, 0), new Vector3D(1, 0, 0), new Vector3D(0, 0, 1))), 100, -450, 450);
+
+            // bottle
 
 
 
