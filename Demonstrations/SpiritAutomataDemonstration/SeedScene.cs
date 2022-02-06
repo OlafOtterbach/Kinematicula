@@ -77,7 +77,7 @@ namespace SpiritAutomataDemonstration
             waggonRail.AddSensor(new LinearSensor(new Vector3D(0, 1, 0)));
             scene.AddBody(waggonRail);
 
-            var leftRailToWaggonRaillinearConstraint = new LinearAxisConstraint(
+            var leftRailToWaggonRaillinearConstraint = new TelescopeLinearAxisConstraint(
                 new Anchor(leftRail, Matrix44D.CreateCoordinateSystem(new Position3D(0,550,50), new Vector3D(0,-1,0), new Vector3D(0,0,1))),
                 new Anchor(waggonRail, Matrix44D.CreateCoordinateSystem(new Position3D(550, 0, -50), new Vector3D(0, 1, 0), new Vector3D(0, 0, 1))), 0,0,1000);
 
@@ -86,36 +86,24 @@ namespace SpiritAutomataDemonstration
             waggon.Name = "rail";
             waggon.AddSensor(new LinearSensor(new Vector3D(1, 0, 0)));
             scene.AddBody(waggon);
-            var waggonRailToWaggonlinearConstraint = new LinearAxisConstraint(
+            var waggonRailToWaggonlinearConstraint = new TelescopeLinearAxisConstraint(
                 new Anchor(waggonRail, Matrix44D.CreateCoordinateSystem(new Position3D(0, 50, 0), new Vector3D(-1, 0, 0), new Vector3D(0, 0, 1))),
                 new Anchor(waggon, Matrix44D.CreateCoordinateSystem(new Position3D(0, 50, 0), new Vector3D(1, 0, 0), new Vector3D(0, 0, 1))), 100, -450, 450);
 
             // bottle
+            var borderFlags = new bool[] { true, true, true };
+            var facetsFlags = new bool[] { false, false, true };
+            var segment1 = new double[] { 50, 0, 52, 5, 50, 10, 50, 50, 55, 70, 65, 80, 80, 120, 100, 150 };
+            var segment2 = new double[] { 100, 150, 100, 600 };
+            var segment3 = new double[] { 100, 600, 0, 600 };
+            var segments = new double[][] {segment1, segment2, segment3};
+            var bottle = RotationBody.Create(8, segments, borderFlags, facetsFlags);
+            bottle.AddSensor(new PlaneSensor(new Vector3D(0, 0, 1)));
+            scene.AddBody(bottle);
 
-
-
-            //// Crank socket
-            //var socket = Cylinder.Create(10, 50, 200);
-            //scene.AddBody(socket);
-            //var floorAnchor = new Anchor(floor, Matrix44D.Identity);
-            //var socketToFloorAnchor = new Anchor(socket, Matrix44D.CreateTranslation(new Vector3D(0, 0, -100)));
-            //var fixedToFloorConstraint = new FixedConstraint(floorAnchor, socketToFloorAnchor);
-
-            //// Crank arm
-            //var arm = Oval.Create(10, 10, 50, 50, false, false, false, false, 200, 50, Matrix44D.Identity);
-            //scene.AddBody(arm);
-            //var socketToArmAnchor = new Anchor(socket, Matrix44D.CreateTranslation(new Vector3D(0, 0, 100)));
-            //var armToSocketAnchor = new Anchor(arm, Matrix44D.CreateTranslation(new Vector3D(0, 0, -25)));
-            //var rotationAxisConstraint = new RotationAxisConstraint(socketToArmAnchor, armToSocketAnchor, 0.0.DegToRad(), -720.0.DegToRad(), +720.0.DegToRad());
-            //arm.AddSensor(new CylinderSensor(new Vector3D(0, 0, 1)));
-
-            //// Crank grip
-            //var grip = Cylinder.Create(10, 50, 50);
-            //scene.AddBody(grip);
-            //var armToGrip = new Anchor(arm, Matrix44D.CreateTranslation(new Vector3D(200, 0, +25)));
-            //var gripToArm = new Anchor(grip, Matrix44D.CreateTranslation(new Vector3D(0, 0, -25)));
-            //var fixedToArmConstraint = new FixedConstraint(armToGrip, gripToArm);
-            //grip.AddSensor(new CylinderSensor(new Vector3D(0, 0, 1), arm));
+            var fixedConstraint = new FixedConstraint(
+                new Anchor(waggon, Matrix44D.CreateTranslation(new Vector3D(0, 0, 50))),
+                new Anchor(bottle, Matrix44D.Identity));
 
             scene.InitScene();
             return scene;
