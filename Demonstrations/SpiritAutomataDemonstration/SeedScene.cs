@@ -16,7 +16,7 @@ namespace SpiritAutomataDemonstration
 
             // floor
             var floor = Floor.Create(12, 100);
-            floor.Name = "Floor";
+            floor.Name = "floor";
             scene.AddBody(floor);
             var fixedToWorldConstraint = new FixedConstraint(new Anchor(scene.World, Matrix44D.Identity), new Anchor(floor, Matrix44D.Identity));
 
@@ -78,8 +78,8 @@ namespace SpiritAutomataDemonstration
             scene.AddBody(waggonRail);
 
             var leftRailToWaggonRaillinearConstraint = new TelescopeLinearAxisConstraint(
-                new Anchor(leftRail, Matrix44D.CreateCoordinateSystem(new Position3D(0,550,50), new Vector3D(0,-1,0), new Vector3D(0,0,1))),
-                new Anchor(waggonRail, Matrix44D.CreateCoordinateSystem(new Position3D(550, 0, -50), new Vector3D(0, 1, 0), new Vector3D(0, 0, 1))), 0,0,1000);
+                new Anchor(leftRail, Matrix44D.CreateCoordinateSystem(new Position3D(0, 550, 50), new Vector3D(0, -1, 0), new Vector3D(0, 0, 1))),
+                new Anchor(waggonRail, Matrix44D.CreateCoordinateSystem(new Position3D(550, 0, -50), new Vector3D(0, 1, 0), new Vector3D(0, 0, 1))), 0, 0, 1000);
 
             // waggon
             var waggon = Cuboid.Create(100, 100, 100);
@@ -96,14 +96,24 @@ namespace SpiritAutomataDemonstration
             var segment1 = new double[] { 50, 0, 52, 5, 50, 10, 50, 50, 55, 70, 65, 80, 80, 120, 100, 150 };
             var segment2 = new double[] { 100, 150, 100, 600 };
             var segment3 = new double[] { 100, 600, 0, 600 };
-            var segments = new double[][] {segment1, segment2, segment3};
+            var segments = new double[][] { segment1, segment2, segment3 };
             var bottle = RotationBody.Create(8, segments, borderFlags, facetsFlags);
+            bottle.Name = "bottle";
             bottle.AddSensor(new PlaneSensor(new Vector3D(0, 0, 1)));
             scene.AddBody(bottle);
 
             var fixedConstraint = new FixedConstraint(
                 new Anchor(waggon, Matrix44D.CreateTranslation(new Vector3D(0, 0, 50))),
                 new Anchor(bottle, Matrix44D.Identity));
+
+            // crank socket y
+            var crankSocketY = Cylinder.Create(10, 200, 100);
+            crankSocketY.Name = "crankSockety";
+            crankSocketY.AddSensor(new CylinderSensor(new Vector3D(0, 0, 1)));
+            var floorAnchor = new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(0, -1000, 0)));
+            var crankSocketYToFloorAnchor = new Anchor(crankSocketY, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0)));
+            var rotationAxisYConstraint = new RotationAxisConstraint(floorAnchor, crankSocketYToFloorAnchor, 180.0.DegToRad(), 0.0.DegToRad(), 720.0.DegToRad());
+            scene.AddBody(crankSocketY);
 
             scene.InitScene();
             return scene;
