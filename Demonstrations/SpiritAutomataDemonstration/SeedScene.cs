@@ -107,13 +107,41 @@ namespace SpiritAutomataDemonstration
                 new Anchor(bottle, Matrix44D.Identity));
 
             // crank socket y
-            var crankSocketY = Cylinder.Create(10, 200, 100);
-            crankSocketY.Name = "crankSockety";
+            var crankSocketY = Cylinder.Create(20, 200, 50);
+            crankSocketY.Name = "crankSocket y";
             crankSocketY.AddSensor(new CylinderSensor(new Vector3D(0, 0, 1)));
-            var floorAnchor = new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(0, -1000, 0)));
+            var floorAnchorY = new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(-300, -1000, 0)));
             var crankSocketYToFloorAnchor = new Anchor(crankSocketY, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0)));
-            var rotationAxisYConstraint = new RotationAxisConstraint(floorAnchor, crankSocketYToFloorAnchor, 180.0.DegToRad(), 0.0.DegToRad(), 720.0.DegToRad());
+            var rotationAxisYConstraint = new RotationAxisConstraint(floorAnchorY, crankSocketYToFloorAnchor, 0.0.DegToRad(), 0.0.DegToRad(), 720.0.DegToRad());
             scene.AddBody(crankSocketY);
+
+            // Crank grip y
+            var gripY = Cylinder.Create(10, 80, 100);
+            gripY.Name = "grip y";
+            scene.AddBody(gripY);
+            var socketToGripY = new Anchor(crankSocketY, Matrix44D.CreateTranslation(new Vector3D(120, 0, 25)));
+            var gripYToSocket = new Anchor(gripY, Matrix44D.CreateTranslation(new Vector3D(0, 0, -50)));
+            var fixedToArmYConstraint = new FixedConstraint(socketToGripY, gripYToSocket);
+            gripY.AddSensor(new CylinderSensor(new Vector3D(0, 0, 1), crankSocketY));
+
+            // crank socket x
+            var crankSocketX = Cylinder.Create(20, 200, 50);
+            crankSocketX.Name = "crankSocket x";
+            crankSocketX.AddSensor(new CylinderSensor(new Vector3D(0, 0, 1)));
+            var floorAnchorX = new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(300, -1000, 0)));
+            var crankSocketXToFloorAnchor = new Anchor(crankSocketX, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0)));
+            var rotationAxisXConstraint = new RotationAxisConstraint(floorAnchorX, crankSocketXToFloorAnchor, 0.0.DegToRad(), 0.0.DegToRad(), 720.0.DegToRad());
+            scene.AddBody(crankSocketX);
+
+            // Crank grip x
+            var gripX = Cylinder.Create(10, 80, 100);
+            gripY.Name = "grip x";
+            scene.AddBody(gripX);
+            var socketToGripX = new Anchor(crankSocketX, Matrix44D.CreateTranslation(new Vector3D(120, 0, 25)));
+            var gripXToSocket = new Anchor(gripX, Matrix44D.CreateTranslation(new Vector3D(0, 0, -50)));
+            var fixedToArmXConstraint = new FixedConstraint(socketToGripX, gripXToSocket);
+            gripX.AddSensor(new CylinderSensor(new Vector3D(0, 0, 1), crankSocketX));
+
 
             scene.InitScene();
             return scene;
