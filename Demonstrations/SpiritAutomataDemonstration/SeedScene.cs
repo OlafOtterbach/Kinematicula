@@ -84,7 +84,7 @@ namespace SpiritAutomataDemonstration
             // waggon
             var waggon = Cuboid.Create(100, 100, 100);
             waggon.Name = "rail";
-            waggon.AddSensor(new LinearSensor(new Vector3D(1, 0, 0)));
+            waggon.AddSensor(new PlaneSensor(new Vector3D(0, 0, 1)));
             scene.AddBody(waggon);
             var waggonRailToWaggonlinearConstraint = new TelescopeLinearAxisConstraint(
                 new Anchor(waggonRail, Matrix44D.CreateCoordinateSystem(new Position3D(0, 50, 0), new Vector3D(-1, 0, 0), new Vector3D(0, 0, 1))),
