@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Deimos.": {
+    "SpiritAutomata": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
