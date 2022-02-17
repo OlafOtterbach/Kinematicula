@@ -5,6 +5,7 @@ using Kinematicula.Graphics.Saving;
 using Kinematicula.Kinematics.DirectForwardSolving;
 using Kinematicula.Kinematics.DirectInverseSolving;
 using Kinematicula.Mathematics;
+using SpiritAutomataDemonstration.Constraints;
 
 namespace SpiritAutomataDemonstration
 {
@@ -124,6 +125,7 @@ namespace SpiritAutomataDemonstration
             var fixedToArmYConstraint = new FixedConstraint(socketToGripY, gripYToSocket);
             gripY.AddSensor(new CylinderSensor(new Vector3D(0, 0, 1), crankSocketY));
 
+
             // crank socket x
             var crankSocketX = Cylinder.Create(20, 200, 50);
             crankSocketX.Name = "crankSocket x";
@@ -142,7 +144,10 @@ namespace SpiritAutomataDemonstration
             var fixedToArmXConstraint = new FixedConstraint(socketToGripX, gripXToSocket);
             gripX.AddSensor(new CylinderSensor(new Vector3D(0, 0, 1), crankSocketX));
 
+            var controlYConstraint = new RotationToLinearConstraint(new Anchor(crankSocketY, Matrix44D.Identity), new Anchor(waggonRail, Matrix44D.Identity));
 
+            scene.AddForwardSolver(new RotationToLinearForwardSolver());
+            scene.AddInverseSolver(new RotationToLinearInverseSolver());
             scene.InitScene();
             return scene;
         }
