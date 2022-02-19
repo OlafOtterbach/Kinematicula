@@ -32,7 +32,7 @@ namespace CylinderDemonstration
             scene.AddBody(arm);
             var socketToArmAnchor = new Anchor(socket, Matrix44D.CreateTranslation(new Vector3D(0, 0, 100)));
             var armToSocketAnchor = new Anchor(arm, Matrix44D.CreateTranslation(new Vector3D(0, 0, -25)));
-            var rotationAxisConstraint = new RotationAxisConstraint(socketToArmAnchor, armToSocketAnchor, 0.0.DegToRad(), -720.0.DegToRad(), +720.0.DegToRad());
+            var rotationAxisConstraint = new RotationAxisConstraint(socketToArmAnchor, armToSocketAnchor, 45.0.DegToRad(), -720.0.DegToRad(), +720.0.DegToRad());
             arm.AddSensor(new CylinderSensor(new Vector3D(0, 0, 1)));
 
 
