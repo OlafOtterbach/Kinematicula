@@ -1,5 +1,4 @@
-﻿using System;
-using Kinematicula.Graphics;
+﻿using Kinematicula.Graphics;
 using Kinematicula.Mathematics;
 using Kinematicula.Mathematics.Extensions;
 using Kinematicula.Scening;
@@ -22,9 +21,27 @@ namespace Kinematicula.LogicViewing.Services
             var endMoveDirection = endMoveOffset - offset;
             var endMoveRay = new Axis3D(endMoveOffset, endMoveDirection);
 
+            var bodyTouchPosition = moveEvent.Body.Frame * moveEvent.BodyTouchPosition;
+
+            // Calculate spin
+            var moveVec = (endMoveOffset - startMoveOffset).Normalize();
+
+            var cylinderSensor = sensor as CylinderSensor;
+            var bodyFrame = cylinderSensor.ReferenceBodyWithOrigin?.Frame ?? moveEvent.Body.Frame;
+            var cylinderAxis = new Axis3D(bodyFrame * cylinderSensor.Offset, bodyFrame * cylinderSensor.Axis);
+
+            var axisPerpendicularPoint = cylinderAxis.CalculatePerpendicularPoint(bodyTouchPosition);
+            var ex = bodyTouchPosition - axisPerpendicularPoint;
+            var axisFrame = Matrix44D.CreateCoordinateSystem(cylinderAxis.Offset, ex, cylinderAxis.Direction).Inverse();
+            var p1 = new Position3D();
+            var p2 = axisFrame * bodyTouchPosition;
+            var p3 = axisFrame * (bodyTouchPosition + moveVec);
+
+            var spin = TriangleMath.IsCounterClockwise(p1.X, p1.Y, p2.X, p2.Y, p3.X, p3.Y) ? 1.0 : -1.0;
+
             Process(sensor as CylinderSensor,
                     moveEvent.Body,
-                    moveEvent.BodyTouchPosition,
+                    bodyTouchPosition,
                     moveEvent.StartMoveX,
                     moveEvent.StartMoveY,
                     startMoveRay,
@@ -34,7 +51,8 @@ namespace Kinematicula.LogicViewing.Services
                     moveEvent.CanvasWidth,
                     moveEvent.CanvasHeight,
                     moveEvent.Camera,
-                    Scene);
+                    Scene,
+                    spin);
         }
 
         private void Process(
@@ -50,7 +68,8 @@ namespace Kinematicula.LogicViewing.Services
             double canvasWidth,
             double canvasHeight,
             Camera camera,
-            Scene Scene)
+            Scene Scene,
+            double spin)
         {
             if (startX.EqualsTo(endX) && startY.EqualsTo(endY)) return;
 
@@ -60,11 +79,11 @@ namespace Kinematicula.LogicViewing.Services
             double angle;
             if (IsAxisIsInCameraPlane(cylinderAxis, camera))
             {
-                angle = CalculateAngleForAxisLyingInCanvas(bodyTouchPosition, startX, startY, endMoveRay, cylinderAxis, canvasWidth, canvasHeight, camera);
+                angle = CalculateAngleForAxisLyingInCanvas(bodyTouchPosition, startX, startY, endMoveRay, cylinderAxis, canvasWidth, canvasHeight, camera,spin);
             }
             else
             {
-                angle = CalculateAngleForAxisNotLyingInCanvas(startX, startY, startMoveRay, endX, endY, endMoveRay, cylinderAxis, canvasWidth, canvasHeight);
+                angle = CalculateAngleForAxisNotLyingInCanvas(startX, startY, startMoveRay, endX, endY, endMoveRay, cylinderAxis, canvasWidth, canvasHeight,spin);
             }
 
             if (Math.Abs(angle.RadToDeg()) > cylinderSensor.LimitationAngle)
@@ -95,7 +114,8 @@ namespace Kinematicula.LogicViewing.Services
             Axis3D cylinderAxis,
             double canvasWidth,
             double canvasHeight,
-            Camera camera
+            Camera camera,
+            double spin
         )
         {
             var angle = 0.0;
@@ -110,7 +130,7 @@ namespace Kinematicula.LogicViewing.Services
             if (success)
             {
                 // Ermitteln des Vorzeichens für Drehung
-                var sign = (plump - p1).Length < (plump - p2).Length ? -1.0 : 1.0;
+                //var sign = (plump - p1).Length < (plump - p2).Length ? -1.0 : 1.0;
 
                 // Ermitteln der Länge der Mausbewegung in Richtung senkrecht zur Rotationsachse
                 var (endX, endY) = ViewProjection.ProjectSceneSystemToCanvas(plump, canvasWidth, canvasHeight, camera.NearPlane, camera.Frame);
@@ -132,7 +152,7 @@ namespace Kinematicula.LogicViewing.Services
 
                 var angleInDegree = 180.0 * delta / lengthOfHalfRotation;
 
-                angle = sign * angleInDegree.DegToRad();
+                angle = spin * angleInDegree.DegToRad();
             }
 
             return angle;
@@ -147,14 +167,15 @@ namespace Kinematicula.LogicViewing.Services
             Axis3D endMoveRay,
             Axis3D cylinderAxis,
             double canvasWidth,
-            double canvasHeight)
+            double canvasHeight,
+            double spin)
         {
             var axisPlane = new Plane3D(cylinderAxis.Offset, cylinderAxis.Direction);
             var startOffset = GetPosition(startMoveRay, axisPlane);
             var endOffset = GetPosition(endMoveRay, axisPlane);
 
-            double sign = CalculateAngleSign(cylinderAxis, startOffset, endOffset);
-            var angle = sign * 1.0 * CalculateAngle(startX, startY, endX, endY, canvasWidth, canvasHeight);
+            //double sign = CalculateAngleSign(cylinderAxis, startOffset, endOffset);
+            var angle = spin * 1.0 * CalculateAngle(startX, startY, endX, endY, canvasWidth, canvasHeight);
 
             return angle;
         }

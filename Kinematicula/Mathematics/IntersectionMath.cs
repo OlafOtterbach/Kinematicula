@@ -357,7 +357,7 @@ namespace Kinematicula.Mathematics
             return (false, -1.0);
         }
 
-        public static (bool, Position3D, double) GetIntersectionAndSquaredDistanceOfRayAndTriangle(Position3D rayOffset, Vector3D rayDirection, Position3D p1, Position3D p2, Position3D p3)
+        public static (bool isIntersected, Position3D absoluteIntersection, double squaredDistance) GetIntersectionAndSquaredDistanceOfRayAndTriangle(Position3D rayOffset, Vector3D rayDirection, Position3D p1, Position3D p2, Position3D p3)
         {
             var normal = ((p2 - p1) & (p3 - p1)).Normalize();
             var (hasIntersection, intersection) = IntersectionMath.Intersect(p1, normal, rayOffset, rayDirection);
