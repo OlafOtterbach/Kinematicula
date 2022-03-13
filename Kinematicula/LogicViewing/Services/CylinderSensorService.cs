@@ -41,7 +41,7 @@ namespace Kinematicula.LogicViewing.Services
 
             // calculate angle
             var angle = spin * CalculateAngle(startX, startY, endX, endY, canvasWidth, canvasHeight);
-            if (Math.Abs(angle.RadToDeg()) > cylinderSensor.LimitationAngle)
+            if (Math.Abs(angle.ToDegree()) > cylinderSensor.LimitationAngle)
             {
                 angle = Math.Sign(angle) * cylinderSensor.LimitationAngle;
             }
@@ -60,7 +60,7 @@ namespace Kinematicula.LogicViewing.Services
         {
             var min = Math.Min(canvasWidth, canvasHeight);
             var delta = Vector2DMath.Length(startX, startY, endX, endY);
-            var angle = (360.0 * delta / min).DegToRad();
+            var angle = (360.0 * delta / min).ToRadiant();
             return angle;
         }
 

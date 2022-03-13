@@ -12,8 +12,8 @@ namespace Kinematicula.LogicViewing.Extensions
 
         public static void SetCamera(this Camera camera, Position3D target, double alpha, double beta, double distance)
         {
-            alpha = alpha.DegToRad();
-            beta = beta.DegToRad();
+            alpha = alpha.ToRadiant();
+            beta = beta.ToRadiant();
             var rotAlpha = Matrix44D.CreateRotation(new Position3D(), new Vector3D(0, 0, 1), alpha);
             var rotBeta = Matrix44D.CreateRotation(new Position3D(), new Vector3D(1, 0, 0), -beta);
             var translation = Matrix44D.CreateTranslation(new Vector3D(0.0, -distance, 0.0));

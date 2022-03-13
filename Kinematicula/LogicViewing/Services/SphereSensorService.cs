@@ -112,7 +112,7 @@ namespace Kinematicula.LogicViewing.Services
 
                 var angleInDegree = 180.0 * delta / lengthOfHalfRotation;
 
-                angle = sign * angleInDegree.DegToRad();
+                angle = sign * angleInDegree.ToRadiant();
             }
 
             return angle;

@@ -38,7 +38,7 @@ namespace Kinematicula.Tests.Mathematics
 
       private double CreateAngle()
       {
-         return ((double)((int)(_rand.NextDouble() * 360.0))).DegToRad();
+         return ((double)((int)(_rand.NextDouble() * 360.0))).ToRadiant();
       }
    }
 }

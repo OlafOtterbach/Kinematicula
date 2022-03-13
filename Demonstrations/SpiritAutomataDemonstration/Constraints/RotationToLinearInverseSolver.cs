@@ -33,12 +33,12 @@ namespace SpiritAutomataDemonstration.Constraints
 
             if(first == linearBody)
             {
-                rotationConstraint.Angle = linearConstraint.LinearPosition.DegToRad();
+                rotationConstraint.Angle = linearConstraint.LinearPosition.ToRadiant();
                 result = _rotationSolver.Solve(rotationConstraint, rotationBody, new Snapshot(new Dictionary<object, IState>()));
             }
             else 
             {
-                linearConstraint.LinearPosition = rotationConstraint.Angle.RadToDeg();
+                linearConstraint.LinearPosition = rotationConstraint.Angle.ToDegree();
                 result = _linearSolver.Solve(linearConstraint, linearBody, new Snapshot(new Dictionary<object, IState>()));
             }
 
@@ -60,12 +60,12 @@ namespace SpiritAutomataDemonstration.Constraints
 
             if (second == linearBody)
             {
-                rotationConstraint.Angle = linearConstraint.LinearPosition.DegToRad();
+                rotationConstraint.Angle = linearConstraint.LinearPosition.ToRadiant();
                 result = _rotationSolver.Solve(rotationConstraint, rotationBody, new Snapshot(new Dictionary<object, IState>()));
             }
             else
             {
-                linearConstraint.LinearPosition = rotationConstraint.Angle.RadToDeg();
+                linearConstraint.LinearPosition = rotationConstraint.Angle.ToDegree();
                 result = _linearSolver.Solve(linearConstraint, linearBody, new Snapshot(new Dictionary<object, IState>()));
             }
 

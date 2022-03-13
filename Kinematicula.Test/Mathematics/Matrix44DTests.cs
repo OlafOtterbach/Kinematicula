@@ -202,7 +202,7 @@ namespace Kinematicula.Tests.Mathematics
         public void OperatorMultiplyTest_WhenRoationWithTranslationAreMultiplidWithPosition_ThenPositionIsRotatedAndThenTranslated()
         {
             var first = Matrix44D.CreateTranslation(new Vector3D(100.0, 0.0, 0.0));
-            var second = Matrix44D.CreateRotation(new Position3D(), new Vector3D(0, 0, 1), 90.0.DegToRad());
+            var second = Matrix44D.CreateRotation(new Position3D(), new Vector3D(0, 0, 1), 90.0.ToRadiant());
             var position = new Position3D(1.0, 0.0, 0.0);
 
             var newPosition = first * second * position;
@@ -214,7 +214,7 @@ namespace Kinematicula.Tests.Mathematics
         [Fact]
         public void OperatorMultiplyTest_WhenTranslationWithRoationAreMultiplidWithPosition_ThenPositionIsTranslatedAndThenRotated()
         {
-            var first = Matrix44D.CreateRotation(new Position3D(), new Vector3D(0, 0, 1), 90.0.DegToRad());
+            var first = Matrix44D.CreateRotation(new Position3D(), new Vector3D(0, 0, 1), 90.0.ToRadiant());
             var second = Matrix44D.CreateTranslation(new Vector3D(100.0, 0.0, 0.0));
             var position = new Position3D(1.0, 0.0, 0.0);
 
@@ -414,7 +414,7 @@ namespace Kinematicula.Tests.Mathematics
         public void CreateRotationTest_WhenParameterOffsetAxisAndAngle_ThenPositionIsRotatedAndTranslated()
         {
             var axis = new Vector3D(1, 0, 0);
-            var rot = Matrix44D.CreateRotation(new Position3D(0, 0, 10), axis, 90.0.DegToRad());
+            var rot = Matrix44D.CreateRotation(new Position3D(0, 0, 10), axis, 90.0.ToRadiant());
 
             var pos = rot * new Position3D(0.0, 0.0, 0.0);
             Assert.Equal(new Position3D(0.0, 10.0, 10.0), pos);
@@ -424,7 +424,7 @@ namespace Kinematicula.Tests.Mathematics
         public void CreateRotationTest_WhenParameterOnlyAxisAndAngle_ThenPositioIsOnlyRotated()
         {
             var axis = new Vector3D(1, 0, 0);
-            var rot = Matrix44D.CreateRotation(axis, 90.0.DegToRad());
+            var rot = Matrix44D.CreateRotation(axis, 90.0.ToRadiant());
 
             Assert.Equal(new Position3D(), rot.Offset);
             Assert.Equal(new Vector3D(), rot.Translation);
@@ -439,7 +439,7 @@ namespace Kinematicula.Tests.Mathematics
                 new Position3D(300, 0, 300),
                 new Vector3D(0, 0, -1),
                 new Vector3D(1, 0, 0));
-            var rot = Matrix44D.CreateRotation(new Position3D(), new Vector3D(0, 0, 1), 90.0.DegToRad());
+            var rot = Matrix44D.CreateRotation(new Position3D(), new Vector3D(0, 0, 1), 90.0.ToRadiant());
             var offset = new Position3D(300, 0, 300);
 
 
