@@ -2,9 +2,6 @@
 using Kinematicula.Graphics.Saving;
 using Kinematicula.Mathematics;
 using Kinematicula.Mathematics.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Kinematicula.Kinematics.DirectInverseSolving
 {

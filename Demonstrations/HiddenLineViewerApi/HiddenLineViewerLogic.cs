@@ -29,7 +29,7 @@ namespace HiddenLineViewerApi
             //    new Vector3D(0.8143309354782104, 0.5803593397140503, -0.006943948566913605),
             //    new Vector3D(-0.18246249854564667, 0.26734301447868347, 0.9461687207221985));
 
-            camera.SetCamera(0.0, 45.0, 1000.0);
+            camera.SetCamera(0.0, 45.0, 2000.0);
             camera.Frame = Matrix44D.CreateTranslation(new Vector3D(0, 0, 200)) * camera.Frame;
 
             var sceneState = new SceneStateDto()
