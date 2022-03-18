@@ -11,7 +11,7 @@ namespace Kinematicula.Tests.Mathematics.Extensions
         [Fact]
         public void ToCardanTest1()
         {
-            var cardanFrame = new CardanFrame(new Position3D(), 0.0.DegToRad(), 45.0.DegToRad(), 90.0.DegToRad());
+            var cardanFrame = new CardanFrame(new Position3D(), 0.0.ToRadiant(), 45.0.ToRadiant(), 90.0.ToRadiant());
 
             var mat = cardanFrame.ToMatrix44D();
             var ex1 = mat * new Vector3D(1, 0, 0);
@@ -25,7 +25,7 @@ namespace Kinematicula.Tests.Mathematics.Extensions
         [Fact]
         public void ToCardanTest2()
         {
-            var cardanFrame = new CardanFrame(new Position3D(), 45.0.DegToRad(), 45.0.DegToRad(), 45.0.DegToRad());
+            var cardanFrame = new CardanFrame(new Position3D(), 45.0.ToRadiant(), 45.0.ToRadiant(), 45.0.ToRadiant());
 
             var mat = cardanFrame.ToMatrix44D();
             var ex1 = mat * new Vector3D(1, 0, 0);
@@ -39,15 +39,15 @@ namespace Kinematicula.Tests.Mathematics.Extensions
         [Fact]
         public void ToCardanTest3()
         {
-            var cardanFrame = new CardanFrame(new Position3D(), 269.96510228042916.DegToRad(), 0.00030437000552928036.DegToRad(), 89.0006093665338.DegToRad());
+            var cardanFrame = new CardanFrame(new Position3D(), 269.96510228042916.ToRadiant(), 0.00030437000552928036.ToRadiant(), 89.0006093665338.ToRadiant());
 
             var mat = cardanFrame.ToMatrix44D();
             var ex1 = mat * new Vector3D(1, 0, 0);
 
             var cardan = mat.ToCardanFrame();
-            var alpha = cardan.AlphaAngleAxisX.RadToDeg();
-            var beta = cardan.BetaAngleAxisY.RadToDeg();
-            var Gamma = cardan.GammaAngleAxisZ.RadToDeg();
+            var alpha = cardan.AlphaAngleAxisX.ToDegree();
+            var beta = cardan.BetaAngleAxisY.ToDegree();
+            var Gamma = cardan.GammaAngleAxisZ.ToDegree();
 
             var rot = cardan.ToMatrix44D();
 

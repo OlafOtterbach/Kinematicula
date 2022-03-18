@@ -1,16 +1,13 @@
 ﻿using Kinematicula.Graphics;
 using Kinematicula.Graphics.Saving;
-using Kinematicula.Mathematics;
-using Kinematicula.Mathematics.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Kinematicula.Kinematics.DirectForwardSolving;
 
 namespace Kinematicula.Kinematics.DirectInverseSolving
 {
     public class DirectInverseConstraintSolver : IDirectInverseConstraintSolver
     {
         private Dictionary<Type, IDirectInverseSolver> _solvers;
+        private DirectForwardConstraintSolver _forwardSolver;
 
         public DirectInverseConstraintSolver()
         {
@@ -24,6 +21,8 @@ namespace Kinematicula.Kinematics.DirectInverseSolving
             };
 
             _solvers = solvers.ToDictionary(solver => solver.GetType());
+
+            _forwardSolver = new DirectForwardConstraintSolver();
         }
 
         public void AddSolver(IDirectInverseSolver solver)
@@ -42,65 +41,22 @@ namespace Kinematicula.Kinematics.DirectInverseSolving
             }
         }
 
+        public void AddSolvers(IEnumerable<IDirectForwardSolver> solvers)
+        {
+            _forwardSolver.AddSolvers(solvers);
+        }
+
+        public void AddSolver(IDirectForwardSolver solver)
+        {
+            _forwardSolver.AddSolver(solver);
+        }
+
         public bool Solve(Body startBody, Snapshot snapshot)
         {
-            var startFrame = snapshot.GetFrameFor(startBody);
-            var endFrame = startBody.Frame;
             var isValid = Solve(startBody, null, snapshot);
             if (!isValid)
             {
-                snapshot.ResetScene();
-                TransformMath.CalculateAxesAndRotation(startFrame, endFrame, out var axisAlpha, out var angleAlpha, out var axisBeta, out var angleBeta);
-
-                var translation = endFrame.Offset - startFrame.Offset;
-
-                var start = 0.0;
-                var end = 1.0;
-                isValid = false;
-                var index = 0;
-                while (!start.EqualsTo(end))
-                {
-                    snapshot.ResetScene();
-                    var half = (start + end) / 2.0;
-                    var alpha = half * angleAlpha;
-                    var beta = half * angleBeta;
-                    var alphaRotation = Matrix44D.CreateRotation(startFrame.Offset, axisAlpha, alpha);
-                    var betaRotation = Matrix44D.CreateRotation(startFrame.Offset, axisBeta, beta);
-                    var rotation = alphaRotation * betaRotation;
-
-                    var translationStep = Matrix44D.CreateTranslation(half * translation);
-
-                    startBody.Frame = translationStep * rotation * startFrame;
-                    isValid = Solve(startBody, null, snapshot);
-                    if (isValid)
-                    {
-                        start = half;
-                    }
-                    else
-                    {
-                        end = half;
-                    }
-
-                    index++;
-                }
-
-                if (!isValid)
-                {
-                    snapshot.ResetScene();
-                    var half = start;
-                    var alpha = half * angleAlpha;
-                    var beta = half * angleBeta;
-                    var alphaRotation = Matrix44D.CreateRotation(startFrame.Offset, axisAlpha, alpha);
-                    var betaRotation = Matrix44D.CreateRotation(startFrame.Offset, axisBeta, beta);
-                    var rotation = alphaRotation * betaRotation;
-                    var translationStep = Matrix44D.CreateTranslation(half * translation);
-                    startBody.Frame = translationStep * rotation * startFrame;
-                    isValid = Solve(startBody, null, snapshot);
-                    if(!isValid)
-                    {
-                        snapshot.ResetScene();
-                    }
-                }
+                _forwardSolver.Solve(startBody);
             }
 
             return true;

@@ -13,7 +13,7 @@ namespace Kinematicula.Tests.Mathematics.Extensions
             var second = new Vector3D(1, 1, 0);
             var axis = new Vector3D(0, 0, 1);
 
-            var angle = first.CounterClockwiseAngleWith(second, axis).RadToDeg();
+            var angle = first.CounterClockwiseAngleWith(second, axis).ToDegree();
 
             Assert.Equal(45.0, angle, 3);
         }
@@ -25,7 +25,7 @@ namespace Kinematicula.Tests.Mathematics.Extensions
             var second = new Vector3D(1, -1, 0);
             var axis = new Vector3D(0, 0, 1);
 
-            var angle = first.CounterClockwiseAngleWith(second, axis).RadToDeg();
+            var angle = first.CounterClockwiseAngleWith(second, axis).ToDegree();
 
             Assert.Equal(315.0, angle, 3);
         }
@@ -37,7 +37,7 @@ namespace Kinematicula.Tests.Mathematics.Extensions
             var second = new Vector3D(0, -1, 0);
             var axis = new Vector3D(0, 0, 1);
 
-            var angle = first.CounterClockwiseAngleWith(second, axis).RadToDeg();
+            var angle = first.CounterClockwiseAngleWith(second, axis).ToDegree();
 
             Assert.Equal(270.0, angle, 3);
         }

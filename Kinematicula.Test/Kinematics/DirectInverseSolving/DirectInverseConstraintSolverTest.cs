@@ -19,8 +19,8 @@ namespace Kinematicula.Tests.Kinematics.DirectInverseSolving
             IDirectInverseConstraintSolver inverseSolver = Substitute.For<IDirectInverseConstraintSolver>();
             ISnapshotFactory snapshotFactory = Substitute.For<ISnapshotFactory>();
             var scene = new Scene(forwardSolver, inverseSolver, snapshotFactory);
-            var minimum = 0.0.DegToRad();
-            var maximum = 90.0.DegToRad();
+            var minimum = 0.0.ToRadiant();
+            var maximum = 90.0.ToRadiant();
 
             var floor = Floor.Create(10, 5);
             scene.Bodies.Add(floor);
@@ -46,7 +46,7 @@ namespace Kinematicula.Tests.Kinematics.DirectInverseSolving
             var snapShotFactory = new SnapshotFactory(mementorFactory);
             var snapShot = snapShotFactory.TakeSnapshot(scene);
 
-            cubeA.Frame = Matrix44D.CreateRotation(new Vector3D(0, 0, 1), 90.0.DegToRad()) * cubeA.Frame;
+            cubeA.Frame = Matrix44D.CreateRotation(new Vector3D(0, 0, 1), 90.0.ToRadiant()) * cubeA.Frame;
 
             // Act
             solver.Solve(cubeA, snapShot);
@@ -61,8 +61,8 @@ namespace Kinematicula.Tests.Kinematics.DirectInverseSolving
             IDirectInverseConstraintSolver inverseSolver = Substitute.For<IDirectInverseConstraintSolver>();
             ISnapshotFactory snapshotFactory = Substitute.For<ISnapshotFactory>();
             var scene = new Scene(forwardSolver, inverseSolver, snapshotFactory);
-            var minimum = -90.0.DegToRad();
-            var maximum = 90.0.DegToRad();
+            var minimum = -90.0.ToRadiant();
+            var maximum = 90.0.ToRadiant();
 
             var floor = Floor.Create(10, 5);
             scene.Bodies.Add(floor);
@@ -100,7 +100,7 @@ namespace Kinematicula.Tests.Kinematics.DirectInverseSolving
             var snapShotFactory = new SnapshotFactory(mementorFactory);
             var snapShot = snapShotFactory.TakeSnapshot(scene);
 
-            cubeA.Frame = Matrix44D.CreateRotation(new Vector3D(0, 0, 1), 10.0.DegToRad()) * cubeA.Frame;
+            cubeA.Frame = Matrix44D.CreateRotation(new Vector3D(0, 0, 1), 10.0.ToRadiant()) * cubeA.Frame;
 
             // Act
             solver.Solve(cubeA, snapShot);
