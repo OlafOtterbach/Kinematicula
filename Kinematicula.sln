@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpiritAutomataDemonstration
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demonstrations", "Demonstrations", "{D856EE3C-418A-4939-A033-48859DF9BC35}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinearAxisDemo", "Demonstrations\LinearAxisDemo\LinearAxisDemo.csproj", "{10C820A3-2274-41C8-8751-33213002B3BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{796F12A6-75D5-4CD4-A279-AB0459C3BE81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{796F12A6-75D5-4CD4-A279-AB0459C3BE81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{796F12A6-75D5-4CD4-A279-AB0459C3BE81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10C820A3-2274-41C8-8751-33213002B3BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10C820A3-2274-41C8-8751-33213002B3BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10C820A3-2274-41C8-8751-33213002B3BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10C820A3-2274-41C8-8751-33213002B3BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,6 +55,7 @@ Global
 		{EF953D94-CC57-4A92-8CB8-D3AA325685ED} = {D856EE3C-418A-4939-A033-48859DF9BC35}
 		{5880C922-8D1A-4C61-905D-8891BD968EAF} = {D856EE3C-418A-4939-A033-48859DF9BC35}
 		{796F12A6-75D5-4CD4-A279-AB0459C3BE81} = {D856EE3C-418A-4939-A033-48859DF9BC35}
+		{10C820A3-2274-41C8-8751-33213002B3BB} = {D856EE3C-418A-4939-A033-48859DF9BC35}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DE8F1BAD-C788-4D6B-A5EA-97411150B610}
