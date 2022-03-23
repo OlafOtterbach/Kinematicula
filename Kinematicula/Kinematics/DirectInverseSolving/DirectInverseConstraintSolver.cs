@@ -1,13 +1,11 @@
 ﻿using Kinematicula.Graphics;
 using Kinematicula.Graphics.Saving;
-using Kinematicula.Kinematics.DirectForwardSolving;
 
 namespace Kinematicula.Kinematics.DirectInverseSolving
 {
     public class DirectInverseConstraintSolver : IDirectInverseConstraintSolver
     {
         private Dictionary<Type, IDirectInverseSolver> _solvers;
-        private DirectForwardConstraintSolver _forwardSolver;
 
         public DirectInverseConstraintSolver()
         {
@@ -21,8 +19,6 @@ namespace Kinematicula.Kinematics.DirectInverseSolving
             };
 
             _solvers = solvers.ToDictionary(solver => solver.GetType());
-
-            _forwardSolver = new DirectForwardConstraintSolver();
         }
 
         public void AddSolver(IDirectInverseSolver solver)
@@ -41,28 +37,18 @@ namespace Kinematicula.Kinematics.DirectInverseSolving
             }
         }
 
-        public void AddSolvers(IEnumerable<IDirectForwardSolver> solvers)
-        {
-            _forwardSolver.AddSolvers(solvers);
-        }
-
-        public void AddSolver(IDirectForwardSolver solver)
-        {
-            _forwardSolver.AddSolver(solver);
-        }
-
         public bool Solve(Body startBody, Snapshot snapshot)
         {
-            var isValid = Solve(startBody, null, snapshot);
-            if (!isValid)
+            var result = Solve(startBody, null, snapshot);
+            if (!result.IsSolved)
             {
-                _forwardSolver.Solve(startBody);
+                Solve(result.BreakingBody, snapshot);
             }
 
             return true;
         }
 
-        private bool Solve(Body start, Constraint originConstraint, Snapshot snapshot)
+        private (bool IsSolved, Body BreakingBody) Solve(Body start, Constraint originConstraint, Snapshot snapshot)
         {
             var known = new HashSet<Constraint>();
             if (originConstraint != null) known.Add(originConstraint);
@@ -84,13 +70,14 @@ namespace Kinematicula.Kinematics.DirectInverseSolving
                 }
                 else
                 {
-                    return false;
+                    var breakingBody = solveResult.First(x => !x.IsValid).Body;
+                    return (false, breakingBody);
                 }
 
                 known.UnionWith(constraints);
             }
 
-            return true;
+            return (true, null);
         }
 
         private (bool IsValid, Body Body, Constraint Constraint)

@@ -26,7 +26,14 @@ namespace CylinderDemonstration
             firstSocket.Name = "first socket";
             scene.AddBody(firstSocket);
 
-            var fixedFirstSocketToFloor = new FixedConstraint(new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(-450, 0,0))), new Anchor(firstSocket, Matrix44D.CreateTranslation(new Vector3D(0,0,-50))));
+            var fixedFirstSocketToFloor = new FixedConstraint(new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(-250, 0,0))), new Anchor(firstSocket, Matrix44D.CreateTranslation(new Vector3D(0,0,-50))));
+
+            // second socket
+            var secondSocket = Cube.Create(100);
+            secondSocket.Name = "second socket";
+            scene.AddBody(secondSocket);
+
+            var fixedSecondSocketToFloor = new FixedConstraint(new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(250, 0, 0))), new Anchor(secondSocket, Matrix44D.CreateTranslation(new Vector3D(0, 0, -50))));
 
 
 
@@ -36,11 +43,26 @@ namespace CylinderDemonstration
             firstShifter.AddSensor(new LinearSensor(new Vector3D(1, 0, 0)));
             scene.AddBody(firstShifter);
 
+            new LinearAxisConstraint(
+                            new Anchor(firstSocket, Matrix44D.CreateTranslation(new Vector3D(0, 0, 50))),
+                            new Anchor(firstShifter, Matrix44D.CreateTranslation(new Vector3D(0, 0, -50))),
+                            0,
+                           -200,
+                            200);
+
             // second shifter
             var secondShifter = Cuboid.Create(500, 100, 100);
             secondShifter.Name = "second shifter";
             secondShifter.AddSensor(new LinearSensor(new Vector3D(1, 0, 0)));
             scene.AddBody(secondShifter);
+
+            new LinearAxisConstraint(
+                            new Anchor(secondSocket, Matrix44D.CreateTranslation(new Vector3D(0, 0, 50))),
+                            new Anchor(secondShifter, Matrix44D.CreateTranslation(new Vector3D(0, 0, -50))),
+                            0,
+                           -100,
+                            200);
+
 
             var firstAnchor = new Anchor(firstShifter, Matrix44D.CreateTranslation(new Vector3D(250, 0, 0)));
             var secondAnchor = new Anchor(secondShifter, Matrix44D.CreateTranslation(new Vector3D(-250, 0, 0)));
