@@ -1,5 +1,4 @@
 ﻿using Kinematicula.Graphics;
-using Kinematicula.Graphics.Saving;
 using Kinematicula.Mathematics.Extensions;
 using Kinematicula.Mathematics;
 
@@ -7,7 +6,7 @@ namespace Kinematicula.Kinematics.DirectInverseSolving
 {
     public class TelescopeLinearAxisSolver : DirectInverseSolver<TelescopeLinearAxisConstraint>
     {
-        protected override bool SolveFirstToSecond(TelescopeLinearAxisConstraint constraint, Snapshot snapShot)
+        protected override bool SolveFirstToSecond(TelescopeLinearAxisConstraint constraint)
         {
             var rail = constraint.First.Body;
             var wagon = constraint.Second.Body;
@@ -42,7 +41,7 @@ namespace Kinematicula.Kinematics.DirectInverseSolving
             return true;
         }
 
-        protected override bool SolveSecondToFirst(TelescopeLinearAxisConstraint constraint, Snapshot snapShot)
+        protected override bool SolveSecondToFirst(TelescopeLinearAxisConstraint constraint)
         {
             var rail = constraint.First.Body;
             var wagon = constraint.Second.Body;

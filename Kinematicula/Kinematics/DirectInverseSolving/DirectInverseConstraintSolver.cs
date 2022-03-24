@@ -1,5 +1,4 @@
 ﻿using Kinematicula.Graphics;
-using Kinematicula.Graphics.Saving;
 
 namespace Kinematicula.Kinematics.DirectInverseSolving
 {
@@ -37,18 +36,18 @@ namespace Kinematicula.Kinematics.DirectInverseSolving
             }
         }
 
-        public bool Solve(Body startBody, Snapshot snapshot)
+        public bool Solve(Body startBody)
         {
-            var result = Solve(startBody, null, snapshot);
+            var result = Solve(startBody, null);
             if (!result.IsSolved)
             {
-                Solve(result.BreakingBody, snapshot);
+                Solve(result.BreakingBody);
             }
 
             return true;
         }
 
-        private (bool IsSolved, Body BreakingBody) Solve(Body start, Constraint originConstraint, Snapshot snapshot)
+        private (bool IsSolved, Body BreakingBody) Solve(Body start, Constraint originConstraint)
         {
             var known = new HashSet<Constraint>();
             if (originConstraint != null) known.Add(originConstraint);
@@ -61,7 +60,7 @@ namespace Kinematicula.Kinematics.DirectInverseSolving
                 var constraints = currentBody.Constraints;
 
                 var solveResult = constraints.Where(constraint => !known.Contains(constraint))
-                                  .Select(constraint => Execute(constraint, currentBody, snapshot))
+                                  .Select(constraint => Execute(constraint, currentBody))
                                   .ToList();
                 var unsolved = solveResult.Where(x => !x.IsValid).ToList();
                 if (!unsolved.Any())
@@ -80,18 +79,18 @@ namespace Kinematicula.Kinematics.DirectInverseSolving
             return (true, null);
         }
 
-        private (bool IsValid, Body Body, Constraint Constraint)
-        Execute(Constraint constraint, Body currentBody, Snapshot snapshot)
+        private (bool IsValid, Body Body)
+        Execute(Constraint constraint, Body currentBody)
         {
-            var isValid = _solvers.Values.Select(x => x.Solve(constraint, currentBody, snapshot)).All(x => x);
+            var isValid = _solvers.Values.Select(x => x.Solve(constraint, currentBody)).All(x => x);
 
             if (isValid)
             {
-                return (isValid, constraint.First.Body == currentBody ? constraint.Second.Body : constraint.First.Body, constraint);
+                return (isValid, constraint.First.Body == currentBody ? constraint.Second.Body : constraint.First.Body);
             }
             else
             {
-                return (isValid, constraint.First.Body == currentBody ? constraint.First.Body : constraint.Second.Body, constraint);
+                return (isValid, constraint.First.Body == currentBody ? constraint.First.Body : constraint.Second.Body);
             }
         }
     }

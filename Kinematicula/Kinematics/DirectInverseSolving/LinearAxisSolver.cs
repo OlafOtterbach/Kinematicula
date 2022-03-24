@@ -1,5 +1,4 @@
 ﻿using Kinematicula.Graphics;
-using Kinematicula.Graphics.Saving;
 using Kinematicula.Mathematics.Extensions;
 using Kinematicula.Mathematics;
 
@@ -7,23 +6,22 @@ namespace Kinematicula.Kinematics.DirectInverseSolving
 {
     public class LinearAxisSolver : DirectInverseSolver<LinearAxisConstraint>
     {
-        protected override bool SolveFirstToSecond(LinearAxisConstraint constraint, Snapshot snapShot)
+        protected override bool SolveFirstToSecond(LinearAxisConstraint constraint)
         {
-            var rail = constraint.First.Body;
-            var wagon = constraint.Second.Body;
+            // move second relative to linearposition to first body
+            var railAnchor = constraint.First;
+            var wagonAnchor = constraint.Second;
+            var firstMat = railAnchor.Body.Frame;
+            var firstAnchorMat = railAnchor.ConnectionFrame;
+            var secondAnchorMat = wagonAnchor.ConnectionFrame;
+            var linMat = Matrix44D.CreateTranslation(new Vector3D(constraint.LinearPosition, 0.0, 0.0));
+            var wagonFrame = firstMat * firstAnchorMat * linMat * (secondAnchorMat.Inverse());
+            wagonAnchor.Body.Frame = wagonFrame;
 
-            var formerRailFrame = snapShot.GetFrameFor(rail);
-            var formerWagonFrame = snapShot.GetFrameFor(wagon);
-
-            var relativeFrame = formerRailFrame.Inverse() * formerWagonFrame;
-
-            var newWagonFrame = rail.Frame * relativeFrame;
-
-            wagon.Frame = newWagonFrame;
             return true;
         }
 
-        protected override bool SolveSecondToFirst(LinearAxisConstraint constraint, Snapshot snapShot)
+        protected override bool SolveSecondToFirst(LinearAxisConstraint constraint)
         {
             var rail = constraint.First.Body;
             var wagon = constraint.Second.Body;

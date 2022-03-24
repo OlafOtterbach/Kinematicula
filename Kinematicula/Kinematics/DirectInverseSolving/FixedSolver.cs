@@ -1,16 +1,15 @@
 ﻿using Kinematicula.Graphics;
-using Kinematicula.Graphics.Saving;
 
 namespace Kinematicula.Kinematics.DirectInverseSolving
 {
     public class FixedSolver : DirectInverseSolver<FixedConstraint>
     {
-        protected override bool SolveFirstToSecond(FixedConstraint fixedConstraint, Snapshot snapShot)
+        protected override bool SolveFirstToSecond(FixedConstraint fixedConstraint)
         {
             return Solve(fixedConstraint.First, fixedConstraint.Second);
         }
 
-        protected override bool SolveSecondToFirst(FixedConstraint fixedConstraint, Snapshot snapShot)
+        protected override bool SolveSecondToFirst(FixedConstraint fixedConstraint)
         {
             var result = Solve(fixedConstraint.Second, fixedConstraint.First);
             return result;

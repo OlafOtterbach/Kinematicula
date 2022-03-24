@@ -1,7 +1,5 @@
 ﻿using Kinematicula.Graphics;
-using Kinematicula.Graphics.Saving;
 using Kinematicula.Kinematics.DirectInverseSolving;
-using System.Collections.Generic;
 
 namespace Kinematicula.Kinematics
 {
@@ -11,6 +9,6 @@ namespace Kinematicula.Kinematics
 
         void AddSolvers(IEnumerable<IDirectInverseSolver> solvers);
 
-        bool Solve(Body start, Snapshot snapshot);
+        bool Solve(Body start);
     }
 }

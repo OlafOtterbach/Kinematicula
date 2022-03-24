@@ -2,7 +2,6 @@
 using NSubstitute;
 using Kinematicula.Graphics;
 using Kinematicula.Graphics.Creators;
-using Kinematicula.Graphics.Saving;
 using Kinematicula.Kinematics;
 using Kinematicula.Kinematics.DirectInverseSolving;
 using Kinematicula.Mathematics;
@@ -17,8 +16,7 @@ namespace Kinematicula.Tests.Kinematics.DirectInverseSolving
         {
             IDirectForwardConstraintSolver forwardSolver = Substitute.For<IDirectForwardConstraintSolver>();
             IDirectInverseConstraintSolver inverseSolver = Substitute.For<IDirectInverseConstraintSolver>();
-            ISnapshotFactory snapshotFactory = Substitute.For<ISnapshotFactory>();
-            var scene = new Scene(forwardSolver, inverseSolver, snapshotFactory);
+            var scene = new Scene(forwardSolver, inverseSolver);
             var minimum = 0.0.ToRadiant();
             var maximum = 90.0.ToRadiant();
 
@@ -39,17 +37,12 @@ namespace Kinematicula.Tests.Kinematics.DirectInverseSolving
                 minimum,
                 maximum);
 
-            var mementorFactory = new StateFactory();
-
             var solver = new DirectInverseConstraintSolver();
-
-            var snapShotFactory = new SnapshotFactory(mementorFactory);
-            var snapShot = snapShotFactory.TakeSnapshot(scene);
 
             cubeA.Frame = Matrix44D.CreateRotation(new Vector3D(0, 0, 1), 90.0.ToRadiant()) * cubeA.Frame;
 
             // Act
-            solver.Solve(cubeA, snapShot);
+            solver.Solve(cubeA);
 
             // Arrange
         }
@@ -59,8 +52,7 @@ namespace Kinematicula.Tests.Kinematics.DirectInverseSolving
         {
             IDirectForwardConstraintSolver forwardSolver = Substitute.For<IDirectForwardConstraintSolver>();
             IDirectInverseConstraintSolver inverseSolver = Substitute.For<IDirectInverseConstraintSolver>();
-            ISnapshotFactory snapshotFactory = Substitute.For<ISnapshotFactory>();
-            var scene = new Scene(forwardSolver, inverseSolver, snapshotFactory);
+            var scene = new Scene(forwardSolver, inverseSolver);
             var minimum = -90.0.ToRadiant();
             var maximum = 90.0.ToRadiant();
 
@@ -93,17 +85,12 @@ namespace Kinematicula.Tests.Kinematics.DirectInverseSolving
                 minimum,
                 maximum);
 
-            var mementorFactory = new StateFactory();
-
             var solver = new DirectInverseConstraintSolver();
-
-            var snapShotFactory = new SnapshotFactory(mementorFactory);
-            var snapShot = snapShotFactory.TakeSnapshot(scene);
 
             cubeA.Frame = Matrix44D.CreateRotation(new Vector3D(0, 0, 1), 10.0.ToRadiant()) * cubeA.Frame;
 
             // Act
-            solver.Solve(cubeA, snapShot);
+            solver.Solve(cubeA);
 
             // Arrange
         }

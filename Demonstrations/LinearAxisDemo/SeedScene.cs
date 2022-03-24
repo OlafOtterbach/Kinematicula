@@ -1,7 +1,6 @@
 ﻿using Kinematicula.Scening;
 using Kinematicula.Graphics;
 using Kinematicula.Graphics.Creators;
-using Kinematicula.Graphics.Saving;
 using Kinematicula.Kinematics.DirectForwardSolving;
 using Kinematicula.Kinematics.DirectInverseSolving;
 using Kinematicula.Mathematics;
@@ -12,7 +11,7 @@ namespace CylinderDemonstration
     {
         public static Scene CreateAndPopulateScene()
         {
-            var scene = new Scene(new DirectForwardConstraintSolver(), new DirectInverseConstraintSolver(), new SnapshotFactory(new StateFactory()));
+            var scene = new Scene(new DirectForwardConstraintSolver(), new DirectInverseConstraintSolver());
 
             // floor
             var floor = Floor.Create(10, 100);

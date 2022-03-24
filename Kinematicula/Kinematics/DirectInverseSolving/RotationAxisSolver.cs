@@ -1,5 +1,4 @@
 ﻿using Kinematicula.Graphics;
-using Kinematicula.Graphics.Saving;
 using Kinematicula.Mathematics;
 using Kinematicula.Mathematics.Extensions;
 
@@ -7,35 +6,33 @@ namespace Kinematicula.Kinematics.DirectInverseSolving
 {
     public class RotationAxisSolver : DirectInverseSolver<RotationAxisConstraint>
     {
-        protected override bool SolveFirstToSecond(RotationAxisConstraint constraint, Snapshot snapShot)
+        protected override bool SolveFirstToSecond(RotationAxisConstraint constraint)
         {
-            var rail = constraint.First.Body;
-            var wagon = constraint.Second.Body;
-            var formerthreadFrame = snapShot.GetFrameFor(rail);
-            var formerWagonFrame = snapShot.GetFrameFor(wagon);
-            var realativeFrame = formerthreadFrame.Inverse() * formerWagonFrame;
-            var newWagonFrame = rail.Frame * realativeFrame;
-            wagon.Frame = newWagonFrame;
+            var thread = constraint.First.Body;
+            var screwMat = constraint.First.Body.Frame;
+            var screwAnchorMat = constraint.First.ConnectionFrame;
+            var threadAnchorMat = constraint.Second.ConnectionFrame;
+            var rotMat = Matrix44D.CreateRotation(new Vector3D(0.0, 0.0, 1.0), constraint.Angle);
+            thread.Frame = screwMat * screwAnchorMat * rotMat * (threadAnchorMat.Inverse());
             return true;
         }
 
-        protected override bool SolveSecondToFirst(RotationAxisConstraint constraint, Snapshot snapShot)
+        protected override bool SolveSecondToFirst(RotationAxisConstraint constraint)
         {
             var thread = constraint.First.Body;
             var screw = constraint.Second.Body;
-            var screwFrame = screw.Frame;
             var threadConnectionFrame = thread.Frame * constraint.First.ConnectionFrame;
             var screwConnectionFrame = screw.Frame * constraint.Second.ConnectionFrame;
-            var formerThreadFrame = snapShot.GetFrameFor(thread);
-            var formerScrewFrame = snapShot.GetFrameFor(screw);
 
             // IF position or orientation is not correct THEN
             if (!threadConnectionFrame.Offset.EqualsTo(screwConnectionFrame.Offset, 3) || !threadConnectionFrame.Ez.EqualsTo(screwConnectionFrame.Ez, 3))
             {
                 // Setting thread to screw by former angle
-                var relativeFrame = formerScrewFrame.Inverse() * formerThreadFrame;
-                var newThreadFrame = screwFrame * relativeFrame;
-                thread.Frame = newThreadFrame;
+                var screwMat = constraint.First.Body.Frame;
+                var screwAnchorMat = constraint.First.ConnectionFrame;
+                var threadAnchorMat = constraint.Second.ConnectionFrame;
+                var rotMat = Matrix44D.CreateRotation(new Vector3D(0.0, 0.0, 1.0), constraint.Angle);
+                thread.Frame = screwMat * screwAnchorMat * rotMat * (threadAnchorMat.Inverse());
             } // ELSE
             else
             {
