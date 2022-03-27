@@ -36,14 +36,14 @@ namespace Kinematicula.Kinematics.DirectInverseSolving
             }
         }
 
-        public bool Solve(Body startBody)
+        public bool TrySolve(Body startBody)
         {
             var result = TrySolve(startBody, 1);
 
             return result;
         }
 
-        public bool TrySolve(Body startBody, int count)
+        private bool TrySolve(Body startBody, int count)
         {
             var result = Solve(startBody, null);
             if (!result.IsSolved)

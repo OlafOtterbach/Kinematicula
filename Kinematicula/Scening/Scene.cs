@@ -23,7 +23,7 @@ namespace Kinematicula.Scening
 
         public IDirectForwardConstraintSolver ForwardSolver { get; }
 
-        public IDirectInverseConstraintSolver InverseSolver  { get; }
+        public IDirectInverseConstraintSolver InverseSolver { get; }
 
         public World World => Bodies.OfType<World>().First();
 
@@ -41,17 +41,22 @@ namespace Kinematicula.Scening
 
         public void SetBodyFrame(Body body, Matrix44D bodyFrame)
         {
+            var freezedScene = new FreezeScene(this);
+
             if (body != null)
             {
                 body.Frame = bodyFrame;
-            }
-            if(!InverseSolver.Solve(body))
-            {
 
-            }
+                if (!InverseSolver.TrySolve(body))
+                {
+                    // reset scene and kinematics
+                    freezedScene.ResetScene();
+                    InverseSolver.TrySolve(body);
+                }
 
-            // Correction for precision of calculated solve result.
-            ForwardSolver.Solve(this);
+                // correction for precision of calculated solve result.
+                ForwardSolver.Solve(this);
+            }
         }
 
         public void InitScene()

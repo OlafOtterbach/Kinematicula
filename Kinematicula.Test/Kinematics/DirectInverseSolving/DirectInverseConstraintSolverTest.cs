@@ -42,7 +42,7 @@ namespace Kinematicula.Tests.Kinematics.DirectInverseSolving
             cubeA.Frame = Matrix44D.CreateRotation(new Vector3D(0, 0, 1), 90.0.ToRadiant()) * cubeA.Frame;
 
             // Act
-            solver.Solve(cubeA);
+            solver.TrySolve(cubeA);
 
             // Arrange
         }
@@ -90,7 +90,7 @@ namespace Kinematicula.Tests.Kinematics.DirectInverseSolving
             cubeA.Frame = Matrix44D.CreateRotation(new Vector3D(0, 0, 1), 10.0.ToRadiant()) * cubeA.Frame;
 
             // Act
-            solver.Solve(cubeA);
+            solver.TrySolve(cubeA);
 
             // Arrange
         }

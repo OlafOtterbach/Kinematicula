@@ -10,7 +10,7 @@ namespace SpiritAutomataDemonstration.Constraints
         {
             var shifter = constraint.First.Body;
             var linearConstraint = shifter.Constraints.OfType<LinearAxisConstraint>().Where(c => c.Second.Body == shifter).First();
-            var pos = (linearConstraint.First.Body.Frame * linearConstraint.First.ConnectionFrame).Inverse() * (shifter.Frame )
+            var pos = (linearConstraint.First.Body.Frame * linearConstraint.First.ConnectionFrame).Inverse() * (shifter.Frame);
 
             return false;
         }

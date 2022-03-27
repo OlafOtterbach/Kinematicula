@@ -9,6 +9,6 @@ namespace Kinematicula.Kinematics
 
         void AddSolvers(IEnumerable<IDirectInverseSolver> solvers);
 
-        bool Solve(Body start);
+        bool TrySolve(Body start);
     }
 }

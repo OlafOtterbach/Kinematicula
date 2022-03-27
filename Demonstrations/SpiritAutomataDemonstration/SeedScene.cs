@@ -106,7 +106,7 @@ namespace SpiritAutomataDemonstration
                 new Anchor(waggon, Matrix44D.CreateTranslation(new Vector3D(0, 0, 50))),
                 new Anchor(bottle, Matrix44D.Identity));
 
-            // waggon
+            // shifter
             var shifter1 = Cube.Create(100);
             shifter1.Name = "shifter";
             shifter1.AddSensor(new PlaneSensor(new Vector3D(0, 0, 1)));
