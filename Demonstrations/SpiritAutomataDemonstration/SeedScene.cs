@@ -82,7 +82,7 @@ namespace SpiritAutomataDemonstration
 
 
             // waggon
-            var waggon = Cuboid.Create(100, 100, 100);
+            var waggon = Cube.Create(100);
             waggon.Name = "rail";
             waggon.AddSensor(new PlaneSensor(new Vector3D(0, 0, 1)));
             scene.AddBody(waggon);
@@ -105,6 +105,17 @@ namespace SpiritAutomataDemonstration
             var fixedConstraint = new FixedConstraint(
                 new Anchor(waggon, Matrix44D.CreateTranslation(new Vector3D(0, 0, 50))),
                 new Anchor(bottle, Matrix44D.Identity));
+
+            // waggon
+            var shifter1 = Cube.Create(100);
+            shifter1.Name = "shifter";
+            shifter1.AddSensor(new PlaneSensor(new Vector3D(0, 0, 1)));
+            scene.AddBody(shifter1);
+            var shifter1linearConstraint = new LinearAxisConstraint(
+                new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(0, -800, 0))),
+                new Anchor(shifter1, Matrix44D.CreateTranslation(new Vector3D(0, 0, -50))), 0, -550, 550);
+
+
 
             scene.InitScene();
             return scene;

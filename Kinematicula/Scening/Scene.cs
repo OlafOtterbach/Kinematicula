@@ -45,7 +45,10 @@ namespace Kinematicula.Scening
             {
                 body.Frame = bodyFrame;
             }
-            InverseSolver.Solve(body);
+            if(!InverseSolver.Solve(body))
+            {
+
+            }
 
             // Correction for precision of calculated solve result.
             ForwardSolver.Solve(this);

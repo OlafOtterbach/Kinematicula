@@ -38,10 +38,20 @@ namespace Kinematicula.Kinematics.DirectInverseSolving
 
         public bool Solve(Body startBody)
         {
+            var result = TrySolve(startBody, 1);
+
+            return result;
+        }
+
+        public bool TrySolve(Body startBody, int count)
+        {
             var result = Solve(startBody, null);
             if (!result.IsSolved)
             {
-                Solve(result.BreakingBody);
+                if (count > 100)
+                    return false;
+
+                TrySolve(result.BreakingBody, count++);
             }
 
             return true;
