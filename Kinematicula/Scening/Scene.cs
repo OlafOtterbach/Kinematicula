@@ -16,7 +16,15 @@ namespace Kinematicula.Scening
             var world = new World();
             world.Name = "World";
 
-            Bodies = new List<Body>() { world };
+            var defaultCamera = new CameraBody()
+            {
+                Name = string.Empty,
+                NearPlane = 1.0,
+                Target = new Position3D(),
+                Frame = Matrix44D.CreateTranslation(new Vector3D(0, -500, 0))
+            };
+
+            Bodies = new List<Body>() { world, defaultCamera };
             ForwardSolver = forwardSolver;
             InverseSolver = inverseSolver;
         }

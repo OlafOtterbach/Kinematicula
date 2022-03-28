@@ -1,26 +1,13 @@
-﻿using Kinematicula.LogicViewing;
-using Kinematicula.Mathematics;
+﻿using Kinematicula.Mathematics;
 
 namespace Kinematicula.Graphics
 {
     public class CameraBody : Body
     {
-        private Camera _camera;
+        public double Distance => (Target - Frame.Offset).Length;
 
-        public CameraBody()
-        {
-            _camera = new Camera();
-        }
+        public double NearPlane { get; set; }
 
-        public Camera Camera
-        { 
-            get; set; }
-
-        protected override Matrix44D OnFrameChange(Matrix44D currentFrame, Matrix44D newFrame)
-        {
-
-
-            return newFrame;
-        }
+        public Position3D Target { get; set; }
     }
 }

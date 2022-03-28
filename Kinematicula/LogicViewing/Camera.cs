@@ -4,6 +4,8 @@ namespace Kinematicula.LogicViewing
 {
     public class Camera
     {
+        public string Name { get; set; }
+
         public double Distance => (Target - Frame.Offset).Length;
 
         public double NearPlane { get; set; }

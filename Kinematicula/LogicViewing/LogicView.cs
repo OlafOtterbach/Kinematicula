@@ -1,5 +1,4 @@
-﻿using System;
-using Kinematicula.Graphics.Extensions;
+﻿using Kinematicula.Graphics.Extensions;
 using Kinematicula.LogicViewing.Extensions;
 using Kinematicula.LogicViewing.Services;
 using Kinematicula.Mathematics;
@@ -38,9 +37,10 @@ namespace Kinematicula.LogicViewing
             if (touchEvent.IsBodyTouched)
             {
                 touchEvent.Camera.MoveTargetTo(touchEvent.TouchPosition);
+                Scene.UpdateCamera(touchEvent.Camera);
             }
 
-            return touchEvent.Camera;
+            return Scene.GetCamera(touchEvent.Camera.Name);
         }
 
         public Camera Select(SelectEvent selectEvent)
@@ -53,9 +53,10 @@ namespace Kinematicula.LogicViewing
             if (isintersected)
             {
                 selectEvent.Camera.MoveTargetTo(intersection);
+                Scene.UpdateCamera(selectEvent.Camera);
             }
 
-            return selectEvent.Camera;
+            return Scene.GetCamera(selectEvent.Camera.Name);
         }
 
         public Camera Move(MoveEvent moveEvent)
@@ -64,17 +65,21 @@ namespace Kinematicula.LogicViewing
             {
                 var deltaX = moveEvent.EndMoveX - moveEvent.StartMoveX;
                 var deltaY = moveEvent.EndMoveY - moveEvent.StartMoveY;
-                return Orbit(deltaX, deltaY, moveEvent.CanvasWidth, moveEvent.CanvasHeight, moveEvent.Camera);
+                moveEvent.Camera = Orbit(deltaX, deltaY, moveEvent.CanvasWidth, moveEvent.CanvasHeight, moveEvent.Camera);
+                Scene.UpdateCamera(moveEvent.Camera);
             }
 
-            return moveEvent.Camera;
+            return Scene.GetCamera(moveEvent.Camera.Name);
         }
 
         public Camera Zoom(ZoomEvent zoomEvent)
         {
             var dy = zoomEvent.Delta * 1.0;
+
             zoomEvent.Camera.Zoom(dy);
-            return zoomEvent.Camera;
+            Scene.UpdateCamera(zoomEvent.Camera);
+
+            return Scene.GetCamera(zoomEvent.Camera.Name);
         }
 
         private Camera Orbit(double pixelDeltaX, double pixelDeltaY, int canvasWidth, int canvasHeight, Camera camera)
