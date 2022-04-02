@@ -2,7 +2,7 @@
 
 namespace Kinematicula.Graphics
 {
-    public class CameraBody : Body
+    public class Camera : Body
     {
         public double Distance => (Target - Frame.Offset).Length;
 

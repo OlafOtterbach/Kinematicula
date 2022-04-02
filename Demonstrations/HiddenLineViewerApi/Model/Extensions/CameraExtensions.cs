@@ -5,7 +5,7 @@ namespace HiddenLineViewerApi
 {
     public static class CameraExtensions
     {
-        public static CameraDto ToCameraDto(this Camera camera)
+        public static CameraDto ToCameraDto(this CameraInfo camera)
         {
             var cameraDto = new CameraDto();
 
@@ -16,7 +16,7 @@ namespace HiddenLineViewerApi
             return cameraDto;
         }
 
-        public static Camera ToCamera(this CameraDto cameraDto)
+        public static CameraInfo ToCamera(this CameraDto cameraDto)
         {
             //var frame = new Matrix44D(
             //    cameraDto.A11, cameraDto.A12, cameraDto.A13, cameraDto.A14,
@@ -29,7 +29,7 @@ namespace HiddenLineViewerApi
             var direction = frame.Ey;
             var target = position + direction * cameraDto.TargetDistance;
 
-            var camera = new Camera();
+            var camera = new CameraInfo();
             camera.Frame = frame;
             camera.Target = target;
             camera.NearPlane = 1.0;

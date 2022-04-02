@@ -4,9 +4,9 @@ namespace Kinematicula.LogicViewing.Extensions
 {
     internal static class CameraBodyExtensions
     {
-        public static Camera ToCamera(this CameraBody cameraBody)
+        public static CameraInfo ToCamera(this Camera cameraBody)
         {
-            return new Camera()
+            return new CameraInfo()
             {
                 Name = cameraBody.Name,
                 NearPlane = cameraBody.NearPlane,
@@ -15,7 +15,7 @@ namespace Kinematicula.LogicViewing.Extensions
             };
         }
 
-        public static void Update(this CameraBody cameraBody, Camera camera)
+        public static void Update(this Camera cameraBody, CameraInfo camera)
         {
             cameraBody.NearPlane = camera.NearPlane;
             cameraBody.Frame = camera.Frame;

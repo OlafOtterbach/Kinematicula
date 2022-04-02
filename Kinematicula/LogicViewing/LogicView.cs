@@ -32,7 +32,7 @@ namespace Kinematicula.LogicViewing
             return new SelectedBodyState { SelectedBodyId = isIntersected ? body.Id : Guid.Empty, IsBodySelected = isIntersected, BodyIntersection = intersection };
         }
 
-        public Camera Touch(TouchEvent touchEvent)
+        public CameraInfo Touch(TouchEvent touchEvent)
         {
             if (touchEvent.IsBodyTouched)
             {
@@ -43,7 +43,7 @@ namespace Kinematicula.LogicViewing
             return Scene.GetCamera(touchEvent.Camera.Name);
         }
 
-        public Camera Select(SelectEvent selectEvent)
+        public CameraInfo Select(SelectEvent selectEvent)
         {
             var posScene = ViewProjection.ProjectCanvasToSceneSystem(selectEvent.selectPositionX, selectEvent.selectPositionY, selectEvent.CanvasWidth, selectEvent.CanvasHeight, selectEvent.Camera.NearPlane, selectEvent.Camera.Frame);
             var rayOffset = selectEvent.Camera.Frame.Offset;
@@ -59,7 +59,7 @@ namespace Kinematicula.LogicViewing
             return Scene.GetCamera(selectEvent.Camera.Name);
         }
 
-        public Camera Move(MoveEvent moveEvent)
+        public CameraInfo Move(MoveEvent moveEvent)
         {
             if (!_moveSensorProcessors.Process(moveEvent.ToMoveAction(Scene), Scene))
             {
@@ -72,7 +72,7 @@ namespace Kinematicula.LogicViewing
             return Scene.GetCamera(moveEvent.Camera.Name);
         }
 
-        public Camera Zoom(ZoomEvent zoomEvent)
+        public CameraInfo Zoom(ZoomEvent zoomEvent)
         {
             var dy = zoomEvent.Delta * 1.0;
 
@@ -82,7 +82,7 @@ namespace Kinematicula.LogicViewing
             return Scene.GetCamera(zoomEvent.Camera.Name);
         }
 
-        private Camera Orbit(double pixelDeltaX, double pixelDeltaY, int canvasWidth, int canvasHeight, Camera camera)
+        private CameraInfo Orbit(double pixelDeltaX, double pixelDeltaY, int canvasWidth, int canvasHeight, CameraInfo camera)
         {
             var horicontalPixelFor360Degree = canvasWidth;
             var verticalPixelFor360Degree = canvasHeight;

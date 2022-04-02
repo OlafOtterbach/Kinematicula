@@ -2,7 +2,7 @@
 
 namespace Kinematicula.LogicViewing
 {
-    public class Camera
+    public class CameraInfo
     {
         public string Name { get; set; }
 

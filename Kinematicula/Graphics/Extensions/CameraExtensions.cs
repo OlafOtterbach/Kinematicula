@@ -1,16 +1,16 @@
 ﻿using Kinematicula.Mathematics;
 using Kinematicula.Mathematics.Extensions;
 
-namespace Kinematicula.LogicViewing.Extensions
+namespace Kinematicula.Graphics.Extensions
 {
     public static class CameraExtensions
     {
-        public static void SetCamera(this CameraInfo camera, double alpha, double beta, double distance)
+        public static void SetCamera(this Camera camera, double alpha, double beta, double distance)
         {
             camera.SetCamera(new Position3D(), alpha, beta, distance);
         }
 
-        public static void SetCamera(this CameraInfo camera, Position3D target, double alpha, double beta, double distance)
+        public static void SetCamera(this Camera camera, Position3D target, double alpha, double beta, double distance)
         {
             alpha = alpha.ToRadiant();
             beta = beta.ToRadiant();
@@ -23,7 +23,7 @@ namespace Kinematicula.LogicViewing.Extensions
             camera.Target = target;
         }
 
-        public static void OrbitXY(this CameraInfo camera, double alpha)
+        public static void OrbitXY(this Camera camera, double alpha)
         {
             var offset = camera.Frame.Offset;
             var ex = camera.Frame.Ex;
@@ -50,7 +50,7 @@ namespace Kinematicula.LogicViewing.Extensions
             camera.Frame = newFrame;
         }
 
-        public static void OrbitYZ(this CameraInfo camera, double alpha)
+        public static void OrbitYZ(this Camera camera, double alpha)
         {
             var offset = camera.Frame.Offset;
             var ex = camera.Frame.Ex;
@@ -75,7 +75,7 @@ namespace Kinematicula.LogicViewing.Extensions
             camera.Frame = newFrame;
         }
 
-        public static void Zoom(this CameraInfo camera, double delta)
+        public static void Zoom(this Camera camera, double delta)
         {
             if (delta >= camera.Distance)
             {
@@ -89,7 +89,7 @@ namespace Kinematicula.LogicViewing.Extensions
             camera.Frame = Matrix44D.CreateCoordinateSystem(offset, ex, ey, ez);
         }
 
-        public static void MoveTargetTo(this CameraInfo camera, Position3D target)
+        public static void MoveTargetTo(this Camera camera, Position3D target)
         {
             var offset = target - (camera.Target - camera.Frame.Offset);
             var ex = camera.Frame.Ex;

@@ -21,7 +21,7 @@ namespace HiddenLineViewerApi
 
         public SceneStateDto GetScene(int canvasWidth, int canvasHeight)
         {
-            var camera = new Camera();
+            var camera = new CameraInfo();
             camera.NearPlane = 1.0;
 
             //camera.Frame = Matrix44D.CreateCoordinateSystem(

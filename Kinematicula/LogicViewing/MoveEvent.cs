@@ -15,7 +15,7 @@ namespace Kinematicula.LogicViewing
         public double EndMoveX { get; set; }
         public double EndMoveY { get; set; }
  
-        public Camera Camera { get; set; }
+        public CameraInfo Camera { get; set; }
         public int CanvasWidth { get; set; }
         public int CanvasHeight { get; set; }
     }
