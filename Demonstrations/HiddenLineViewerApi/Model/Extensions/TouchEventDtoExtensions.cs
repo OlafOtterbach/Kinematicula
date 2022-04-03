@@ -11,7 +11,7 @@ namespace HiddenLineViewerApi
                 IsBodyTouched = touchEventDto.IsBodyTouched,
                 BodyId = touchEventDto.BodyId,
                 TouchPosition = touchEventDto.TouchPosition.ToPosition3D(),
-                Camera = touchEventDto.Camera.ToCamera(),
+                Camera = touchEventDto.Camera.ToCameraInfo(),
                 CanvasWidth = touchEventDto.CanvasWidth,
                 CanvasHeight = touchEventDto.CanvasHeight
             };

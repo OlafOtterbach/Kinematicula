@@ -6,9 +6,9 @@ namespace Kinematicula.LogicViewing
     {
         public string Name { get; set; }
 
-        public double Distance => (Target - Frame.Offset).Length;
-
         public double NearPlane { get; set; }
+
+        public double Distance { get; set; }
 
         public Position3D Target { get; set; }
 

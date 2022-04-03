@@ -4,6 +4,7 @@ using Kinematicula.Graphics.Creators;
 using Kinematicula.Kinematics.DirectForwardSolving;
 using Kinematicula.Kinematics.DirectInverseSolving;
 using Kinematicula.Mathematics;
+using Kinematicula.Graphics.Extensions;
 
 namespace CylinderDemonstration
 {
@@ -66,6 +67,15 @@ namespace CylinderDemonstration
             var firstAnchor = new Anchor(firstShifter, Matrix44D.CreateTranslation(new Vector3D(250, 0, 0)));
             var secondAnchor = new Anchor(secondShifter, Matrix44D.CreateTranslation(new Vector3D(-250, 0, 0)));
             var fixedFirstToSecondShifter = new FixedConstraint(firstAnchor, secondAnchor);
+
+            var camera = new Camera()
+            {
+                Name = "CameraOne",
+                NearPlane = 1.0,
+                Target = new Position3D(),
+            };
+            camera.SetCamera(0.0, 45.0, 1500.0);
+            scene.AddBody(camera);
 
             scene.InitScene();
             return scene;

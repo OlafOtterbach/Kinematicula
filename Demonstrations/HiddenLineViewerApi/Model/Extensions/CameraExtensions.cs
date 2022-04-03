@@ -5,38 +5,31 @@ namespace HiddenLineViewerApi
 {
     public static class CameraExtensions
     {
-        public static CameraDto ToCameraDto(this CameraInfo camera)
+        public static CameraDto ToCameraDto(this CameraInfo cameraInfo)
         {
             var cameraDto = new CameraDto();
 
-            cameraDto.Name = camera.Name;
+            cameraDto.Name = cameraInfo.Name;
 
-            cameraDto.NearPlane = camera.NearPlane;
+            cameraDto.NearPlane = cameraInfo.NearPlane;
 
-            cameraDto.Distance = camera.Distance;
+            cameraDto.Distance = cameraInfo.Distance;
 
-            cameraDto.TargetDistance = (camera.Target - camera.Frame.Offset).Length;
+            cameraDto.Target = cameraInfo.Target.ToPositionDto();
 
-            cameraDto.Frame = camera.Frame.ToCardanFrame().ToCardanFrameDto();
+            cameraDto.Frame = cameraInfo.Frame.ToCardanFrame().ToCardanFrameDto();
 
             return cameraDto;
         }
 
-        public static CameraInfo ToCamera(this CameraDto cameraDto)
+        public static CameraInfo ToCameraInfo(this CameraDto cameraDto)
         {
-            var frame = cameraDto.Frame.ToCardanFrame().ToMatrix44D();
-
-            var position = frame.Offset;
-            var direction = frame.Ey;
-            var target = position + direction * cameraDto.TargetDistance;
-
             var camera = new CameraInfo();
             camera.Name = cameraDto.Name;
             camera.NearPlane = cameraDto.NearPlane;
-            //camera.Distance = cameraDto.Distance;
-            camera.Frame = frame;
-            camera.Target = target;
-            camera.NearPlane = 1.0;
+            camera.Distance = cameraDto.Distance;
+            camera.Target = cameraDto.Target.ToPosition3D();
+            camera.Frame = cameraDto.Frame.ToCardanFrame().ToMatrix44D();
 
             return camera;
         }

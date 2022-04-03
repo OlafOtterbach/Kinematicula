@@ -124,7 +124,7 @@ function getPosition(event, canvas) {
 
 async function getScenery() {
     lock = true;
-    let url = encodeURI("http://localhost:5000/initial-graphics?canvasWidth=" + canvas.width + "&canvasHeight=" + canvas.height);
+    let url = encodeURI("http://localhost:5000/initial-graphics?cameraName=CameraOne&canvasWidth=" + canvas.width + "&canvasHeight=" + canvas.height);
     let graphics = await fetchData(url);
     lock = false;
     drawScene(graphics);

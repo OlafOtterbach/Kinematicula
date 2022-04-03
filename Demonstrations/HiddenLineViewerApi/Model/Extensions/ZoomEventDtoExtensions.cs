@@ -9,7 +9,7 @@ namespace HiddenLineViewerApi
             var zoomEvent = new ZoomEvent
             {
                 Delta = zoomEventDto.delta,
-                Camera = zoomEventDto.camera.ToCamera(),
+                Camera = zoomEventDto.camera.ToCameraInfo(),
                 CanvasWidth = zoomEventDto.canvasWidth,
                 CanvasHeight = zoomEventDto.canvasHeight
             };

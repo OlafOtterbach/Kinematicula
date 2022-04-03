@@ -45,7 +45,9 @@ namespace Kinematicula.LogicViewing
         {
             if (touchEvent.IsBodyTouched)
             {
-                touchEvent.Camera.MoveTargetTo(touchEvent.TouchPosition);
+                var body = Scene.GetBody(touchEvent.BodyId);
+                var absoluteTouchPosition = body.Frame * touchEvent.TouchPosition;
+                touchEvent.Camera.MoveTargetTo(absoluteTouchPosition);
                 Scene.UpdateCamera(touchEvent.Camera);
             }
 

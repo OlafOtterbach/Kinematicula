@@ -43,7 +43,6 @@ function TouchEventDto() {
     this.canvasWidth = 0;
     this.canvasHeight = 0;
     this.camera = null;
-    this.bodyStates = null;
 }
 
 function MoveEventDto() {
@@ -57,7 +56,6 @@ function MoveEventDto() {
     this.canvasWidth = 0;
     this.canvasHeight = 0;
     this.camera = null;
-    this.bodyStates = null;
 }
 
 function ZoomEventDto() {
@@ -65,7 +63,6 @@ function ZoomEventDto() {
     this.canvasWidth = 0;
     this.canvasHeight = 0;
     this.camera = null;
-    this.bodyStates = null;
 }
 
 function sleep(ms) {

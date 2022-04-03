@@ -17,7 +17,6 @@ namespace Kinematicula.LogicViewing.Extensions
             if (camera != null)
             {
                 var cameraBody = scene.GetCameraBody(camera.Name);
-
                 cameraBody.Update(camera);
                 scene.SetBodyFrame(cameraBody, camera.Frame);
             }
