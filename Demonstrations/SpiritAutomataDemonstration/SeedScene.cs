@@ -4,6 +4,7 @@ using Kinematicula.Graphics.Creators;
 using Kinematicula.Kinematics.DirectForwardSolving;
 using Kinematicula.Kinematics.DirectInverseSolving;
 using Kinematicula.Mathematics;
+using Kinematicula.Graphics.Extensions;
 
 namespace SpiritAutomataDemonstration
 {
@@ -115,7 +116,14 @@ namespace SpiritAutomataDemonstration
                 new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(0, -800, 0))),
                 new Anchor(shifter1, Matrix44D.CreateTranslation(new Vector3D(0, 0, -50))), 0, -550, 550);
 
-
+            var camera = new Camera()
+            {
+                Name = "CameraOne",
+                NearPlane = 1.0,
+                Target = new Position3D(),
+            };
+            camera.SetCamera(45.0, 45.0, 3500.0);
+            scene.AddBody(camera);
 
             scene.InitScene();
             return scene;

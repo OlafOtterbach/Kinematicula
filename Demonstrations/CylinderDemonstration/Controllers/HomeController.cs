@@ -21,7 +21,7 @@ namespace CylinderDemonstration.Controllers
         [HttpGet("initial-graphics")]
         public ActionResult<SceneStateDto> GetScene([FromQuery] int canvasWidth, [FromQuery] int canvasHeight)
         {
-            return Ok(_logicView.GetScene(canvasWidth, canvasHeight));
+            return Ok(_logicView.GetScene(string.Empty, canvasWidth, canvasHeight));
         }
 
         [HttpPost("select")]

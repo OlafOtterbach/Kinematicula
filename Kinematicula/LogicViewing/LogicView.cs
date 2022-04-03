@@ -1,4 +1,5 @@
-﻿using Kinematicula.Graphics.Extensions;
+﻿using Kinematicula.Graphics;
+using Kinematicula.Graphics.Extensions;
 using Kinematicula.LogicViewing.Extensions;
 using Kinematicula.LogicViewing.Services;
 using Kinematicula.Mathematics;
@@ -17,10 +18,18 @@ namespace Kinematicula.LogicViewing
         {
             Scene = scene;
             _moveSensorProcessors = moveSensorProcessor;
-
         }
 
         public Scene Scene { get; }
+
+
+        public CameraInfo GetCamera(string cameraName)
+        {
+            var cameras = Scene.Bodies.OfType<Camera>().ToList();
+            var camera = cameras.FirstOrDefault(x => x.Name == cameraName) ?? cameras.First();
+            var cameraInfo = camera.ToCamera();
+            return cameraInfo;
+        }
 
         public SelectedBodyState SelectBody(SelectEvent selectEvent)
         {
