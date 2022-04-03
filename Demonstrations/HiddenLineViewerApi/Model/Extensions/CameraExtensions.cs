@@ -11,6 +11,10 @@ namespace HiddenLineViewerApi
 
             cameraDto.Name = camera.Name;
 
+            cameraDto.NearPlane = camera.NearPlane;
+
+            cameraDto.Distance = camera.Distance;
+
             cameraDto.TargetDistance = (camera.Target - camera.Frame.Offset).Length;
 
             cameraDto.Frame = camera.Frame.ToCardanFrame().ToCardanFrameDto();
@@ -28,6 +32,8 @@ namespace HiddenLineViewerApi
 
             var camera = new CameraInfo();
             camera.Name = cameraDto.Name;
+            camera.NearPlane = cameraDto.NearPlane;
+            //camera.Distance = cameraDto.Distance;
             camera.Frame = frame;
             camera.Target = target;
             camera.NearPlane = 1.0;
