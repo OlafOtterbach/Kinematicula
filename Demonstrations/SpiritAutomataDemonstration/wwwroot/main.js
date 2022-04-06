@@ -11,10 +11,10 @@ let currentCamera;
 let mouseMoved = false;
 let currentMousePosition;
 
-let canvas = document.querySelector("canvas");
-canvas.addEventListener("mousedown", onMouseDown);
-canvas.addEventListener("mouseup", onMouseUp);
-var ctx = canvas.getContext("2d");
+let canvasOne = document.getElementById("CanvasOne");
+canvasOne.addEventListener("mousedown", onMouseDown);
+canvasOne.addEventListener("mouseup", onMouseUp);
+var ctx = canvasOne.getContext("2d");
 getScenery();
 
 function Position(x, y) {
@@ -71,19 +71,19 @@ function sleep(ms) {
 
 function onMouseDown(event) {
     if (event.button === 0 || event.button === 2) {
-        canvas.addEventListener("mousemove", onMouseMoved);
-        canvas.addEventListener("contextmenu", onContextMenu);
+        canvasOne.addEventListener("mousemove", onMouseMoved);
+        canvasOne.addEventListener("contextmenu", onContextMenu);
 
         mouseMoved = false;
-        currentMousePosition = getPosition(event, canvas)
+        currentMousePosition = getPosition(event, canvasOne)
         select(currentMousePosition.x, currentMousePosition.y, currentCamera);
     }
 }
 
 function onMouseUp(event) {
     if (event.button === 0) {
-        canvas.removeEventListener("mousemove", onMouseMoved);
-        canvas.removeEventListener("contextmenu", onContextMenu);
+        canvasOne.removeEventListener("mousemove", onMouseMoved);
+        canvasOne.removeEventListener("contextmenu", onContextMenu);
 
         if (!mouseMoved) {
             touch();
@@ -94,11 +94,11 @@ function onMouseUp(event) {
 
 function onMouseMoved(event) {
     if (event.buttons === 0) {
-        canvas.removeEventListener("mousemove", onMouseMoved);
+        canvasOne.removeEventListener("mousemove", onMouseMoved);
     } else {
         if (event.buttons === 1 || event.buttons === 2) {
             mouseMoved = true;
-            let movedMousePosition = getPosition(event, canvas)
+            let movedMousePosition = getPosition(event, canvasOne)
             if (event.buttons === 1) {
                 let eventSource = event.ctrlKey ? "left mouse button and control key" : event.shiftKey ? "left mouse button and shift key" : "left mouse button"
                 move(eventSource, currentBodyId, currentMousePosition, movedMousePosition);
@@ -114,14 +114,14 @@ function onContextMenu(event) {
     return false;
 }
 
-function getPosition(event, canvas) {
-    let rect = canvas.getBoundingClientRect();
+function getPosition(event, canvasOne) {
+    let rect = canvasOne.getBoundingClientRect();
     return new Position(event.clientX - rect.left, event.clientY - rect.top);
 }
 
 async function getScenery() {
     lock = true;
-    let url = encodeURI("http://localhost:5000/initial-graphics?cameraName=CameraOne&canvasWidth=" + canvas.width + "&canvasHeight=" + canvas.height);
+    let url = encodeURI("http://localhost:5000/initial-graphics?cameraName=CameraTwo&canvasWidth=" + canvasOne.width + "&canvasHeight=" + canvasOne.height);
     let graphics = await fetchData(url);
     lock = false;
     drawScene(graphics);
@@ -133,8 +133,8 @@ async function select(x, y) {
     selectEvent.camera = currentCamera;
     selectEvent.selectPositionX = x;
     selectEvent.selectPositionY = y;
-    selectEvent.canvasWidth = canvas.width;
-    selectEvent.canvasHeight = canvas.height;
+    selectEvent.canvasWidth = canvasOne.width;
+    selectEvent.canvasHeight = canvasOne.height;
     let url = encodeURI("http://localhost:5000/select");
     let bodySelection = await postData(url, selectEvent);
     currentBodyId = bodySelection.BodyId;
@@ -150,8 +150,8 @@ async function touch() {
     touchEvent.touchPosition = currentBodyIntersection;
     touchEvent.isBodyTouched = currentlyIsBodySelected;
     touchEvent.camera = currentCamera;
-    touchEvent.canvasWidth = canvas.width;
-    touchEvent.canvasHeight = canvas.height;
+    touchEvent.canvasWidth = canvasOne.width;
+    touchEvent.canvasHeight = canvasOne.height;
     let url = encodeURI("http://localhost:5000/touch");
     let sceneState = await postData(url, touchEvent);
     lock = false;
@@ -171,8 +171,8 @@ async function move(eventSource, bodyId, start, end) {
         moveEvent.startY = start.y;
         moveEvent.endX = end.x;
         moveEvent.endY = end.y;
-        moveEvent.canvasWidth = canvas.width;
-        moveEvent.canvasHeight = canvas.height;
+        moveEvent.canvasWidth = canvasOne.width;
+        moveEvent.canvasHeight = canvasOne.height;
         let url = encodeURI("http://localhost:5000/move");
         let sceneState = await postData(url, moveEvent);
         drawScene(sceneState);
@@ -189,8 +189,8 @@ async function zoom(start, end) {
         let zoomEvent = new ZoomEventDto();
         zoomEvent.camera = currentCamera;
         zoomEvent.delta = delta;
-        zoomEvent.canvasWidth = canvas.width;
-        zoomEvent.canvasHeight = canvas.height;
+        zoomEvent.canvasWidth = canvasOne.width;
+        zoomEvent.canvasHeight = canvasOne.height;
         let url = encodeURI("http://localhost:5000/zoom");
         let sceneState = await postData(url, zoomEvent);
         drawScene(sceneState);
@@ -204,7 +204,7 @@ function drawScene(sceneState) {
         currentCamera = sceneState.Camera;
         ctx.beginPath();
         ctx.fillStyle = backgroundColor;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillRect(0, 0, canvasOne.width, canvasOne.height);
         ctx.closePath();
         ctx.stroke();
 

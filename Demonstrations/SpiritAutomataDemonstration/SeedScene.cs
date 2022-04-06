@@ -116,14 +116,27 @@ namespace SpiritAutomataDemonstration
                 new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(0, -800, 0))),
                 new Anchor(shifter1, Matrix44D.CreateTranslation(new Vector3D(0, 0, -50))), 0, -550, 550);
 
-            var camera = new Camera()
+            var cameraOne = new Camera()
             {
                 Name = "CameraOne",
                 NearPlane = 1.0,
                 Target = new Position3D(),
             };
-            camera.SetCamera(45.0, 45.0, 3500.0);
-            scene.AddBody(camera);
+            cameraOne.SetCamera(45.0, 45.0, 3500.0);
+            scene.AddBody(cameraOne);
+
+            var cameraTwo = new Camera()
+            {
+                Name = "CameraTwo",
+                NearPlane = 1.0,
+                Target = new Position3D(),
+            };
+            scene.AddBody(cameraTwo);
+
+            var cameraTwoToWagonFixedConstraint = new FixedConstraint(
+                new Anchor(waggon, Matrix44D.CreateTranslation(new Vector3D(0, 1000, -250))),
+                new Anchor(cameraTwo, Matrix44D.CreateCoordinateSystem(new Position3D(), new Vector3D(-1,0,0), new Vector3D(0,0,1))));
+
 
             scene.InitScene();
             return scene;
