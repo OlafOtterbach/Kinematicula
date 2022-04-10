@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Kinematicula.Mathematics
+﻿namespace Kinematicula.Mathematics
 {
     public struct Plane3D : IEquatable<Plane3D>
     {

@@ -1,5 +1,4 @@
 ﻿using Kinematicula.Mathematics.Extensions;
-using System;
 
 namespace Kinematicula.Mathematics
 {
@@ -114,10 +113,9 @@ namespace Kinematicula.Mathematics
 
         public static (bool, Position3D) CalculatePerpendicularPoint(this Axis3D baseAxis, Axis3D neighbourAxis)
         {
-            // Lotpunkte ermittel, deren Lot gebildet aus deren Verbindungslinie
-            // senkrecht auf beiden Geraden steht
+            // determine perdpendicular points of line orthogonal on both axes.
 
-            // Parameter fuer Gerade 1: g1=a+k*v initialisieren
+            // initialize parameters for straight line 1: g1=a+k*v
             bool result = false;
             var perpendicularPoint = new Position3D(double.MinValue, double.MinValue, double.MinValue);
 
@@ -135,23 +133,23 @@ namespace Kinematicula.Mathematics
             double w2 = neighbourAxis.Direction.Y;
             double w3 = neighbourAxis.Direction.Z;
 
-            // Gleichung 1: A1-k*K1+l*L1=0 erzeugen
+            // equation 1: A1-k*K1+l*L1=0
             double A1 = v1 * b1 + v2 * b2 + v3 * b3 - v1 * a1 - v2 * a2 - v3 * a3;
             double K1 = v1 * v1 + v2 * v2 + v3 * v3;
             double L1 = v1 * w1 + v2 * w2 + v3 * w3; // = K2
 
-            // Gleichung 2: A2-k*K2+l*L2=0 erzeugen
+            // equation 2: A2-k*K2+l*L2=0
             double A2 = w1 * b1 + w2 * b2 + w3 * b3 - w1 * a1 - w2 * a2 - w3 * a3;
             double K2 = w1 * v1 + w2 * v2 + w3 * v3; // = L1
             double L2 = w1 * w1 + w2 * w2 + w3 * w3;
 
-            // Calculate factor k
+            // calculate factor k
             double k = L1 * K2 - L2 * K1;
             if (k != 0.0)
             {
                 k = (L1 * A2 - L2 * A1) / k;
 
-                // Calculate plump point
+                // calculate plump point
                 var delta = baseAxis.Direction * k;
                 perpendicularPoint = baseAxis.Offset + delta;
                 result = true;
@@ -161,10 +159,9 @@ namespace Kinematicula.Mathematics
 
         public static (bool, Position3D) CalculatePerpendicularPoint(Position3D baseLineOffset, Vector3D baseLineDirection, Position3D neighbourOffset, Vector3D neighbourDirection)
         {
-            // Lotpunkte ermittel, deren Lot gebildet aus deren Verbindungslinie
-            // senkrecht auf beiden Geraden steht
+            // determine perdpendicular points of line orthogonal on both axes.
 
-            // Parameter fuer Gerade 1: g1=a+k*v initialisieren
+            // initialize parameters for straight line 1: g1=a+k*v
             bool result = false;
             var perpendicularPoint = new Position3D(double.MinValue, double.MinValue, double.MinValue);
 
@@ -229,14 +226,14 @@ namespace Kinematicula.Mathematics
             var dy = axis.Direction.Y;
             var dz = axis.Direction.Z;
 
-            // Liniengleichung in Hessenormalform der Ebene einsetzen
+            // setting line equation  in hesse normal form of plane
             var help1 = (nx * x) + (ny * y) + (nz * z)
                         - (nx * sx) - (ny * sy) - (nz * sz);
             var help2 = (nx * dx) + (ny * dy) + (nz * dz);
             Position3D intersection;
             if (help2.NotEqualsTo(0.0))
             {
-                // Schnittpunkt errechnen
+                // calculate intersection
                 var lamda = help1 / help2;
                 intersection = axis.Offset + (axis.Direction * lamda);
                 result = true;
@@ -268,14 +265,14 @@ namespace Kinematicula.Mathematics
             var dy = lineDirection.Y;
             var dz = lineDirection.Z;
 
-            // Liniengleichung in Hessenormalform der Ebene einsetzen
+            // setting line equation  in hesse normal form of plane
             var help1 = (nx * x) + (ny * y) + (nz * z)
                         - (nx * sx) - (ny * sy) - (nz * sz);
             var help2 = (nx * dx) + (ny * dy) + (nz * dz);
             Position3D intersection;
             if (help2.NotEqualsTo(0.0))
             {
-                // Schnittpunkt errechnen
+                // calculating intersection
                 var lamda = help1 / help2;
                 intersection = lineOffset + (lineDirection * lamda);
                 result = true;

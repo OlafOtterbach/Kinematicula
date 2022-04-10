@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Kinematicula.Mathematics
+﻿namespace Kinematicula.Mathematics
 {
     public static class ConstantsMath
     {

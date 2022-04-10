@@ -22,7 +22,6 @@ namespace SpiritAutomataDemonstration
                     {
                         options.SerializerSettings.ContractResolver = new DefaultContractResolver();
                         options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                        // options.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
                     });
 
             services.AddSwaggerGen(c =>
