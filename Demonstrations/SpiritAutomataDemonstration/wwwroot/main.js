@@ -20,8 +20,9 @@ let canvasTwo = document.getElementById("CanvasTwo");
 var ctxTwo = canvasTwo.getContext("2d");
 
 
-getScenery(canvasOne, ctxOne, "CameraOne");
+initScenery(canvasOne, ctxOne, "CameraOne");
 getScenery(canvasTwo, ctxTwo, "CameraTwo");
+
 
 function Position(x, y) {
     this.x = x;
@@ -125,6 +126,15 @@ function getPosition(event, canvasOne) {
     return new Position(event.clientX - rect.left, event.clientY - rect.top);
 }
 
+async function initScenery(canvas, ctx, cameraName) {
+    lock = true;
+    let url = encodeURI("http://localhost:5000/initial-graphics?cameraName=" + cameraName + "&canvasWidth=" + canvas.width + "&canvasHeight=" + canvas.height);
+    let graphics = await fetchData(url);
+    lock = false;
+    drawScene(ctx, graphics);
+    currentCamera = graphics.Camera;
+}
+
 async function getScenery(canvas, ctx, cameraName) {
     lock = true;
     let url = encodeURI("http://localhost:5000/initial-graphics?cameraName=" + cameraName + "&canvasWidth=" + canvas.width + "&canvasHeight=" + canvas.height);
@@ -162,6 +172,7 @@ async function touch() {
     let sceneState = await postData(url, touchEvent);
     lock = false;
     drawScene(ctxOne, sceneState);
+    currentCamera = sceneState.Camera;
 }
 
 async function move(eventSource, bodyId, start, end) {
@@ -181,7 +192,11 @@ async function move(eventSource, bodyId, start, end) {
         moveEvent.canvasHeight = canvasOne.height;
         let url = encodeURI("http://localhost:5000/move");
         let sceneState = await postData(url, moveEvent);
+
+        getScenery(canvasTwo, ctxTwo, "CameraTwo");
         drawScene(ctxOne, sceneState);
+        currentCamera = sceneState.Camera;
+
         currentMousePosition = end;
         lock = false;
     }
@@ -200,6 +215,7 @@ async function zoom(start, end) {
         let url = encodeURI("http://localhost:5000/zoom");
         let sceneState = await postData(url, zoomEvent);
         drawScene(ctxOne, sceneState);
+        currentCamera = sceneState.Camera;
         currentMousePosition = end;
         lock = false;
     }
@@ -207,7 +223,6 @@ async function zoom(start, end) {
 
 function drawScene(ctx, sceneState) {
     if (sceneState !== undefined) {
-        currentCamera = sceneState.Camera;
         ctx.beginPath();
         ctx.fillStyle = backgroundColor;
         ctx.fillRect(0, 0, canvasOne.width, canvasOne.height);

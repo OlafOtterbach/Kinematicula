@@ -85,7 +85,7 @@ namespace Kinematicula.LogicViewing
 
         public CameraInfo Zoom(ZoomEvent zoomEvent)
         {
-            var dy = zoomEvent.Delta * 1.0;
+            var dy = zoomEvent.Delta * 2.0;
 
             zoomEvent.Camera.Zoom(dy);
             Scene.UpdateCamera(zoomEvent.Camera);
