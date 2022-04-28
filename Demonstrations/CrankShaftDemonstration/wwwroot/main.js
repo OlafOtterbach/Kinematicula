@@ -1,6 +1,6 @@
-﻿const lineWidth = 3.0;
-const backgroundColor = "#FFFFFF";
-const defaultForegroundColor = "#000000"
+﻿const lineWidth = 2.0;
+const backgroundColor = "#000000";
+const defaultForegroundColor = "#00FF00"
 let lock = false;
 
 let currentBodyId;

@@ -21,19 +21,19 @@ namespace CylinderDemonstration
             scene.AddBody(floor);
             var fixedToWorldConstraint = new FixedConstraint(new Anchor(scene.World, Matrix44D.Identity), new Anchor(floor, Matrix44D.Identity));
 
-
-            var motor = MotorCreator.Create();
+            // motor
+            var motor = MotorCreator.Create(scene);
             scene.AddBody(motor);
             var fixedToFloorConstraint = new FixedConstraint(new Anchor(floor, Matrix44D.Identity), new Anchor(motor, Matrix44D.Identity));
-
-
+            
+            // camera
             var camera = new Camera()
             {
                 Name = "CameraOne",
                 NearPlane = 1.0,
                 Target = new Position3D(),
             };
-            camera.SetCamera(10.0, 10.0, 1500.0);
+            camera.SetCamera(30.0, 30.0, 1800.0);
             camera.Frame = Matrix44D.CreateTranslation(new Vector3D(0, 0, 200)) * camera.Frame;
             scene.AddBody(camera);
 
