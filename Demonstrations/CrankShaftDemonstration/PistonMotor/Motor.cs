@@ -5,9 +5,9 @@ namespace CrankShaftDemonstration.PistonMotor
 {
     public class Motor : Body
     {
-        private Dictionary<int, RotationAxisConstraint> _axes = new Dictionary<int, RotationAxisConstraint>();
+        private Dictionary<int, Constraint> _axes = new Dictionary<int, Constraint>();
 
-        public void AddAxis(RotationAxisConstraint axisConstraint)
+        public void AddAxis(Constraint axisConstraint)
         {
             int axisNumber = _axes.Keys.Count + 1;
             _axes[axisNumber] = axisConstraint;
@@ -19,7 +19,14 @@ namespace CrankShaftDemonstration.PistonMotor
             {
                 if(_axes.ContainsKey(number))
                 {
-                    _axes[number].Angle = values[number - 1];
+                    if (_axes[number] is RotationAxisConstraint rotationAxis)
+                    {
+                        rotationAxis.Angle = values[number - 1];
+                    }
+                    else if (_axes[number] is LinearAxisConstraint linearAxis)
+                    {
+                        linearAxis.LinearPosition = values[number - 1];
+                    }
                 }
             }
         }

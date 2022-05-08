@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Kinematicula.Graphics;
+﻿using Kinematicula.Graphics;
 using Kinematicula.Graphics.Extensions;
 using Kinematicula.Scening;
 

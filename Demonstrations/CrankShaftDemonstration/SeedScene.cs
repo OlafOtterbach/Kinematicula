@@ -24,7 +24,7 @@ namespace CylinderDemonstration
             // motor
             var motor = MotorCreator.Create(scene);
             scene.AddBody(motor);
-            var fixedToFloorConstraint = new FixedConstraint(new Anchor(floor, Matrix44D.Identity), new Anchor(motor, Matrix44D.Identity));
+            var fixedToFloorConstraint = new FixedConstraint(new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(0,0,200))), new Anchor(motor, Matrix44D.Identity));
             
             // camera
             var camera = new Camera()

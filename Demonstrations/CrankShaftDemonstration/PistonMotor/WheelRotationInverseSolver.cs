@@ -1,14 +1,17 @@
 ﻿namespace CrankShaftDemonstration.PistonMotor;
 
 using Kinematicula.Kinematics.DirectInverseSolving;
+using Kinematicula.Kinematics.DirectForwardSolving;
 
 public class WheelRotationInverseSolver : DirectInverseSolver<WheelRotationConstraint>
 {
-    RotationAxisSolver _rotationSolver;
+    private Kinematicula.Kinematics.DirectInverseSolving.RotationAxisSolver _rotationSolver;
+    private DirectForwardConstraintSolver _forwardSolver;
 
     public WheelRotationInverseSolver()
     {
-        _rotationSolver = new RotationAxisSolver();
+        _rotationSolver = new Kinematicula.Kinematics.DirectInverseSolving.RotationAxisSolver();
+        _forwardSolver = new DirectForwardConstraintSolver();
     }
 
     protected override bool SolveFirstToSecond(WheelRotationConstraint constraint)
@@ -19,8 +22,10 @@ public class WheelRotationInverseSolver : DirectInverseSolver<WheelRotationConst
         if (_rotationSolver.Solve(constraint, constraint.Second.Body))
         {
             var motor = constraint.Second.Body.Parent as Motor;
-            var (shaftAlpha, pistonAlpha) = MotorService.GetAxesForWheelAngle(constraint.Angle, 100, 300);
-            motor.SetAxes(constraint.Angle, shaftAlpha, pistonAlpha);
+            var (shaftAlpha, pistonAlpha, pistonPosition)
+                = MotorService.GetAxesForWheelAngle(constraint.Angle, 100, 300);
+            motor.SetAxes(constraint.Angle, shaftAlpha, pistonAlpha, pistonPosition);
+            _forwardSolver.SolveLocal(motor);
         }
 
         return true;

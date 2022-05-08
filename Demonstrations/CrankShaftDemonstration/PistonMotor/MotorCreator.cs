@@ -19,7 +19,7 @@ namespace CrankShaftDemonstration.PistonMotor
             motor.AddChild(wheel1);
             wheel1.AddSensor(new CylinderSensor(new Vector3D(0, 0, 1)));
 
-            var floorAnchor = new Anchor(motor, Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, 200), new Vector3D(0, 0, -1), new Vector3D(1, 0, 0)));
+            var floorAnchor = new Anchor(motor, Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, 0), new Vector3D(0, 0, -1), new Vector3D(1, 0, 0)));
             var wheel1AxisAnchor = new Anchor(wheel1, Matrix44D.CreateTranslation(new Vector3D(0, 0, -25 - 50)));
             var motorToWheel1RotationAxisConstraint = new WheelRotationConstraint(floorAnchor, wheel1AxisAnchor);
             motor.AddAxis(motorToWheel1RotationAxisConstraint);
@@ -70,9 +70,14 @@ namespace CrankShaftDemonstration.PistonMotor
                                                      new Vector3D(0, 0, -1), new Vector3D(1, 0, 0))),
                                       new Anchor(piston, Matrix44D.CreateTranslation(new Vector3D(0, 0, -100))));
 
-            var wheelAlpha = 240.0.ToRadiant(); // -240.0.ToRadiant();
-            var (shaftAlpha, pistonAlpha) = MotorService.GetAxesForWheelAngle(wheelAlpha, 100, 300);
-            motor.SetAxes(wheelAlpha, shaftAlpha, pistonAlpha);
+            var linearAxis = new LinearAxisConstraint(
+                            new Anchor(motor, Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, 0), new Vector3D(0, 0, 1), new Vector3D(-1, 0, 0))),
+                            new Anchor(piston, Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, 0), new Vector3D(0, 0, 1), new Vector3D(-1, 0, 0))));
+            motor.AddAxis(linearAxis);
+
+            var wheelAlpha = 0.88853512779115029;// 45.0.ToRadiant(); // -240.0.ToRadiant();
+            var (shaftAlpha, pistonAlpha, pistonPosition) = MotorService.GetAxesForWheelAngle(wheelAlpha, 100, 300);
+            motor.SetAxes(wheelAlpha, shaftAlpha, pistonAlpha, pistonPosition);
 
             return motor;
         }
