@@ -62,6 +62,7 @@ namespace CrankShaftDemonstration.PistonMotor
 
             var piston = Cylinder.Create(10, 150, 200);
             piston.Name = "piston";
+            piston.AddSensor(new LinearSensor(new Vector3D(0, 0, 1)));
             motor.AddChild(piston);
             var pistonConnection
                 = new FixedConstraint(new Anchor(pistonMounter2,
