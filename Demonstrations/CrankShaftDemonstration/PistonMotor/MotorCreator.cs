@@ -13,6 +13,7 @@ namespace CrankShaftDemonstration.PistonMotor
             motor.Name = "piston motor";
 
             scene.AddInverseSolver(new WheelRotationInverseSolver());
+            scene.AddInverseSolver(new PistonLinearAxisInverseSolver());
 
             var wheel1 = Cylinder.Create(16, 150, 50);
             wheel1.Name = "wheel 1";
@@ -71,12 +72,12 @@ namespace CrankShaftDemonstration.PistonMotor
                                                      new Vector3D(0, 0, -1), new Vector3D(1, 0, 0))),
                                       new Anchor(piston, Matrix44D.CreateTranslation(new Vector3D(0, 0, -100))));
 
-            var linearAxis = new LinearAxisConstraint(
+            var linearAxis = new PistonLinearAxisConstraint(
                             new Anchor(motor, Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, 0), new Vector3D(0, 0, 1), new Vector3D(-1, 0, 0))),
                             new Anchor(piston, Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, 0), new Vector3D(0, 0, 1), new Vector3D(-1, 0, 0))));
             motor.AddAxis(linearAxis);
 
-            var wheelAlpha = 0.88853512779115029;// 45.0.ToRadiant(); // -240.0.ToRadiant();
+            var wheelAlpha = 0.0.ToRadiant(); // -240.0.ToRadiant();
             var (shaftAlpha, pistonAlpha, pistonPosition) = MotorService.GetAxesForWheelAngle(wheelAlpha, 100, 300);
             motor.SetAxes(wheelAlpha, shaftAlpha, pistonAlpha, pistonPosition);
 

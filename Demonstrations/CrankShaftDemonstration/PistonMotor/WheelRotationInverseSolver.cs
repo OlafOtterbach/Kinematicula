@@ -22,9 +22,9 @@ public class WheelRotationInverseSolver : DirectInverseSolver<WheelRotationConst
         if (_rotationSolver.Solve(constraint, constraint.Second.Body))
         {
             var motor = constraint.Second.Body.Parent as Motor;
-            var (shaftAlpha, pistonAlpha, pistonPosition)
+            var (shaftAngle, pistonAlpha, pistonPosition)
                 = MotorService.GetAxesForWheelAngle(constraint.Angle, 100, 300);
-            motor.SetAxes(constraint.Angle, shaftAlpha, pistonAlpha, pistonPosition);
+            motor.SetAxes(constraint.Angle, shaftAngle, pistonAlpha, pistonPosition);
             _forwardSolver.SolveLocal(motor);
         }
 
