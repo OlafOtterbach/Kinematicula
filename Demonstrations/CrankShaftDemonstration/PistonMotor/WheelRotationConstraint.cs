@@ -1,7 +1,6 @@
-﻿
-using Kinematicula.Graphics;
+﻿using Kinematicula.Graphics;
 
-namespace CrankShaftDemonstration.PistonMotor
+namespace PistonEngineDemonstration.PistonMotor
 {
     public class WheelRotationConstraint : RotationAxisConstraint
     {

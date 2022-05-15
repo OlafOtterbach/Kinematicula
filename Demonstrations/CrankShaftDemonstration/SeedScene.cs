@@ -5,9 +5,9 @@ using Kinematicula.Kinematics.DirectForwardSolving;
 using Kinematicula.Kinematics.DirectInverseSolving;
 using Kinematicula.Mathematics;
 using Kinematicula.Graphics.Extensions;
-using CrankShaftDemonstration.PistonMotor;
+using PistonEngineDemonstration.PistonMotor;
 
-namespace CylinderDemonstration
+namespace PistonEngineDemonstration
 {
     public static class SeedScene
     {

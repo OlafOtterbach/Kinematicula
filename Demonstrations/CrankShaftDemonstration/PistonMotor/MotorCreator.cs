@@ -3,7 +3,7 @@ using Kinematicula.Graphics.Creators;
 using Kinematicula.Mathematics;
 using Kinematicula.Scening;
 
-namespace CrankShaftDemonstration.PistonMotor
+namespace PistonEngineDemonstration.PistonMotor
 {
     public class MotorCreator
     {
@@ -74,7 +74,10 @@ namespace CrankShaftDemonstration.PistonMotor
 
             var linearAxis = new PistonLinearAxisConstraint(
                             new Anchor(motor, Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, 0), new Vector3D(0, 0, 1), new Vector3D(-1, 0, 0))),
-                            new Anchor(piston, Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, 0), new Vector3D(0, 0, 1), new Vector3D(-1, 0, 0))));
+                            new Anchor(piston, Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, 0), new Vector3D(0, 0, 1), new Vector3D(-1, 0, 0))),
+                            400,
+                            400,
+                            600);
             motor.AddAxis(linearAxis);
 
             var wheelAlpha = 0.0.ToRadiant(); // -240.0.ToRadiant();

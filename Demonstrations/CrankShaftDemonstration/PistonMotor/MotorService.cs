@@ -1,7 +1,7 @@
 ﻿using Kinematicula.Mathematics;
 using static System.Math;
 
-namespace CrankShaftDemonstration.PistonMotor
+namespace PistonEngineDemonstration.PistonMotor
 {
     public static class MotorService
     {

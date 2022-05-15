@@ -1,7 +1,8 @@
 ﻿using Kinematicula.Kinematics.DirectForwardSolving;
 using Kinematicula.Kinematics.DirectInverseSolving;
+using Kinematicula.Mathematics.Extensions;
 
-namespace CrankShaftDemonstration.PistonMotor
+namespace PistonEngineDemonstration.PistonMotor
 {
     public class PistonLinearAxisInverseSolver : DirectInverseSolver<PistonLinearAxisConstraint>
 {
@@ -24,6 +25,14 @@ namespace CrankShaftDemonstration.PistonMotor
                 var position = constraint.LinearPosition;
                 var motor = constraint.Second.Body.Parent as Motor;
                 var (wheelAngle, shaftAngle, pistonAngle, pistonPosition) = MotorService.GetAxesForPistonPosition(position, 100, 300);
+
+                var currentWheelAngle = motor.GetWheelAxisValue();
+                if(currentWheelAngle.EqualsTo(0.0) && constraint.IsWheelCounterClockWise)
+                {
+
+                }
+
+
                 motor.SetAxes(wheelAngle, shaftAngle, pistonAngle, pistonPosition);
 
                 _forwardSolver.SolveLocal(motor);

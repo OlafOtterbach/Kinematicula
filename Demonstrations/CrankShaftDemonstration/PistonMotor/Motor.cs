@@ -1,7 +1,7 @@
 ﻿using Kinematicula.Graphics;
 using System.Collections.Generic;
 
-namespace CrankShaftDemonstration.PistonMotor
+namespace PistonEngineDemonstration.PistonMotor
 {
     public class Motor : Body
     {
@@ -29,6 +29,12 @@ namespace CrankShaftDemonstration.PistonMotor
                     }
                 }
             }
+        }
+
+        public double GetWheelAxisValue()
+        {
+            var wheelAxis = _axes[1] as WheelRotationConstraint;
+            return wheelAxis.Angle;
         }
     }
 }

@@ -9,7 +9,7 @@ using Kinematicula.HiddenLineGraphics;
 using Kinematicula.LogicViewing;
 using HiddenLineViewerApi;
 
-namespace CylinderDemonstration
+namespace PistonEngineDemonstration
 {
     public class Startup
     {
