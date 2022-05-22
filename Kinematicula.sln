@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpiritAutomataDemonstration
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinearAxisDemo", "Demonstrations\LinearAxisDemo\LinearAxisDemo.csproj", "{10C820A3-2274-41C8-8751-33213002B3BB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PistonEngineDemonstration", "Demonstrations\CrankShaftDemonstration\PistonEngineDemonstration.csproj", "{7DB9D059-60C5-4EEE-9202-C31962396458}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PistonEngineDemonstration", "Demonstrations\PistonEngineDemonstration\PistonEngineDemonstration.csproj", "{7DB9D059-60C5-4EEE-9202-C31962396458}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demonstrations", "Demonstrations", "{D856EE3C-418A-4939-A033-48859DF9BC35}"
 EndProject

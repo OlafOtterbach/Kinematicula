@@ -1,4 +1,5 @@
 ﻿using Kinematicula.Graphics;
+using Kinematicula.Mathematics;
 using System.Collections.Generic;
 
 namespace PistonEngineDemonstration.PistonMotor
@@ -19,7 +20,12 @@ namespace PistonEngineDemonstration.PistonMotor
             {
                 if(_axes.ContainsKey(number))
                 {
-                    if (_axes[number] is RotationAxisConstraint rotationAxis)
+                    if (_axes[number] is WheelRotationConstraint wheelRotationAxis)
+                    {
+                        var angle = values[number - 1].ToDegree();
+                           wheelRotationAxis.Angle = values[number - 1];
+                    }
+                    else if (_axes[number] is RotationAxisConstraint rotationAxis)
                     {
                         rotationAxis.Angle = values[number - 1];
                     }

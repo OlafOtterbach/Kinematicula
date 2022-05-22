@@ -1,5 +1,6 @@
 ﻿using Kinematicula.Kinematics.DirectForwardSolving;
 using Kinematicula.Kinematics.DirectInverseSolving;
+using Kinematicula.Mathematics;
 using Kinematicula.Mathematics.Extensions;
 
 namespace PistonEngineDemonstration.PistonMotor
@@ -26,12 +27,14 @@ namespace PistonEngineDemonstration.PistonMotor
                 var motor = constraint.Second.Body.Parent as Motor;
                 var (wheelAngle, shaftAngle, pistonAngle, pistonPosition) = MotorService.GetAxesForPistonPosition(position, 100, 300);
 
+                var counterWheelAngle = (-wheelAngle).Modulo2Pi();
                 var currentWheelAngle = motor.GetWheelAxisValue();
-                if(currentWheelAngle.EqualsTo(0.0) && constraint.IsWheelCounterClockWise)
+                var distance = currentWheelAngle.DistantAngleTo(wheelAngle);
+                var counterDistance = currentWheelAngle.DistantAngleTo(counterWheelAngle);
+                if(counterDistance < distance)
                 {
-
+                    wheelAngle = counterWheelAngle;
                 }
-
 
                 motor.SetAxes(wheelAngle, shaftAngle, pistonAngle, pistonPosition);
 

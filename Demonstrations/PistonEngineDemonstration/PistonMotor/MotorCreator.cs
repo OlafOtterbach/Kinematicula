@@ -80,7 +80,7 @@ namespace PistonEngineDemonstration.PistonMotor
                             600);
             motor.AddAxis(linearAxis);
 
-            var wheelAlpha = 0.0.ToRadiant(); // -240.0.ToRadiant();
+            var wheelAlpha = -45.0.ToRadiant(); // -240.0.ToRadiant();
             var (shaftAlpha, pistonAlpha, pistonPosition) = MotorService.GetAxesForWheelAngle(wheelAlpha, 100, 300);
             motor.SetAxes(wheelAlpha, shaftAlpha, pistonAlpha, pistonPosition);
 
