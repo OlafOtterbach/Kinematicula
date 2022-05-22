@@ -8,7 +8,5 @@ namespace PistonEngineDemonstration.PistonMotor
             : base(first, second, position, minimum, maximum)
         {
         }
-
-        public bool IsWheelCounterClockWise { get;set; } = true;
     }
 }
