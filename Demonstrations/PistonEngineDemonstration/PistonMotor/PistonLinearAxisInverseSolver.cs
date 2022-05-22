@@ -27,13 +27,22 @@ namespace PistonEngineDemonstration.PistonMotor
                 var motor = constraint.Second.Body.Parent as Motor;
                 var (wheelAngle, shaftAngle, pistonAngle, pistonPosition) = MotorService.GetAxesForPistonPosition(position, 100, 300);
 
-                var counterWheelAngle = (-wheelAngle).Modulo2Pi();
-                var currentWheelAngle = motor.GetWheelAxisValue();
-                var distance = currentWheelAngle.DistantAngleTo(wheelAngle);
-                var counterDistance = currentWheelAngle.DistantAngleTo(counterWheelAngle);
-                if(counterDistance < distance)
+                var currentWheelAngle = motor.GetWheelAxisValue().Modulo2Pi();
+
+                if(currentWheelAngle.Equals(ConstantsMath.Pi))
                 {
+                    var counterWheelAngle = (-wheelAngle).Modulo2Pi();
                     wheelAngle = counterWheelAngle;
+                    shaftAngle = (-shaftAngle).Modulo2Pi();
+                    pistonAngle = (-pistonAngle).Modulo2Pi();
+                }
+
+                if (currentWheelAngle > ConstantsMath.Pi && currentWheelAngle < ConstantsMath.Pi2)
+                {
+                    var counterWheelAngle = (-wheelAngle).Modulo2Pi();
+                    wheelAngle = counterWheelAngle;
+                    shaftAngle = (-shaftAngle).Modulo2Pi();
+                    pistonAngle = (-pistonAngle).Modulo2Pi();
                 }
 
                 motor.SetAxes(wheelAngle, shaftAngle, pistonAngle, pistonPosition);
