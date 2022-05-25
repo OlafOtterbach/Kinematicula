@@ -8,7 +8,7 @@ namespace Kinematicula.HiddenLineGraphics.Services
 {
     public static class Converting
     {
-        public static SceneHL ToHiddenLineScene(this Scene scene, Camera camera)
+        public static SceneHL ToHiddenLineScene(this Scene scene, CameraInfo camera)
         {
             var cameraFrame = camera.Frame.Inverse();
 

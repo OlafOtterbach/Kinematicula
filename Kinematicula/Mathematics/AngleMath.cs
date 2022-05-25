@@ -1,5 +1,4 @@
-﻿using System;
-using Kinematicula.Mathematics.Extensions;
+﻿using Kinematicula.Mathematics.Extensions;
 
 namespace Kinematicula.Mathematics
 {
@@ -49,40 +48,11 @@ namespace Kinematicula.Mathematics
 
         public static double Modulo2Pi(this double angle)
         {
-            double alpha;
-
-            // Seperates absolute value and sign
-            var absAlpha = Math.Abs(angle);
-            var signAlpha = (angle >= 0.0f);
-
-            // Calculates modulo2Pi
-            if ((absAlpha > ConstantsMath.Pi2) || (absAlpha.EqualsTo(ConstantsMath.Pi2)))
+            var alpha = angle % ConstantsMath.Pi2;
+            if (alpha < 0)
             {
-                long count = (long)(absAlpha / ConstantsMath.Pi2);
-                absAlpha = absAlpha - (count * ConstantsMath.Pi2);
-                if (absAlpha < 0.0f)
-                {
-                    absAlpha = 0.0f;
-                }
+                alpha = ConstantsMath.Pi2 + alpha;
             }
-
-            // Calculates positive angle
-            if (signAlpha)
-            {
-                alpha = absAlpha;
-            }
-            else
-            {
-                if (absAlpha.EqualsTo(0.0))
-                {
-                    alpha = absAlpha;
-                }
-                else
-                {
-                    alpha = ConstantsMath.Pi2 - absAlpha;
-                }
-            }
-
             return alpha;
         }
 
@@ -100,34 +70,6 @@ namespace Kinematicula.Mathematics
                 alpha = alpha >= 0.0 ? alpha : ConstantsMath.Pi2 + alpha;
                 return alpha;
             }
-        }
-
-        public static double FindNearestAngle(double sourceAngle, double destAngle)
-        {
-            double r_angle = sourceAngle;
-            double step = ConstantsMath.Pi2;
-            double diff = destAngle - sourceAngle;
-            if (diff < 0.0)
-            {
-                step = -step;
-            }
-            double minDelta = Math.Abs(diff);
-            double angle = sourceAngle;
-
-            bool found = false;
-            while (!found)
-            {
-                angle += step;
-                found = true;
-                double delta = Math.Abs(destAngle - angle);
-                if (delta < minDelta)
-                {
-                    minDelta = delta;
-                    r_angle = angle;
-                    found = false;
-                }
-            }
-            return r_angle;
         }
     }
 }

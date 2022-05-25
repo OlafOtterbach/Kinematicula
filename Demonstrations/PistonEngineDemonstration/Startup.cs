@@ -9,7 +9,7 @@ using Kinematicula.HiddenLineGraphics;
 using Kinematicula.LogicViewing;
 using HiddenLineViewerApi;
 
-namespace CylinderDemonstration
+namespace PistonEngineDemonstration
 {
     public class Startup
     {
@@ -22,7 +22,6 @@ namespace CylinderDemonstration
                     {
                         options.SerializerSettings.ContractResolver = new DefaultContractResolver();
                         options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                        // options.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
                     });
 
             services.AddSwaggerGen(c =>

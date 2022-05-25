@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Kinematicula.Mathematics.Extensions
+﻿namespace Kinematicula.Mathematics.Extensions
 {
     public static class DoubleExtensions
     {

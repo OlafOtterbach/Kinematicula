@@ -6,12 +6,14 @@ namespace Kinematicula.LogicViewing
     {
         Scene Scene { get; }
 
+        CameraInfo GetCamera(string cameraName);
+
         SelectedBodyState SelectBody(SelectEvent selectEvent);
 
-        Camera Touch(TouchEvent touchEvent);
+        CameraInfo Touch(TouchEvent touchEvent);
 
-        Camera Move(MoveEvent moveEvent);
+        CameraInfo Move(MoveEvent moveEvent);
 
-        Camera Zoom(ZoomEvent zoomEvent);
+        CameraInfo Zoom(ZoomEvent zoomEvent);
     }
 }

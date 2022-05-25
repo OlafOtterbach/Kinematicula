@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using HiddenLineViewerApi;
 
-namespace CylinderDemonstration.Controllers
+namespace PistonEngineDemonstration.Controllers
 {
     public class HomeController : Controller
     {
@@ -19,9 +19,9 @@ namespace CylinderDemonstration.Controllers
         }
 
         [HttpGet("initial-graphics")]
-        public ActionResult<SceneStateDto> GetScene([FromQuery] int canvasWidth, [FromQuery] int canvasHeight)
+        public ActionResult<SceneStateDto> GetScene([FromQuery] string cameraName, [FromQuery] int canvasWidth, [FromQuery] int canvasHeight)
         {
-            return Ok(_logicView.GetScene(canvasWidth, canvasHeight));
+            return Ok(_logicView.GetScene(cameraName, canvasWidth, canvasHeight));
         }
 
         [HttpPost("select")]

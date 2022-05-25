@@ -16,7 +16,7 @@ namespace HiddenLineViewerApi
                 StartMoveY = moveEventDto.StartY,
                 EndMoveX = moveEventDto.EndX,
                 EndMoveY = moveEventDto.EndY,
-                Camera = moveEventDto.Camera.ToCamera(),
+                Camera = moveEventDto.Camera.ToCameraInfo(),
                 CanvasWidth = moveEventDto.CanvasWidth,
                 CanvasHeight = moveEventDto.CanvasHeight,
             };

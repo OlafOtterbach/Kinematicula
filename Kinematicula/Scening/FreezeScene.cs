@@ -9,14 +9,7 @@ namespace Kinematicula.Scening
 
         public FreezeScene(Scene scene)
         {
-            var bodies = scene.Bodies.SelectMany(body => SelectManyBodies(body));
-            _snapShot = bodies.ToDictionary(body => body, body => body.Frame);
-        }
-
-        public IEnumerable<Body> SelectManyBodies(Body body)
-        {
-            var bodies = new[] { body }.Concat(body.Children.SelectMany(child => SelectManyBodies(child))).ToList();
-            return bodies;
+            _snapShot = scene.Bodies.ToDictionary(body => body, body => body.Frame);
         }
 
         public void ResetScene()

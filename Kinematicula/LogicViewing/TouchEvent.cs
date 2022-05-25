@@ -11,7 +11,7 @@ namespace Kinematicula.LogicViewing
 
         public Position3D TouchPosition { get; set; }
 
-        public Camera Camera { get; set; }
+        public CameraInfo Camera { get; set; }
 
         public int CanvasWidth { get; set; }
 

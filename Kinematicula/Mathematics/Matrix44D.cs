@@ -1,6 +1,5 @@
-﻿using Kinematicula.Mathematics.Extensions;
-using System;
-using System.Numerics;
+﻿using System.Numerics;
+using Kinematicula.Mathematics.Extensions;
 
 namespace Kinematicula.Mathematics
 {

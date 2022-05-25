@@ -1,5 +1,4 @@
 ﻿using Kinematicula.Mathematics.Extensions;
-using System;
 
 namespace Kinematicula.Mathematics
 {

@@ -2,11 +2,13 @@
 
 namespace Kinematicula.LogicViewing
 {
-    public class Camera
+    public class CameraInfo
     {
-        public double Distance => (Target - Frame.Offset).Length;
+        public string Name { get; set; }
 
         public double NearPlane { get; set; }
+
+        public double Distance { get; set; }
 
         public Position3D Target { get; set; }
 

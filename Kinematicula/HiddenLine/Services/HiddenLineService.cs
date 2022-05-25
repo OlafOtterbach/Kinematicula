@@ -8,7 +8,7 @@ namespace Kinematicula.HiddenLineGraphics
 {
     public class HiddenLineService : IHiddenLineService
     {
-        public Dictionary<ushort, ushort[]> GetHiddenLineGraphics(Scene scene, Camera camera, double canvasWidth, double canvasHeight)
+        public Dictionary<ushort, ushort[]> GetHiddenLineGraphics(Scene scene, CameraInfo camera, double canvasWidth, double canvasHeight)
         {
             // Convert to hidden line graphics scene
             var sceneHL = scene.ToHiddenLineScene(camera);

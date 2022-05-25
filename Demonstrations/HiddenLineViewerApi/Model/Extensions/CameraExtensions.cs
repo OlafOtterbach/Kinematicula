@@ -5,34 +5,31 @@ namespace HiddenLineViewerApi
 {
     public static class CameraExtensions
     {
-        public static CameraDto ToCameraDto(this Camera camera)
+        public static CameraDto ToCameraDto(this CameraInfo cameraInfo)
         {
             var cameraDto = new CameraDto();
 
-            cameraDto.TargetDistance = (camera.Target - camera.Frame.Offset).Length;
+            cameraDto.Name = cameraInfo.Name;
 
-            cameraDto.Frame = camera.Frame.ToCardanFrame().ToCardanFrameDto();
+            cameraDto.NearPlane = cameraInfo.NearPlane;
+
+            cameraDto.Distance = cameraInfo.Distance;
+
+            cameraDto.Target = cameraInfo.Target.ToPositionDto();
+
+            cameraDto.Frame = cameraInfo.Frame.ToCardanFrame().ToCardanFrameDto();
 
             return cameraDto;
         }
 
-        public static Camera ToCamera(this CameraDto cameraDto)
+        public static CameraInfo ToCameraInfo(this CameraDto cameraDto)
         {
-            //var frame = new Matrix44D(
-            //    cameraDto.A11, cameraDto.A12, cameraDto.A13, cameraDto.A14,
-            //    cameraDto.A21, cameraDto.A22, cameraDto.A23, cameraDto.A24,
-            //    cameraDto.A31, cameraDto.A32, cameraDto.A33, cameraDto.A34,
-            //    cameraDto.A41, cameraDto.A42, cameraDto.A43, cameraDto.A44);
-            var frame = cameraDto.Frame.ToCardanFrame().ToMatrix44D();
-
-            var position = frame.Offset;
-            var direction = frame.Ey;
-            var target = position + direction * cameraDto.TargetDistance;
-
-            var camera = new Camera();
-            camera.Frame = frame;
-            camera.Target = target;
-            camera.NearPlane = 1.0;
+            var camera = new CameraInfo();
+            camera.Name = cameraDto.Name;
+            camera.NearPlane = cameraDto.NearPlane;
+            camera.Distance = cameraDto.Distance;
+            camera.Target = cameraDto.Target.ToPosition3D();
+            camera.Frame = cameraDto.Frame.ToCardanFrame().ToMatrix44D();
 
             return camera;
         }

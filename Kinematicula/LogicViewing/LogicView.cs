@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Kinematicula.Graphics;
 using Kinematicula.Graphics.Extensions;
 using Kinematicula.LogicViewing.Extensions;
 using Kinematicula.LogicViewing.Services;
@@ -18,10 +18,18 @@ namespace Kinematicula.LogicViewing
         {
             Scene = scene;
             _moveSensorProcessors = moveSensorProcessor;
-
         }
 
         public Scene Scene { get; }
+
+
+        public CameraInfo GetCamera(string cameraName)
+        {
+            var cameras = Scene.Bodies.OfType<Camera>().ToList();
+            var camera = cameras.FirstOrDefault(x => x.Name == cameraName) ?? cameras.First();
+            var cameraInfo = camera.ToCamera();
+            return cameraInfo;
+        }
 
         public SelectedBodyState SelectBody(SelectEvent selectEvent)
         {
@@ -33,17 +41,20 @@ namespace Kinematicula.LogicViewing
             return new SelectedBodyState { SelectedBodyId = isIntersected ? body.Id : Guid.Empty, IsBodySelected = isIntersected, BodyIntersection = intersection };
         }
 
-        public Camera Touch(TouchEvent touchEvent)
+        public CameraInfo Touch(TouchEvent touchEvent)
         {
             if (touchEvent.IsBodyTouched)
             {
-                touchEvent.Camera.MoveTargetTo(touchEvent.TouchPosition);
+                var body = Scene.GetBody(touchEvent.BodyId);
+                var absoluteTouchPosition = body.Frame * touchEvent.TouchPosition;
+                touchEvent.Camera.MoveTargetTo(absoluteTouchPosition);
+                Scene.UpdateCamera(touchEvent.Camera);
             }
 
-            return touchEvent.Camera;
+            return Scene.GetCamera(touchEvent.Camera.Name);
         }
 
-        public Camera Select(SelectEvent selectEvent)
+        public CameraInfo Select(SelectEvent selectEvent)
         {
             var posScene = ViewProjection.ProjectCanvasToSceneSystem(selectEvent.selectPositionX, selectEvent.selectPositionY, selectEvent.CanvasWidth, selectEvent.CanvasHeight, selectEvent.Camera.NearPlane, selectEvent.Camera.Frame);
             var rayOffset = selectEvent.Camera.Frame.Offset;
@@ -53,31 +64,36 @@ namespace Kinematicula.LogicViewing
             if (isintersected)
             {
                 selectEvent.Camera.MoveTargetTo(intersection);
+                Scene.UpdateCamera(selectEvent.Camera);
             }
 
-            return selectEvent.Camera;
+            return Scene.GetCamera(selectEvent.Camera.Name);
         }
 
-        public Camera Move(MoveEvent moveEvent)
+        public CameraInfo Move(MoveEvent moveEvent)
         {
             if (!_moveSensorProcessors.Process(moveEvent.ToMoveAction(Scene), Scene))
             {
                 var deltaX = moveEvent.EndMoveX - moveEvent.StartMoveX;
                 var deltaY = moveEvent.EndMoveY - moveEvent.StartMoveY;
-                return Orbit(deltaX, deltaY, moveEvent.CanvasWidth, moveEvent.CanvasHeight, moveEvent.Camera);
+                moveEvent.Camera = Orbit(deltaX, deltaY, moveEvent.CanvasWidth, moveEvent.CanvasHeight, moveEvent.Camera);
+                Scene.UpdateCamera(moveEvent.Camera);
             }
 
-            return moveEvent.Camera;
+            return Scene.GetCamera(moveEvent.Camera.Name);
         }
 
-        public Camera Zoom(ZoomEvent zoomEvent)
+        public CameraInfo Zoom(ZoomEvent zoomEvent)
         {
-            var dy = zoomEvent.Delta * 1.0;
+            var dy = zoomEvent.Delta * 2.0;
+
             zoomEvent.Camera.Zoom(dy);
-            return zoomEvent.Camera;
+            Scene.UpdateCamera(zoomEvent.Camera);
+
+            return Scene.GetCamera(zoomEvent.Camera.Name);
         }
 
-        private Camera Orbit(double pixelDeltaX, double pixelDeltaY, int canvasWidth, int canvasHeight, Camera camera)
+        private CameraInfo Orbit(double pixelDeltaX, double pixelDeltaY, int canvasWidth, int canvasHeight, CameraInfo camera)
         {
             var horicontalPixelFor360Degree = canvasWidth;
             var verticalPixelFor360Degree = canvasHeight;

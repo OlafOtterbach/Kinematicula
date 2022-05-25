@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Kinematicula.Mathematics
+﻿namespace Kinematicula.Mathematics
 {
     public struct Axis3D : IEquatable<Axis3D>
     {

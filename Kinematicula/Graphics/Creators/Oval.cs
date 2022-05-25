@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Kinematicula.Graphics.Creators.Creator;
+﻿using Kinematicula.Graphics.Creators.Creator;
 using Kinematicula.Mathematics;
 
 namespace Kinematicula.Graphics.Creators
