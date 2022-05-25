@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "CrankShaftDemonstration": {
+    "PistonEngineDemonstration": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
