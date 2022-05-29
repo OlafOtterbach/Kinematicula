@@ -5,9 +5,9 @@ using Kinematicula.Kinematics.DirectForwardSolving;
 using Kinematicula.Kinematics.DirectInverseSolving;
 using Kinematicula.Mathematics;
 using Kinematicula.Graphics.Extensions;
-using PistonEngineDemonstration.PistonMotor;
+using FormiculaDemonstration.Ant.AntLeg;
 
-namespace PistonEngineDemonstration
+namespace FormiculaDemonstration
 {
     public static class SeedScene
     {
@@ -19,12 +19,15 @@ namespace PistonEngineDemonstration
             var floor = Floor.Create(10, 100);
             floor.Name = "Floor";
             scene.AddBody(floor);
-            var fixedToWorldConstraint = new FixedConstraint(new Anchor(scene.World, Matrix44D.Identity), new Anchor(floor, Matrix44D.Identity));
+            var floorToWorldConstraint = new FixedConstraint(new Anchor(scene.World, Matrix44D.Identity), new Anchor(floor, Matrix44D.Identity));
 
-            // motor
-            var motor = MotorCreator.Create(scene);
-            scene.AddBody(motor);
-            var fixedToFloorConstraint = new FixedConstraint(new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(0,0,200))), new Anchor(motor, Matrix44D.Identity));
+            // ant leg
+            var antLeg = AntLegCreator.Create(scene);
+            scene.AddBody(antLeg);
+            var antLegToFloorConstraint
+                = new FixedConstraint(
+                    new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(0,0,400))),
+                    new Anchor(antLeg, Matrix44D.Identity));
             
             // camera
             var camera = new Camera()
