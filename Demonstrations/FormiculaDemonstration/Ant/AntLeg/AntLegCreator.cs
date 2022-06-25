@@ -35,6 +35,7 @@ namespace FormiculaDemonstration.Ant.AntLeg
                     0.0,
                     -45.0.ToRadiant(),
                     +45.0.ToRadiant());
+            antLeg.AddAxis(legPartOneToLegBase);
 
             // leg part two
             var legPartTwo = Cuboid.Create(200, 50, 50);
@@ -48,7 +49,8 @@ namespace FormiculaDemonstration.Ant.AntLeg
                     new Anchor(legPartTwo, Matrix44D.CreateCoordinateSystem(new Position3D(-75, -25, 0), new Vector3D(1, 0, 0), new Vector3D(0, 1, 0))),
                     0.0,
                     -60.0.ToRadiant(),
-                    0.0.ToRadiant());
+                    15.0.ToRadiant());
+            antLeg.AddAxis(legPartTwoToLegPartOne);
 
             // leg part three
             var legPartThree = Cuboid.Create(400, 50, 50);
@@ -62,7 +64,8 @@ namespace FormiculaDemonstration.Ant.AntLeg
                     new Anchor(legPartThree, Matrix44D.CreateCoordinateSystem(new Position3D(-175, 25, 0), new Vector3D(1, 0, 0), new Vector3D(0, 1, 0))),
                     0.0,
                     0.0.ToRadiant(),
-                    170.0.ToRadiant());
+                    145.0.ToRadiant());
+            antLeg.AddAxis(legPartThreeToLegPartTwo);
 
             // leg part four
             var legPartFour = Cuboid.Create(200, 50, 50);
@@ -77,7 +80,9 @@ namespace FormiculaDemonstration.Ant.AntLeg
                     0.0,
                     -60.0.ToRadiant(),
                     60.0.ToRadiant());
+            antLeg.AddAxis(legPartFourToLegPartThree);
 
+            antLeg.SetAxes(45.0.ToRadiant(), -45.0.ToRadiant(), 90.0.ToRadiant(), 45.0.ToRadiant());
 
             return antLeg;
         }
