@@ -71,5 +71,39 @@ namespace Kinematicula.Mathematics
                 return alpha;
             }
         }
+
+        public static double FindNextToPi2AngleBasingOnAngle(double angle, double targetCompareAngle)
+        {
+            var delta = targetCompareAngle - angle;
+            var divideDeltaThrough2PiAbsolute = Math.Abs(Math.Truncate(delta / ConstantsMath.Pi2));
+            var sign = delta > 0.0 ? 1.0 : -1.0;
+
+            var alpha1 = angle + sign * divideDeltaThrough2PiAbsolute * ConstantsMath.Pi2;
+            var alpha2 = angle + sign * (divideDeltaThrough2PiAbsolute + 1.0) * ConstantsMath.Pi2;
+
+            var dist1 = Math.Abs(targetCompareAngle - alpha1);
+            var dist2 = Math.Abs(targetCompareAngle - alpha2);
+
+            var newAngle = dist1 <= dist2 ? alpha1 : alpha2;
+
+            return newAngle;
+        }
+
+        public static double FindNextToPiAngleBasingOnAngle(double angle, double targetCompareAngle)
+        {
+            var delta = targetCompareAngle - angle;
+            var divideDeltaThrough2PiAbsolute = Math.Abs(Math.Truncate(delta / ConstantsMath.Pi));
+            var sign = delta > 0.0 ? 1.0 : -1.0;
+
+            var alpha1 = angle + sign * divideDeltaThrough2PiAbsolute * ConstantsMath.Pi;
+            var alpha2 = angle + sign * (divideDeltaThrough2PiAbsolute + 1.0) * ConstantsMath.Pi;
+
+            var dist1 = Math.Abs(targetCompareAngle - alpha1);
+            var dist2 = Math.Abs(targetCompareAngle - alpha2);
+
+            var newAngle = dist1 <= dist2 ? alpha1 : alpha2;
+
+            return newAngle;
+        }
     }
 }
