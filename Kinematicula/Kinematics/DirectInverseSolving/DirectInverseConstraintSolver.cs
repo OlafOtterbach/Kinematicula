@@ -51,7 +51,7 @@ namespace Kinematicula.Kinematics.DirectInverseSolving
                 if (count > 100)
                     return false;
 
-                TrySolve(result.BreakingBody, count++);
+                TrySolve(result.BreakingBody, count + 1);
             }
 
             return true;
