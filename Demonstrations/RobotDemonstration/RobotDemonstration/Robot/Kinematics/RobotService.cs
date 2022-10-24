@@ -57,10 +57,18 @@ public class RobotService
         var flangeTCP = Matrix44D.CreateCoordinateSystem(new Position3D(0.0, 0.0, 0.0), new Vector3D(0.0, 0.0, 1.0), new Vector3D(0, 1, 0), new Vector3D(-1, 0, 0));
         var mat = flangeTCP.Inverse();
         var adapter = transformation * mat;
+        var wristPosition = adapter.Offset - adapter.Ez * (n5 + n6);
 
         // Calculation of alpha 1
         //
-        var wristPosition = adapter.Offset - adapter.Ez * (n5 + n6);
+        //            O wrist
+        //           /
+        //        | /
+        //        |/ Alpha1
+        // Socket O---
+        //
+        //
+        //
         var x1 = wristPosition.X;
         var y1 = wristPosition.Y;
         double newAlpha1;
@@ -108,10 +116,16 @@ public class RobotService
         //	           |---------------------|
         //                        c = Length(Wrist - Shoulder)
         //
-        //  x = (a^2 + c^2 - b^2) / (2 * c)
-        //  y = a^2 - x^2
-        //  => B(x,y)
-        //  alpha2 = Angle(Ez(Shoulder), (Shoulder - Upperarm))
+        // Using detecting intersection between two circles with radius a and b with cosine theorem to calculate alpha 2.
+        //     b^2 = c^2 + a^2 - 2*a*c * cos(Alpha)
+        // <=> 2*a*c * cos(Alpha) = a^2 + c^2 - b^2
+        // <=> a * cos(Alpha) = (a^2 + c^2 - b^2) / (2 * c) AND  x = a * cos(Alpha)
+        // <=> x = (a^2 + c^2 - b^2) / (2 * c)
+        //
+        //     x = (a^2 + c^2 - b^2) / (2 * c)
+        //     y = a^2 - x^2
+        //  => B(x,y) = Upperarm(x,y)
+        //  => alpha2 = Angle(Ez(Shoulder), (Shoulder - Upperarm))
         //
         //
         var shoulderFrame = GetTransformation(newAlpha1);
@@ -121,8 +135,17 @@ public class RobotService
         var a = n2;
         var b = n3 + n4;
         var c = shoulderToWristVector.Length;
+
         var distanceX = (a * a + c * c - b * b) / (2 * c);
-        var distanceY = Math.Sqrt(a * a - distanceX * distanceX);
+        var distanceYSquared = a * a - distanceX * distanceX;
+        distanceYSquared = Math.Abs(distanceYSquared) < ConstantsMath.Epsilon ? 0.0 : distanceYSquared;
+        if (distanceYSquared < 0.0)
+        {
+            // Robot transformation not possible to reach by alpha 2.
+            return false;
+        }
+
+        var distanceY = Math.Sqrt(distanceYSquared);
         var xVec = distanceX * shoulderToWristVector.Normalize();
         var yVec = distanceY * (shoulderToWristVector & new Vector3D(0, 1, 0)).Normalize();
 
@@ -135,17 +158,15 @@ public class RobotService
         var newAlpha2A = ez.CounterClockwiseAngleWith(shoulderToupperArmVector1, eyRotationAxis);
         var newAlpha2B = ez.CounterClockwiseAngleWith(shoulderToupperArmVector2, eyRotationAxis);
         var newAlpha2C = GetBestAngle(newAlpha2A, newAlpha2B, alpha2);
-
         var newAlpha2 = AngleMath.FindNextToPi2AngleBasingOnAngle(newAlpha2C, alpha2);
 
         var newAlpha2Deg = newAlpha2.ToDegree();
-
 
         // Calculation of alpha 3
         // 
         //                          /
         //                         /
-        //               UpperArm O  Alpha 3 
+        //               UpperArm O  alpha 3 
         //                       / \
         //                      /   \
         //                     /     \
@@ -175,9 +196,6 @@ public class RobotService
 
 
         // Calculation of alpha 4
-        //
-        //
-        //
         //    
         //          /Adapter
         //         /
@@ -205,6 +223,18 @@ public class RobotService
 
 
         // Calculation of alpha 5
+        //    
+        //                                                /Adapter 
+        //                                               \ 
+        //                                              / 
+        //                                             / n5 (Wrist)
+        //                                            /.....
+        //                                           /      ..
+        //                 (Forearm)      (Ulna)    /alpha5   .   
+        //              O-------------|------------O------------->
+        //
+        //
+        //
         var ulnaFrame = GetTransformation(newAlpha1, newAlpha2, newAlpha3, newAlpha4);
         var transformationToUlnaFrame = ulnaFrame.Inverse();
         var adapterVectorInUlnaFrame = transformationToUlnaFrame * adapter.Ez;
@@ -214,6 +244,15 @@ public class RobotService
 
 
         // Calculation of alpha 6
+        //    
+        //          /Adapter
+        //         /
+        //      | /
+        //      |/ Alpha4
+        //      O--- Wrist
+        //
+        //
+        //
         var wristFrame = GetTransformation(newAlpha1, newAlpha2, newAlpha3, newAlpha4, newAlpha5);
         var transformationToWristFrame = wristFrame.Inverse();
         var adapterVectorInWristFrame = transformationToWristFrame * adapter.Ex;

@@ -5,6 +5,7 @@ using Kinematicula.Graphics.Creators;
 using Kinematicula.Mathematics;
 using System.Linq;
 using Gripper.Graphics;
+using RobotDemonstration.Robot.Kinematics;
 
 public static class RobotCreator
 {
@@ -137,7 +138,6 @@ public static class RobotCreator
         robot.SetAxisAngle(4, 0.ToRadiant());
         robot.SetAxisAngle(5, 30.ToRadiant());
         robot.SetAxisAngle(6, 0.ToRadiant());
-
         return robot;
     }
 }

@@ -473,4 +473,43 @@ public class RobotTest
         Assert.Equal(180.0.ToRadiant(), alpha5, 3);
         Assert.Equal(0.0.ToRadiant(), alpha6, 3);
     }
+
+    [Fact]
+    public void Test14()
+    {
+        // Arrange
+        Matrix44D shift(Matrix44D mat)
+        {
+            var shiftedMat = Matrix44D.CreateTranslation(new Vector3D(-1, 0, 0)) * mat;
+            return shiftedMat;
+        }
+
+        var alpha1 = 0.0                    ;
+        var alpha2 = 0.2939263379016005     ;
+        var alpha3 = 3.1235708884478179     ;
+        var alpha4 = 0.0                    ;
+        var alpha5 = -1.8466998270375345    ;
+        var alpha6 = 0.0;
+        var mat = RobotService.GetTransformation(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6);
+        mat = shift(mat);
+        var alpha1New = alpha1;
+        var alpha2New = alpha2;
+        var alpha3New = alpha3;
+        var alpha4New = alpha4;
+        var alpha5New = alpha5;
+        var alpha6New = alpha6;
+
+        // Act
+        var res = RobotService.GetAxesForTransformation(mat, ref alpha1New, ref alpha2New, ref alpha3New, ref alpha4New, ref alpha5New, ref alpha6New);
+
+        // Arrange
+        Assert.False(res);
+
+        Assert.Equal(alpha1, alpha1New, 3);
+        Assert.Equal(alpha2, alpha2New, 3);
+        Assert.Equal(alpha3, alpha3New, 3);
+        Assert.Equal(alpha4, alpha4New, 3);
+        Assert.Equal(alpha5, alpha5New, 3);
+        Assert.Equal(alpha6, alpha6New, 3);
+    }
 }
