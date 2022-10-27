@@ -1,4 +1,4 @@
-﻿namespace RobotDemonstration.Test;
+﻿namespace RobotDemonstration.Test.Robot.Kinematics;
 
 using Kinematicula.Mathematics;
 using RobotDemonstration.Robot.Kinematics;
@@ -83,12 +83,12 @@ public class RobotTest
                                 var alpha15 = (alph5 + 1.0).ToRadiant();
                                 var alpha16 = (alph6 + 1.0).ToRadiant();
                                 var mat = RobotService.GetTransformation(alpha11, alpha12, alpha13, alpha14, alpha15, alpha16);
-                                var alpha21 = (alph1).ToRadiant();
-                                var alpha22 = (alph2).ToRadiant();
-                                var alpha23 = (alph3).ToRadiant();
-                                var alpha24 = (alph4).ToRadiant();
-                                var alpha25 = (alph5).ToRadiant();
-                                var alpha26 = (alph6).ToRadiant();
+                                var alpha21 = alph1.ToRadiant();
+                                var alpha22 = alph2.ToRadiant();
+                                var alpha23 = alph3.ToRadiant();
+                                var alpha24 = alph4.ToRadiant();
+                                var alpha25 = alph5.ToRadiant();
+                                var alpha26 = alph6.ToRadiant();
                                 var res = RobotService.GetAxesForTransformation(mat, ref alpha21, ref alpha22, ref alpha23, ref alpha24, ref alpha25, ref alpha26);
                                 var mat2 = RobotService.GetTransformation(alpha21, alpha22, alpha23, alpha24, alpha25, alpha26);
 
@@ -442,12 +442,12 @@ public class RobotTest
         var result = RobotService.GetAxesForTransformation(mat, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
 
         // Assert
-        Assert.Equal( -angle, alpha1, 3);
-        Assert.Equal( 0.0,    alpha2, 3);
-        Assert.Equal( 0.0,    alpha3, 3);
-        Assert.Equal( 0.0,    alpha4, 3);
-        Assert.Equal( -angle, alpha5, 3);
-        Assert.Equal( 0.0,    alpha6, 3);
+        Assert.Equal(-angle, alpha1, 3);
+        Assert.Equal(0.0, alpha2, 3);
+        Assert.Equal(0.0, alpha3, 3);
+        Assert.Equal(0.0, alpha4, 3);
+        Assert.Equal(-angle, alpha5, 3);
+        Assert.Equal(0.0, alpha6, 3);
     }
 
     [Fact]
@@ -484,11 +484,11 @@ public class RobotTest
             return shiftedMat;
         }
 
-        var alpha1 = 0.0                    ;
-        var alpha2 = 0.2939263379016005     ;
-        var alpha3 = 3.1235708884478179     ;
-        var alpha4 = 0.0                    ;
-        var alpha5 = -1.8466998270375345    ;
+        var alpha1 = 0.0;
+        var alpha2 = 0.2939263379016005;
+        var alpha3 = 3.1235708884478179;
+        var alpha4 = 0.0;
+        var alpha5 = -1.8466998270375345;
         var alpha6 = 0.0;
         var mat = RobotService.GetTransformation(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6);
         mat = shift(mat);

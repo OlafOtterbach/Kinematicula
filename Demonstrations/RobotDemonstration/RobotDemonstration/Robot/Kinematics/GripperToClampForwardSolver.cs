@@ -1,4 +1,4 @@
-﻿namespace RobotDemonstration.Gripper.Kinematics;
+﻿namespace RobotDemonstration.Robot.Kinematics;
 
 using Graphics;
 using Kinematicula.Graphics;
@@ -27,6 +27,6 @@ public class GripperToClampForwardSolver : DirectForwardSolver<GripperToClampCon
 
         var secondBody = second.Body;
 
-        secondBody.Frame = firstMat * firstAnchorMat * linMat * (secondAnchorMat.Inverse());
+        secondBody.Frame = firstMat * firstAnchorMat * linMat * secondAnchorMat.Inverse();
     }
 }

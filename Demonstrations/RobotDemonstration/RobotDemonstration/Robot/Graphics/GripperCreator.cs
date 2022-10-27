@@ -1,4 +1,6 @@
-﻿namespace RobotDemonstration.Gripper.Graphics;
+﻿using RobotDemonstration.Gripper.Graphics;
+
+namespace RobotDemonstration.Robot.Graphics;
 
 using Kinematicula.Graphics;
 using Kinematicula.Graphics.Creators;

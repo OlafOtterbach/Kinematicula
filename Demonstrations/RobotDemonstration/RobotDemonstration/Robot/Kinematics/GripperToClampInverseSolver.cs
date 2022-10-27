@@ -1,4 +1,4 @@
-﻿namespace RobotDemonstration.Gripper.Kinematics;
+﻿namespace RobotDemonstration.Robot.Kinematics;
 
 using Graphics;
 using Kinematicula.Kinematics.DirectInverseSolving;
@@ -7,11 +7,11 @@ using Kinematicula.Mathematics.Extensions;
 
 public class GripperToClampInverseSolver : DirectInverseSolver<GripperToClampConstraint>
 {
-    private readonly Kinematicula.Kinematics.DirectInverseSolving.LinearAxisSolver _linearSolver;
+    private readonly LinearAxisSolver _linearSolver;
 
     public GripperToClampInverseSolver()
     {
-        _linearSolver = new Kinematicula.Kinematics.DirectInverseSolving.LinearAxisSolver();
+        _linearSolver = new LinearAxisSolver();
     }
 
     protected override bool SolveFirstToSecond(GripperToClampConstraint constraint)
