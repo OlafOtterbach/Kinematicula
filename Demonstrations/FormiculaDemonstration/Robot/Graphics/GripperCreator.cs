@@ -1,4 +1,4 @@
-﻿namespace RobotDemonstration.Robot.Graphics;
+﻿namespace FormiculaDemonstration.Robot.Graphics;
 
 using Kinematicula.Graphics;
 using Kinematicula.Graphics.Creators;

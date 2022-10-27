@@ -1,6 +1,5 @@
 ﻿namespace RobotDemonstration;
 
-using Gripper.Kinematics;
 using Kinematicula.Graphics;
 using Kinematicula.Graphics.Creators;
 using Kinematicula.Graphics.Extensions;
@@ -8,7 +7,7 @@ using Kinematicula.Kinematics.DirectForwardSolving;
 using Kinematicula.Kinematics.DirectInverseSolving;
 using Kinematicula.Mathematics;
 using Kinematicula.Scening;
-using Robot.Kinematics;
+using RobotDemonstration.Robot.Kinematics;
 using RobotDemonstration.Robot.Graphics;
 
 public static class SeedScene
