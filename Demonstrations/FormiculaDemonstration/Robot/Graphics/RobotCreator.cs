@@ -122,7 +122,7 @@ public static class RobotCreator
         robot.AddAxis(rotationAdapterByWrist);
 
         var gripper = GripperCreator.Create();
-        var gripperPlug = new Anchor(gripper, Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, 1), new Vector3D(0, 0, 1), new Vector3D(-1, 0, 0)));
+        var gripperPlug = new Anchor(gripper, Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, 0), new Vector3D(0, 0, 1), new Vector3D(-1, 0, 0)));
         robot.AddChild(gripper);
         gripper.Children.First().AddSensor(new PlaneSensor("left mouse button", new Vector3D(0, 1, 0), socketFlex));
         gripper.Children.First().AddSensor(new CylinderSensor("left mouse button and shift key", new Vector3D(0, 0, 1), robot));

@@ -26,11 +26,28 @@ public static class SeedScene
         scene.AddBody(floor);
         var floorToWorldConstraint = new FixedConstraint(new Anchor(scene.World, Matrix44D.Identity), new Anchor(floor, Matrix44D.Identity));
 
-        var robot = RobotCreator.Create();
-        var fixedRobotToFloorConstraint = new FixedConstraint(
-            new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0))),
-            new Anchor(robot, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0))));
-        scene.AddBody(robot);
+        var robot1 = RobotCreator.Create();
+        var fixedRobotToFloorConstraint1 = new FixedConstraint(
+            new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(-400, 0, 0))),
+            new Anchor(robot1, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0))));
+        scene.AddBody(robot1);
+
+        var robot2 = RobotCreator.Create();
+        var fixedRobotToFloorConstraint2 = new FixedConstraint(
+            new Anchor(floor, Matrix44D.CreateCoordinateSystem(new Position3D(400, 0, 0), new Vector3D(-1,0,0), new Vector3D(0,0,1))),
+            new Anchor(robot2, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0))));
+        scene.AddBody(robot2);
+
+        var antBody = Cuboid.Create(200,50, 200);
+        scene.AddBody(antBody);
+
+        var fixedRobot1ToAntBody = new FixedConstraint(
+            new Anchor(antBody, Matrix44D.CreateCoordinateSystem(new Position3D(-100, 0, 0), new Vector3D(0, 0, -1), new Vector3D(1, 0, 0))),
+            new Anchor(robot1.Gripper, Matrix44D.CreateTranslation(new Vector3D(0, 0, 50))));
+
+        var fixedRobot2ToAntBody = new FixedConstraint(
+            new Anchor(antBody, Matrix44D.CreateCoordinateSystem(new Position3D(100, 0, 0), new Vector3D(0, 0, -1), new Vector3D(-1, 0, 0))),
+            new Anchor(robot2.Gripper, Matrix44D.CreateTranslation(new Vector3D(0, 0, 50))));
 
         // camera
         var camera = new Camera()

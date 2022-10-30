@@ -47,6 +47,7 @@ public class RobotService
     public static bool GetAxesForTransformation
     (
         Matrix44D transformation,
+        Matrix44D robotOrigin,
         ref double alpha1,
         ref double alpha2,
         ref double alpha3,
@@ -58,7 +59,7 @@ public class RobotService
         // Transform from gripper frame to adapter frame
         var flangeTCP = Matrix44D.CreateCoordinateSystem(new Position3D(0.0, 0.0, 0.0), new Vector3D(0.0, 0.0, 1.0), new Vector3D(0, 1, 0), new Vector3D(-1, 0, 0));
         var mat = flangeTCP.Inverse();
-        var adapterFrame = transformation * mat;
+        var adapterFrame = robotOrigin.Inverse() * transformation * mat;
 
         // Calculate angles for adapter frame
         var newAlpha1 = CalculateAlpha1(alpha1, adapterFrame, WRISTLENGTH, ADAPTERLENGTH);

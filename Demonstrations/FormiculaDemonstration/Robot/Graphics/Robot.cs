@@ -4,6 +4,7 @@ using Kinematicula.Graphics;
 using Kinematicula.Mathematics;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Robot : Body
 {
@@ -30,4 +31,13 @@ public class Robot : Body
     }
 
     public Matrix44D AdapterToolCenterFrame => Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, 5), new Vector3D(0, 0, 1), new Vector3D(-1, 0, 0));
+
+    public Gripper Gripper
+    {
+        get
+        {
+            var gripper = this.Children.FirstOrDefault(child => child.Name == "gripper") as Gripper;
+            return gripper;
+        }
+    }
 }

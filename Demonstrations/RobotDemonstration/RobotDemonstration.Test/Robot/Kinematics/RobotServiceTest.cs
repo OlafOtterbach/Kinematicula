@@ -25,7 +25,7 @@ public class RobotTest
         alpha6 = 29.ToRadiant();
 
         // Act
-        var result = RobotService.GetAxesForTransformation(mat, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
+        var result = RobotService.GetAxesForTransformation(mat, Matrix44D.Identity, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
 
         // Assert
         Assert.True(result);
@@ -50,7 +50,7 @@ public class RobotTest
         var mat = RobotService.GetTransformation(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6);
 
         // Act
-        var res = RobotService.GetAxesForTransformation(mat, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
+        var res = RobotService.GetAxesForTransformation(mat, Matrix44D.Identity, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
 
         // Assert
         Assert.Equal(0.0, alpha1, 3);
@@ -89,7 +89,7 @@ public class RobotTest
                                 var alpha24 = alph4.ToRadiant();
                                 var alpha25 = alph5.ToRadiant();
                                 var alpha26 = alph6.ToRadiant();
-                                var res = RobotService.GetAxesForTransformation(mat, ref alpha21, ref alpha22, ref alpha23, ref alpha24, ref alpha25, ref alpha26);
+                                var res = RobotService.GetAxesForTransformation(mat, Matrix44D.Identity, ref alpha21, ref alpha22, ref alpha23, ref alpha24, ref alpha25, ref alpha26);
                                 var mat2 = RobotService.GetTransformation(alpha21, alpha22, alpha23, alpha24, alpha25, alpha26);
 
                                 const double EPSILON = 0.01;
@@ -151,7 +151,7 @@ public class RobotTest
         var alpha26 = alph6.ToRadiant();
 
         // Act
-        var res = RobotService.GetAxesForTransformation(mat, ref alpha21, ref alpha22, ref alpha23, ref alpha24, ref alpha25, ref alpha26);
+        var res = RobotService.GetAxesForTransformation(mat, Matrix44D.Identity, ref alpha21, ref alpha22, ref alpha23, ref alpha24, ref alpha25, ref alpha26);
         var alpha21Deg = alpha21.ToDegree();
         var alpha22Deg = alpha22.ToDegree();
         var alpha23Deg = alpha23.ToDegree();
@@ -195,7 +195,7 @@ public class RobotTest
                     var alpha4 = 0.0;
                     var alpha5 = 0.0;
                     var alpha6 = 0.0;
-                    if (RobotService.GetAxesForTransformation(iterPos, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6))
+                    if (RobotService.GetAxesForTransformation(iterPos, Matrix44D.Identity, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6))
                     {
                         //robot.ToolCenterPoint = iterPos;
                         //var robotTcp = robot.ToolCenterPoint;
@@ -251,7 +251,7 @@ public class RobotTest
 
 
         var shouldFrame = Matrix44D.CreateCoordinateSystem(new Position3D(125.23356628417969, 0, 409.2188720703125), new Vector3D(1, 0, -1.0579824447631836E-06), new Vector3D(1.0579824447631836E-06, 0, 1));
-        var result = RobotService.GetAxesForTransformation(shouldFrame, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
+        var result = RobotService.GetAxesForTransformation(shouldFrame, Matrix44D.Identity, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
         var frame = RobotService.GetTransformation(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6);
 
 
@@ -289,7 +289,7 @@ public class RobotTest
         var mat = RobotService.GetTransformation(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6);
 
         // Act
-        var result = RobotService.GetAxesForTransformation(mat, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
+        var result = RobotService.GetAxesForTransformation(mat, Matrix44D.Identity, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
 
         // Assert
         Assert.Equal(0.0, alpha1, 3);
@@ -314,7 +314,7 @@ public class RobotTest
         var mat = RobotService.GetTransformation(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6);
 
         // Act
-        var result = RobotService.GetAxesForTransformation(mat, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
+        var result = RobotService.GetAxesForTransformation(mat, Matrix44D.Identity, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
 
         // Assert
         Assert.Equal(0.0, alpha1, 3);
@@ -339,7 +339,7 @@ public class RobotTest
         var mat = RobotService.GetTransformation(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6);
 
         // Act
-        var result = RobotService.GetAxesForTransformation(mat, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
+        var result = RobotService.GetAxesForTransformation(mat, Matrix44D.Identity, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
 
         // Assert
         Assert.Equal(angle, alpha1, 3);
@@ -364,7 +364,7 @@ public class RobotTest
         var mat = RobotService.GetTransformation(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6);
 
         // Act
-        var result = RobotService.GetAxesForTransformation(mat, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
+        var result = RobotService.GetAxesForTransformation(mat, Matrix44D.Identity, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
 
         // Assert
         Assert.Equal(angle, alpha1, 3);
@@ -389,7 +389,7 @@ public class RobotTest
         var mat = RobotService.GetTransformation(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6);
 
         // Act
-        var result = RobotService.GetAxesForTransformation(mat, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
+        var result = RobotService.GetAxesForTransformation(mat, Matrix44D.Identity, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
 
         // Assert
         Assert.Equal(0.0, alpha1, 3);
@@ -414,7 +414,7 @@ public class RobotTest
         var mat = RobotService.GetTransformation(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6);
 
         // Act
-        var result = RobotService.GetAxesForTransformation(mat, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
+        var result = RobotService.GetAxesForTransformation(mat, Matrix44D.Identity, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
 
         // Assert
         Assert.Equal(0.0, alpha1, 3);
@@ -439,7 +439,7 @@ public class RobotTest
         var mat = RobotService.GetTransformation(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6);
 
         // Act
-        var result = RobotService.GetAxesForTransformation(mat, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
+        var result = RobotService.GetAxesForTransformation(mat, Matrix44D.Identity, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
 
         // Assert
         Assert.Equal(-angle, alpha1, 3);
@@ -463,7 +463,7 @@ public class RobotTest
         var mat = RobotService.GetTransformation(alpha1, alpha2, alpha3, alpha4, alpha5, alpha6);
 
         // Act
-        var res = RobotService.GetAxesForTransformation(mat, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
+        var res = RobotService.GetAxesForTransformation(mat, Matrix44D.Identity, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
 
         // Arrange
         Assert.Equal(0.0.ToRadiant(), alpha1, 3);
@@ -500,7 +500,7 @@ public class RobotTest
         var alpha6New = alpha6;
 
         // Act
-        var res = RobotService.GetAxesForTransformation(mat, ref alpha1New, ref alpha2New, ref alpha3New, ref alpha4New, ref alpha5New, ref alpha6New);
+        var res = RobotService.GetAxesForTransformation(mat, Matrix44D.Identity, ref alpha1New, ref alpha2New, ref alpha3New, ref alpha4New, ref alpha5New, ref alpha6New);
 
         // Arrange
         Assert.False(res);

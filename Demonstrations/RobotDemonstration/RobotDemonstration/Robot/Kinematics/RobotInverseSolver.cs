@@ -43,7 +43,7 @@ public class RobotInverseSolver : DirectInverseSolver<RobotConstraint>
             var alpha5 = robot.GetAxisAngle(5);
             var alpha6 = robot.GetAxisAngle(6);
             var shouldFrame = second.Body.Frame * second.ConnectionFrame;
-            var result = RobotService.GetAxesForTransformation(shouldFrame, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
+            var result = RobotService.GetAxesForTransformation(shouldFrame, robot.Frame, ref alpha1, ref alpha2, ref alpha3, ref alpha4, ref alpha5, ref alpha6);
             if (result)
             {
                 robot.SetAxisAngle(1, alpha1);

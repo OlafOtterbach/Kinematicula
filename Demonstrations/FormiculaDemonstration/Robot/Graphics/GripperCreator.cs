@@ -8,7 +8,7 @@ public class GripperCreator
 {
     public static Gripper Create()
     {
-        var gripper = new Gripper(40.0, 80.0);
+        var gripper = new Gripper(50.0, 80.0);
         gripper.Name = "gripper";
         var gripperSocket = new Anchor(gripper, Matrix44D.Identity);
         var gripperLeftSocket = new Anchor(gripper, Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, 50), new Vector3D(-1, 0, 0), new Vector3D(0, 0, 1)));
