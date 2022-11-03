@@ -34,9 +34,21 @@ public static class SeedScene
 
         var robot2 = RobotCreator.Create();
         var fixedRobotToFloorConstraint2 = new FixedConstraint(
-            new Anchor(floor, Matrix44D.CreateCoordinateSystem(new Position3D(400, 0, 0), new Vector3D(-1,0,0), new Vector3D(0,0,1))),
+            new Anchor(floor, Matrix44D.CreateCoordinateSystem(new Position3D(400, 0, 0), new Vector3D(-1, 0, 0), new Vector3D(0, 0, 1))),
             new Anchor(robot2, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0))));
         scene.AddBody(robot2);
+
+        //var robot3 = RobotCreator.Create();
+        //var fixedRobotToFloorConstraint3 = new FixedConstraint(
+        //    new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(-400, -200, 0))),
+        //    new Anchor(robot3, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0))));
+        //scene.AddBody(robot3);
+
+        //var robot4 = RobotCreator.Create();
+        //var fixedRobotToFloorConstraint4 = new FixedConstraint(
+        //    new Anchor(floor, Matrix44D.CreateCoordinateSystem(new Position3D(400,-200, 0), new Vector3D(-1, 0, 0), new Vector3D(0, 0, 1))),
+        //    new Anchor(robot4, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0))));
+        //scene.AddBody(robot4);
 
         var antBody = Cuboid.Create(200,50, 200);
         scene.AddBody(antBody);
@@ -48,6 +60,14 @@ public static class SeedScene
         var fixedRobot2ToAntBody = new FixedConstraint(
             new Anchor(antBody, Matrix44D.CreateCoordinateSystem(new Position3D(100, 0, 0), new Vector3D(0, 0, -1), new Vector3D(-1, 0, 0))),
             new Anchor(robot2.Gripper, Matrix44D.CreateTranslation(new Vector3D(0, 0, 50))));
+
+        //var fixedRobot3ToAntBody = new FixedConstraint(
+        //    new Anchor(antBody, Matrix44D.CreateCoordinateSystem(new Position3D(-100, -100, 0), new Vector3D(0, 0, -1), new Vector3D(1, 0, 0))),
+        //    new Anchor(robot3.Gripper, Matrix44D.CreateTranslation(new Vector3D(0, 0, 50))));
+
+        //var fixedRobot4ToAntBody = new FixedConstraint(
+        //    new Anchor(antBody, Matrix44D.CreateCoordinateSystem(new Position3D(100, -100, 0), new Vector3D(0, 0, -1), new Vector3D(-1, 0, 0))),
+        //    new Anchor(robot4.Gripper, Matrix44D.CreateTranslation(new Vector3D(0, 0, 50))));
 
         // camera
         var camera = new Camera()
