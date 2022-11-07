@@ -1,6 +1,7 @@
 ﻿namespace FormiculaDemonstration.Robot.Graphics;
 
 using Kinematicula.Graphics;
+using Kinematicula.Graphics.Memento;
 
 public class GripperToClampConstraint : Constraint
 {
@@ -32,4 +33,28 @@ public class GripperToClampConstraint : Constraint
     public double Maximum => Gripper?.Maximum / 2.0 ?? 0.0;
 
     private Gripper Gripper => First.Body as Gripper;
+
+    public override IMemento GetMemento()
+    {
+        return new GripperToClampConstraintMemento(this);
+    }
+}
+
+
+
+public class GripperToClampConstraintMemento : IMemento
+{
+    private readonly GripperToClampConstraint _constraint;
+    private readonly double _linearPosition;
+
+    public GripperToClampConstraintMemento(GripperToClampConstraint constraint)
+    {
+        _constraint = constraint;
+        _linearPosition = constraint.LinearPosition;
+    }
+
+    public void Restore()
+    {
+        _constraint.LinearPosition = _linearPosition;
+    }
 }

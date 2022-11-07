@@ -1,6 +1,8 @@
-﻿namespace Kinematicula.Graphics
+﻿using Kinematicula.Graphics.Memento;
+
+namespace Kinematicula.Graphics
 {
-    public class Constraint
+    public abstract class Constraint : IMementoCreator
     {
         public Constraint(Anchor first, Anchor second)
         {
@@ -13,5 +15,8 @@
         public Anchor First { get; }
 
         public Anchor Second { get; }
+
+        public abstract IMemento GetMemento();
     }
 }
+

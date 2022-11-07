@@ -1,4 +1,6 @@
-﻿namespace Kinematicula.Graphics
+﻿using Kinematicula.Graphics.Memento;
+
+namespace Kinematicula.Graphics
 {
     public class RotationAxisConstraint : Constraint
     {
@@ -30,5 +32,36 @@
         public double MinimumAngle { get; set; }
 
         public double MaximumAngle { get; set; }
+
+        public override IMemento GetMemento()
+        {
+            return new RotationAxisConstraintMemento(this);
+        }
+    }
+
+
+
+
+    public class RotationAxisConstraintMemento : IMemento
+    {
+        private readonly RotationAxisConstraint _constraint;
+        private readonly double _angle;
+        private readonly double _minimumAngle;
+        private readonly double _maximumAngle;
+
+        public RotationAxisConstraintMemento(RotationAxisConstraint constraint)
+        {
+            _constraint = constraint;
+            _angle = constraint.Angle;
+            _minimumAngle = constraint.MinimumAngle;
+            _maximumAngle = constraint.MaximumAngle;
+        }
+
+        public void Restore()
+        {
+            _constraint.MinimumAngle = _minimumAngle;
+            _constraint.MaximumAngle = _maximumAngle;
+            _constraint.Angle = _angle;
+        }
     }
 }

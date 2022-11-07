@@ -1,8 +1,9 @@
-﻿using Kinematicula.Mathematics;
+﻿using Kinematicula.Graphics.Memento;
+using Kinematicula.Mathematics;
 
 namespace Kinematicula.Graphics
 {
-    public class Body : IGraphics
+    public class Body : IGraphics, IMementoCreator
     {
         private Matrix44D _frame;
         private Body _parent;
@@ -79,7 +80,30 @@ namespace Kinematicula.Graphics
 
         public Color Color { get; set; }
 
+        public virtual IMemento GetMemento()
+        {
+            return new BodyMemento(this);
+        }
 
         protected virtual Matrix44D OnFrameChange(Matrix44D currentFrame, Matrix44D newFrame) => newFrame;
+    }
+
+
+
+    public class BodyMemento : IMemento
+    {
+        private readonly Body _body;
+        private readonly Matrix44D _frame;
+
+        public BodyMemento(Body body)
+        {
+            _body = body;
+            _frame = body.Frame;
+        }
+
+        public void Restore()
+        {
+            _body.Frame = _frame;
+        }
     }
 }
