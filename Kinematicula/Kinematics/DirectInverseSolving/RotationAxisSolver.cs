@@ -9,11 +9,15 @@ namespace Kinematicula.Kinematics.DirectInverseSolving
         protected override bool SolveFirstToSecond(RotationAxisConstraint constraint)
         {
             var thread = constraint.First.Body;
-            var screwMat = constraint.First.Body.Frame;
-            var screwAnchorMat = constraint.First.ConnectionFrame;
-            var threadAnchorMat = constraint.Second.ConnectionFrame;
+            var threadMat = thread.Frame;
+            var threadAnchorMat = constraint.First.ConnectionFrame;
+
+            var screw = constraint.Second.Body;
+            var screwMat = screw.Frame;
+            var screwAnchorMat = constraint.Second.ConnectionFrame;
+
             var rotMat = Matrix44D.CreateRotation(new Vector3D(0.0, 0.0, 1.0), constraint.Angle);
-            thread.Frame = screwMat * screwAnchorMat * rotMat * (threadAnchorMat.Inverse());
+            screw.Frame = threadMat * threadAnchorMat * rotMat * (screwAnchorMat.Inverse());
             return true;
         }
 

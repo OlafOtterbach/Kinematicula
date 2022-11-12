@@ -16,7 +16,7 @@ public static class RobotCreator
         var robotSocket = new Anchor(robot, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0)));
 
         var socketFix = Cylinder.Create(SEGMENTS2, 100, 20);
-        socketFix.Name = "socket-fox";
+        socketFix.Name = "socket-fix";
         var socketFixPlug = new Anchor(socketFix, Matrix44D.CreateTranslation(new Vector3D(0, 0, -10)));
         var socketFixSocket = new Anchor(socketFix, Matrix44D.CreateTranslation(new Vector3D(0, 0, 10)));
         robot.AddChild(socketFix);
