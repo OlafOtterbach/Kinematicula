@@ -7,8 +7,8 @@ using Kinematicula.Kinematics.DirectForwardSolving;
 using Kinematicula.Kinematics.DirectInverseSolving;
 using Kinematicula.Mathematics;
 using Kinematicula.Scening;
-using RobotDemonstration.Robot.Graphics;
-using RobotDemonstration.Robot.Kinematics;
+using RobotLib.Graphics;
+using RobotLib.Kinematics;
 
 public static class SeedScene
 {
@@ -29,6 +29,7 @@ public static class SeedScene
         var robot1 = RobotCreator.Create();
         robot1.Name = "robot 1";
         robot1.Frame = Matrix44D.CreateTranslation(new Vector3D(-400, 0, 0));
+        robot1.Gripper.OpeningWidth = 50;
         var fixedRobotToFloorConstraint1 = new FixedConstraint(
             new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(-400, 0, 0))),
             new Anchor(robot1, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0))));
@@ -37,22 +38,23 @@ public static class SeedScene
         var robot2 = RobotCreator.Create();
         robot2.Name = "robot 2";
         robot2.Frame = Matrix44D.CreateCoordinateSystem(new Position3D(400, 0, 0), new Vector3D(-1, 0, 0), new Vector3D(0, 0, 1));
+        robot2.Gripper.OpeningWidth = 50;
         var fixedRobotToFloorConstraint2 = new FixedConstraint(
             new Anchor(floor, Matrix44D.CreateCoordinateSystem(new Position3D(400, 0, 0), new Vector3D(-1, 0, 0), new Vector3D(0, 0, 1))),
             new Anchor(robot2, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0))));
         scene.AddBody(robot2);
 
-        var antBody = Cuboid.Create(200,50, 200);
-        antBody.Frame = Matrix44D.CreateTranslation(new Vector3D(270.57366943359375 + 100 - 400.0, 0, 485.705078125));
-        antBody.Name = "ant body";
-        scene.AddBody(antBody);
+        var cubeBody = Cuboid.Create(200,50, 200);
+        cubeBody.Frame = Matrix44D.CreateTranslation(new Vector3D(270.57366943359375 + 100 - 400.0, 0, 485.705078125));
+        cubeBody.Name = "ant body";
+        scene.AddBody(cubeBody);
 
         var fixedRobot1ToAntBody = new FixedConstraint(
-            new Anchor(antBody, Matrix44D.CreateCoordinateSystem(new Position3D(-100, 0, 0), new Vector3D(0, 0, -1), new Vector3D(1, 0, 0))),
+            new Anchor(cubeBody, Matrix44D.CreateCoordinateSystem(new Position3D(-100, 0, 0), new Vector3D(0, 0, -1), new Vector3D(1, 0, 0))),
             new Anchor(robot1.Gripper, Matrix44D.CreateTranslation(new Vector3D(0, 0, 50))));
 
         var fixedRobot2ToAntBody = new FixedConstraint(
-            new Anchor(antBody, Matrix44D.CreateCoordinateSystem(new Position3D(100, 0, 0), new Vector3D(0, 0, -1), new Vector3D(-1, 0, 0))),
+            new Anchor(cubeBody, Matrix44D.CreateCoordinateSystem(new Position3D(100, 0, 0), new Vector3D(0, 0, -1), new Vector3D(-1, 0, 0))),
             new Anchor(robot2.Gripper, Matrix44D.CreateTranslation(new Vector3D(0, 0, 50))));
 
         // camera
@@ -65,7 +67,7 @@ public static class SeedScene
         camera.SetCamera(30.0, 30.0, 1800.0);
         scene.AddBody(camera);
 
-        var result = scene.InverseSolver.TrySolve(antBody);
+        var result = scene.InverseSolver.TrySolve(cubeBody);
 
         scene.InitScene();
         return scene;

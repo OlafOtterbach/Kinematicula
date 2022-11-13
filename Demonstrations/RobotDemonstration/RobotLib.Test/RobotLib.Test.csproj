@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Kinematicula\Kinematicula.csproj" />
-    <ProjectReference Include="..\RobotDemonstration\RobotDemonstration.csproj" />
+    <ProjectReference Include="..\RobotLib\RobotLib.csproj" />
   </ItemGroup>
 
 </Project>

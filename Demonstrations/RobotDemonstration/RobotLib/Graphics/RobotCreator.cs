@@ -1,4 +1,4 @@
-﻿namespace RobotDemonstration.Robot.Graphics;
+﻿namespace RobotLib.Graphics;
 
 using Kinematicula.Graphics;
 using Kinematicula.Graphics.Creators;

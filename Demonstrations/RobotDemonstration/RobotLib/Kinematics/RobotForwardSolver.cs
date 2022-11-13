@@ -1,6 +1,6 @@
-﻿namespace RobotDemonstration.Robot.Kinematics;
+﻿namespace RobotLib.Kinematics;
 
-using RobotDemonstration.Robot.Graphics;
+using RobotLib.Graphics;
 using Kinematicula.Graphics;
 using Kinematicula.Kinematics.DirectForwardSolving;
 

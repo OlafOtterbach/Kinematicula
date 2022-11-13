@@ -1,4 +1,4 @@
-﻿namespace RobotDemonstration.Robot.Kinematics;
+﻿namespace RobotLib.Kinematics;
 
 using Graphics;
 using Kinematicula.Kinematics.DirectInverseSolving;

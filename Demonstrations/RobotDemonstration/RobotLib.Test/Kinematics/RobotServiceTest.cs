@@ -1,7 +1,7 @@
-﻿namespace RobotDemonstration.Test.Robot.Kinematics;
+﻿namespace RobotLib.Test.Kinematics;
 
 using Kinematicula.Mathematics;
-using RobotDemonstration.Robot.Kinematics;
+using RobotLib.Kinematics;
 using Xunit;
 
 public class RobotTest
