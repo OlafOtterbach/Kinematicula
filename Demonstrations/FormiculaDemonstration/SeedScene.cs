@@ -9,6 +9,8 @@ using Kinematicula.Mathematics;
 using Kinematicula.Scening;
 using FormiculaDemonstration.Ant.Antleg;
 using RobotLib.Kinematics;
+using FormiculaDemonstration.Ant;
+using System.Linq;
 
 public static class SeedScene
 {
@@ -26,54 +28,11 @@ public static class SeedScene
         scene.AddBody(floor);
         var floorToWorldConstraint = new FixedConstraint(new Anchor(scene.World, Matrix44D.Identity), new Anchor(floor, Matrix44D.Identity));
 
-        var robot1 = AntRobotCreator.Create();
-        robot1.Name = "robot 1";
-        robot1.Frame = Matrix44D.CreateTranslation(new Vector3D(-400, 0, 0));
-        var fixedRobotToFloorConstraint1 = new FixedConstraint(
-            new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(-400, 0, 0))),
-            new Anchor(robot1, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0))));
-        scene.AddBody(robot1);
-
-        var robot2 = AntRobotCreator.Create();
-        robot2.Name = "robot 2";
-        robot2.Frame = Matrix44D.CreateCoordinateSystem(new Position3D(400, 0, 0), new Vector3D(-1, 0, 0), new Vector3D(0, 0, 1));
-        var fixedRobotToFloorConstraint2 = new FixedConstraint(
-            new Anchor(floor, Matrix44D.CreateCoordinateSystem(new Position3D(400, 0, 0), new Vector3D(-1, 0, 0), new Vector3D(0, 0, 1))),
-            new Anchor(robot2, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0))));
-        scene.AddBody(robot2);
-
-        //var robot3 = RobotCreator.Create();
-        //var fixedRobotToFloorConstraint3 = new FixedConstraint(
-        //    new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(-400, -200, 0))),
-        //    new Anchor(robot3, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0))));
-        //scene.AddBody(robot3);
-
-        //var robot4 = RobotCreator.Create();
-        //var fixedRobotToFloorConstraint4 = new FixedConstraint(
-        //    new Anchor(floor, Matrix44D.CreateCoordinateSystem(new Position3D(400,-200, 0), new Vector3D(-1, 0, 0), new Vector3D(0, 0, 1))),
-        //    new Anchor(robot4, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0))));
-        //scene.AddBody(robot4);
-
-        var antBody = Cuboid.Create(200,50, 200);
-        antBody.Frame = Matrix44D.CreateTranslation(new Vector3D(270.57366943359375 + 100 - 400.0, 0, 485.705078125));
-        antBody.Name = "ant body";
-        scene.AddBody(antBody);
-
-        var fixedRobot1ToAntBody = new FixedConstraint(
-            new Anchor(antBody, Matrix44D.CreateCoordinateSystem(new Position3D(-100, 0, 0), new Vector3D(0, 0, -1), new Vector3D(1, 0, 0))),
-            new Anchor(robot1.Gripper, Matrix44D.CreateTranslation(new Vector3D(0, 0, 50))));
-
-        var fixedRobot2ToAntBody = new FixedConstraint(
-            new Anchor(antBody, Matrix44D.CreateCoordinateSystem(new Position3D(100, 0, 0), new Vector3D(0, 0, -1), new Vector3D(-1, 0, 0))),
-            new Anchor(robot2.Gripper, Matrix44D.CreateTranslation(new Vector3D(0, 0, 50))));
-
-        //var fixedRobot3ToAntBody = new FixedConstraint(
-        //    new Anchor(antBody, Matrix44D.CreateCoordinateSystem(new Position3D(-100, -100, 0), new Vector3D(0, 0, -1), new Vector3D(1, 0, 0))),
-        //    new Anchor(robot3.Gripper, Matrix44D.CreateTranslation(new Vector3D(0, 0, 50))));
-
-        //var fixedRobot4ToAntBody = new FixedConstraint(
-        //    new Anchor(antBody, Matrix44D.CreateCoordinateSystem(new Position3D(100, -100, 0), new Vector3D(0, 0, -1), new Vector3D(-1, 0, 0))),
-        //    new Anchor(robot4.Gripper, Matrix44D.CreateTranslation(new Vector3D(0, 0, 50))));
+        var ant = AntCreator.Create();
+        var fixedAntToFloorConstraint1 = new FixedConstraint(
+            new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0))),
+            new Anchor(ant, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0))));
+        scene.AddBody(ant);
 
         // camera
         var camera = new Camera()
@@ -85,7 +44,7 @@ public static class SeedScene
         camera.SetCamera(30.0, 30.0, 1800.0);
         scene.AddBody(camera);
 
-        var result = scene.InverseSolver.TrySolve(antBody);
+        var result = scene.InverseSolver.TrySolve(ant.Children.First(x => x.Name == "ant body"));
 
         scene.InitScene();
         return scene;
