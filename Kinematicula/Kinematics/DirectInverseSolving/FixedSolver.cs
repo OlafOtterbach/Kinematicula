@@ -1,33 +1,41 @@
-﻿using Kinematicula.Graphics;
+﻿namespace Kinematicula.Kinematics.DirectInverseSolving;
 
-namespace Kinematicula.Kinematics.DirectInverseSolving
+using Kinematicula.Graphics;
+
+public class FixedSolver : DirectInverseSolver<FixedConstraint>
 {
-    public class FixedSolver : DirectInverseSolver<FixedConstraint>
+    protected override bool IsConstraintValid(FixedConstraint constraint)
     {
-        protected override bool SolveFirstToSecond(FixedConstraint fixedConstraint)
+        var shouldFrame = constraint.First.Body.Frame * constraint.First.ConnectionFrame * constraint.Second.ConnectionFrame.Inverse();
+        var result = constraint.Second.Body.Frame == shouldFrame;
+
+        return result;
+    }
+
+
+    protected override bool SolveFirstToSecond(FixedConstraint fixedConstraint)
+    {
+        return Solve(fixedConstraint.First, fixedConstraint.Second);
+    }
+
+    protected override bool SolveSecondToFirst(FixedConstraint fixedConstraint)
+    {
+        var result = Solve(fixedConstraint.Second, fixedConstraint.First);
+        return result;
+    }
+
+    private bool Solve(Anchor first, Anchor second)
+    {
+        var shouldFrame = first.Body.Frame * first.ConnectionFrame * second.ConnectionFrame.Inverse();
+        second.Body.Frame = shouldFrame;
+        var result = second.Body.Frame == shouldFrame;
+
+        if (!result)
         {
-            return Solve(fixedConstraint.First, fixedConstraint.Second);
+            shouldFrame = second.Body.Frame * second.ConnectionFrame * first.ConnectionFrame.Inverse();
+            first.Body.Frame = shouldFrame;
         }
 
-        protected override bool SolveSecondToFirst(FixedConstraint fixedConstraint)
-        {
-            var result = Solve(fixedConstraint.Second, fixedConstraint.First);
-            return result;
-        }
-
-        private bool Solve(Anchor first, Anchor second)
-        {
-            var shouldFrame = first.Body.Frame * first.ConnectionFrame * second.ConnectionFrame.Inverse();
-            second.Body.Frame = shouldFrame;
-            var result = second.Body.Frame == shouldFrame;
-
-            if (!result)
-            {
-                shouldFrame = second.Body.Frame * second.ConnectionFrame * first.ConnectionFrame.Inverse();
-                first.Body.Frame = shouldFrame;
-            }
-
-            return result;
-        }
+        return result;
     }
 }

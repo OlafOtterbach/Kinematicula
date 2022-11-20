@@ -7,8 +7,8 @@ using Kinematicula.Kinematics.DirectForwardSolving;
 using Kinematicula.Kinematics.DirectInverseSolving;
 using Kinematicula.Mathematics;
 using Kinematicula.Scening;
-using FormiculaDemonstration.Robot.Kinematics;
-using FormiculaDemonstration.Robot.Graphics;
+using FormiculaDemonstration.Ant.Antleg;
+using RobotLib.Kinematics;
 
 public static class SeedScene
 {
@@ -26,7 +26,7 @@ public static class SeedScene
         scene.AddBody(floor);
         var floorToWorldConstraint = new FixedConstraint(new Anchor(scene.World, Matrix44D.Identity), new Anchor(floor, Matrix44D.Identity));
 
-        var robot1 = RobotCreator.Create();
+        var robot1 = AntRobotCreator.Create();
         robot1.Name = "robot 1";
         robot1.Frame = Matrix44D.CreateTranslation(new Vector3D(-400, 0, 0));
         var fixedRobotToFloorConstraint1 = new FixedConstraint(
@@ -34,7 +34,7 @@ public static class SeedScene
             new Anchor(robot1, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0))));
         scene.AddBody(robot1);
 
-        var robot2 = RobotCreator.Create();
+        var robot2 = AntRobotCreator.Create();
         robot2.Name = "robot 2";
         robot2.Frame = Matrix44D.CreateCoordinateSystem(new Position3D(400, 0, 0), new Vector3D(-1, 0, 0), new Vector3D(0, 0, 1));
         var fixedRobotToFloorConstraint2 = new FixedConstraint(

@@ -1,9 +1,10 @@
-﻿using Kinematicula.Graphics;
+﻿namespace Kinematicula.Kinematics.DirectInverseSolving;
 
-namespace Kinematicula.Kinematics.DirectInverseSolving
+using Kinematicula.Graphics;
+
+public interface IDirectInverseSolver
 {
-    public interface IDirectInverseSolver
-    {
-        bool Solve(Constraint constraint, Body startingBody);
-    }
+    bool IsValid(Constraint constraint);
+
+    bool Solve(Constraint constraint, Body startingBody);
 }

@@ -1,16 +1,17 @@
-﻿namespace RobotDemonstration.Robot.Graphics;
+﻿namespace FormiculaDemonstration.Ant.Antleg;
 
 using Kinematicula.Graphics;
 using Kinematicula.Graphics.Creators;
 using Kinematicula.Mathematics;
+using RobotLib.Graphics;
 using System.Linq;
 
-public static class RobotCreator
+public static class AntRobotCreator
 {
     public static Robot Create()
     {
-        const int SEGMENTS1 = 4;
-        const int SEGMENTS2 = 6;
+        const int SEGMENTS1 = 2;
+        const int SEGMENTS2 = 3;
 
         var robot = new Robot();
         var robotSocket = new Anchor(robot, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0)));
@@ -121,8 +122,8 @@ public static class RobotCreator
         var rotationAdapterByWrist = new RotationAxisConstraint(wristSocket, adapterPlug, 10.0.ToRadiant(), -360.0.ToRadiant(), 360.0.ToRadiant());
         robot.AddAxis(rotationAdapterByWrist);
 
-        var gripper = GripperCreator.Create();
-        var gripperPlug = new Anchor(gripper, Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, 1), new Vector3D(0, 0, 1), new Vector3D(-1, 0, 0)));
+        var gripper = AntGripperCreator.Create();
+        var gripperPlug = new Anchor(gripper, Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, 0), new Vector3D(0, 0, 1), new Vector3D(-1, 0, 0)));
         robot.AddChild(gripper);
         gripper.Children.First().AddSensor(new PlaneSensor("left mouse button", new Vector3D(0, 1, 0), socketFlex));
         gripper.Children.First().AddSensor(new CylinderSensor("left mouse button and shift key", new Vector3D(0, 0, 1), robot));

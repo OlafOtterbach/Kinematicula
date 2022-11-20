@@ -7,8 +7,8 @@ using Kinematicula.Kinematics.DirectForwardSolving;
 using Kinematicula.Kinematics.DirectInverseSolving;
 using Kinematicula.Mathematics;
 using Kinematicula.Scening;
-using RobotDemonstration.Robot.Kinematics;
-using RobotDemonstration.Robot.Graphics;
+using RobotLib.Graphics;
+using RobotLib.Kinematics;
 
 public static class SeedScene
 {

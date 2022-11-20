@@ -14,6 +14,8 @@ public class GripperToClampInverseSolver : DirectInverseSolver<GripperToClampCon
         _linearSolver = new LinearAxisSolver();
     }
 
+    protected override bool IsConstraintValid(GripperToClampConstraint constraint) => false;
+
     protected override bool SolveFirstToSecond(GripperToClampConstraint constraint)
     {
         var gripper = constraint.First.Body;

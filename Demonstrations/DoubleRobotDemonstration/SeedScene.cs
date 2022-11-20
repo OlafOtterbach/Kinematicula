@@ -44,9 +44,12 @@ public static class SeedScene
             new Anchor(robot2, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0))));
         scene.AddBody(robot2);
 
-        var cubeBody = Cuboid.Create(200,50, 200);
-        cubeBody.Frame = Matrix44D.CreateTranslation(new Vector3D(270.57366943359375 + 100 - 400.0, 0, 485.705078125));
-        cubeBody.Name = "ant body";
+        var cubeBody = Cuboid.Create(150,50, 200);
+        cubeBody.Frame = Matrix44D.CreateTranslation(new Vector3D(0.0, 0, 485.705078125));
+        cubeBody.Name = "cube body";
+        cubeBody.AddSensor(new PlaneSensor("left mouse button", new Vector3D(0, 1, 0)));
+        cubeBody.AddSensor(new SphereSensor("left mouse button and control key", new Position3D(0, 0, 25), 10.ToRadiant()));
+
         scene.AddBody(cubeBody);
 
         var fixedRobot1ToAntBody = new FixedConstraint(
