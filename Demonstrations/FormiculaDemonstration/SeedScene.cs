@@ -7,7 +7,6 @@ using Kinematicula.Kinematics.DirectForwardSolving;
 using Kinematicula.Kinematics.DirectInverseSolving;
 using Kinematicula.Mathematics;
 using Kinematicula.Scening;
-using FormiculaDemonstration.Ant.Antleg;
 using RobotLib.Kinematics;
 using FormiculaDemonstration.Ant;
 using System.Linq;

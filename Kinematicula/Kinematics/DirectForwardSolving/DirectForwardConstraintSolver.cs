@@ -40,11 +40,6 @@ namespace Kinematicula.Kinematics.DirectForwardSolving
 
         public void Solve(Scene Scene)
         {
-            //var freeBodies = Scene.Bodies.Where(body => body.Parent == null).ToList();
-            //foreach (var body in freeBodies)
-            //{
-            //    Solve(body);
-            //}
             Solve(Scene.World);
         }
 

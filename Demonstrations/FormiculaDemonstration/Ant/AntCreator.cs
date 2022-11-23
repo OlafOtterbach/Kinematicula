@@ -15,6 +15,7 @@ namespace FormiculaDemonstration.Ant
             antBody.Frame = Matrix44D.CreateTranslation(new Vector3D(0.0, 0, 485.705078125));
             antBody.Name = "ant body";
             antBody.AddSensor(new PlaneSensor("left mouse button", new Vector3D(0, 1, 0)));
+            antBody.AddSensor(new PlaneSensor("left mouse button and shift key", new Vector3D(0, 0, 1)));
             antBody.AddSensor(new SphereSensor("left mouse button and control key", new Position3D(0, 0, 25), 10.ToRadiant()));
             ant.AddChild(antBody);
 

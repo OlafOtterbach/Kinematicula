@@ -38,6 +38,24 @@ namespace Kinematicula.Graphics
             {
                 var newFrame = OnFrameChange(_frame, value);
                 _frame = newFrame;
+
+                if(Name == "first socket" && Math.Abs(value.Offset.X + 250.0) > 0.01)
+                {
+                    var a = 0;
+                    a = a + 1;
+                }
+
+                if (Name == "first shifter" && value.Offset.X < -351)
+                {
+                    var a = 0;
+                    a = a + 1;
+                }
+
+                if (Name == "floor" && (Frame.Offset.X != 0.0 || Frame.Offset.Y != 0.0 || Frame.Offset.Z != 0.0))
+                {
+                    var a = 0;
+                    a = a + 1;
+                }
             }
         }
 

@@ -5,7 +5,7 @@ using Kinematicula.Graphics.Creators;
 using Kinematicula.Mathematics;
 using RobotLib.Graphics;
 
-public class AntGripperCreator
+public class AntThightCreator
 {
     public static Gripper Create()
     {

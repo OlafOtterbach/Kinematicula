@@ -15,11 +15,18 @@ public class FixedSolver : DirectInverseSolver<FixedConstraint>
 
     protected override bool SolveFirstToSecond(FixedConstraint fixedConstraint)
     {
-        return Solve(fixedConstraint.First, fixedConstraint.Second);
+        if (IsConstraintValid(fixedConstraint))
+            return true;
+
+        var result = Solve(fixedConstraint.First, fixedConstraint.Second);
+        return result;
     }
 
     protected override bool SolveSecondToFirst(FixedConstraint fixedConstraint)
     {
+        if (IsConstraintValid(fixedConstraint))
+            return true;
+
         var result = Solve(fixedConstraint.Second, fixedConstraint.First);
         return result;
     }

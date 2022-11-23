@@ -25,6 +25,7 @@ public class RotationAxisSolver : DirectInverseSolver<RotationAxisConstraint>
 
     protected override bool SolveSecondToFirst(RotationAxisConstraint constraint)
     {
+        var isValid = true;
         var thread = constraint.First.Body;
         var screw = constraint.Second.Body;
         var threadConnectionFrame = thread.Frame * constraint.First.ConnectionFrame;
@@ -39,6 +40,7 @@ public class RotationAxisSolver : DirectInverseSolver<RotationAxisConstraint>
             var threadAnchorMat = constraint.Second.ConnectionFrame;
             var rotMat = Matrix44D.CreateRotation(new Vector3D(0.0, 0.0, 1.0), constraint.Angle);
             thread.Frame = screwMat * screwAnchorMat * rotMat * (threadAnchorMat.Inverse());
+            isValid = false;
         } // ELSE
         else
         {
@@ -51,10 +53,12 @@ public class RotationAxisSolver : DirectInverseSolver<RotationAxisConstraint>
             if (angle < constraint.MinimumAngle)
             {
                 angle = constraint.MinimumAngle;
+                isValid = false;
             }
             if (angle > constraint.MaximumAngle)
             {
                 angle = constraint.MaximumAngle;
+                isValid = false;
             }
 
             var rotation = Matrix44D.CreateRotation(new Vector3D(0, 0, 1), angle);
@@ -62,6 +66,6 @@ public class RotationAxisSolver : DirectInverseSolver<RotationAxisConstraint>
             constraint.Angle = angle;
         }
 
-        return true;
+        return isValid;
     }
 }

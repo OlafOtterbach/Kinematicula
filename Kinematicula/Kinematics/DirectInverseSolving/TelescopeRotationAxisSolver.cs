@@ -10,6 +10,7 @@ public class TelescopeRotationAxisSolver : DirectInverseSolver<TelescopeRotation
 
     protected override bool SolveFirstToSecond(TelescopeRotationAxisConstraint constraint)
     {
+        var isValid = true;
         var thread = constraint.First.Body;
         var screw = constraint.Second.Body;
         var screwFrame = screw.Frame;
@@ -25,6 +26,7 @@ public class TelescopeRotationAxisSolver : DirectInverseSolver<TelescopeRotation
             var threadAnchorMat = constraint.Second.ConnectionFrame;
             var rotMat = Matrix44D.CreateRotation(new Vector3D(0.0, 0.0, 1.0), constraint.Angle);
             thread.Frame = screwMat * screwAnchorMat * rotMat * (threadAnchorMat.Inverse());
+            isValid = false;
         } // ELSE
         else
         {
@@ -38,10 +40,12 @@ public class TelescopeRotationAxisSolver : DirectInverseSolver<TelescopeRotation
             if (angle < constraint.MinimumAngle)
             {
                 angle = constraint.MinimumAngle;
+                isValid = false;
             }
             if (angle > constraint.MaximumAngle)
             {
                 angle = constraint.MaximumAngle;
+                isValid = false;
             }
 
             var rotation = Matrix44D.CreateRotation(new Vector3D(0, 0, 1), angle);
@@ -49,11 +53,12 @@ public class TelescopeRotationAxisSolver : DirectInverseSolver<TelescopeRotation
             constraint.Angle = angle;
         }
 
-        return true;
+        return isValid;
     }
 
     protected override bool SolveSecondToFirst(TelescopeRotationAxisConstraint constraint)
     {
+        var isValid = true;
         var thread = constraint.First.Body;
         var screw = constraint.Second.Body;
         var threadConnectionFrame = thread.Frame * constraint.First.ConnectionFrame;
@@ -68,6 +73,7 @@ public class TelescopeRotationAxisSolver : DirectInverseSolver<TelescopeRotation
             var threadAnchorMat = constraint.Second.ConnectionFrame;
             var rotMat = Matrix44D.CreateRotation(new Vector3D(0.0, 0.0, 1.0), constraint.Angle);
             thread.Frame = screwMat * screwAnchorMat * rotMat * (threadAnchorMat.Inverse());
+            isValid = false;
         } // ELSE
         else
         {
@@ -81,10 +87,12 @@ public class TelescopeRotationAxisSolver : DirectInverseSolver<TelescopeRotation
             if (angle < constraint.MinimumAngle)
             {
                 angle = constraint.MinimumAngle;
+                isValid = false;
             }
             if (angle > constraint.MaximumAngle)
             {
                 angle = constraint.MaximumAngle;
+                isValid = false;
             }
 
             var rotation = Matrix44D.CreateRotation(new Vector3D(0, 0, 1), -angle);
@@ -92,6 +100,6 @@ public class TelescopeRotationAxisSolver : DirectInverseSolver<TelescopeRotation
             constraint.Angle = angle;
         }
 
-        return true;
+        return isValid;
     }
 }

@@ -38,12 +38,13 @@ public class DirectInverseConstraintSolver : IDirectInverseConstraintSolver
 
     public bool TrySolve(Body startBody)
     {
-        var result = TrySolve(startBody, 1);
+        Console.WriteLine("Start");
+        var result = TrySolve(startBody, null, 1);
 
         return result;
     }
 
-    private bool TrySolve(Body startBody, int count)
+    private bool TrySolve(Body startBody, Constraint startConstraint, int count)
     {
         var result = Solve(startBody, null);
         if (!result.IsSolved)
@@ -51,7 +52,7 @@ public class DirectInverseConstraintSolver : IDirectInverseConstraintSolver
             if (count > 100)
                 return false;
 
-            if (!TrySolve(result.BreakingBody, count + 1))
+            if (!TrySolve(result.BreakingBody, result.BreakingConstraint, count + 1))
             {
                 return false;
             }
@@ -60,17 +61,17 @@ public class DirectInverseConstraintSolver : IDirectInverseConstraintSolver
         return true;
     }
 
-    private (bool IsSolved, Body BreakingBody) Solve(Body start, Constraint originConstraint)
+    private (bool IsSolved, Body BreakingBody, Constraint BreakingConstraint) Solve(Body start , Constraint startConstraint)
     {
         var known = new HashSet<Constraint>();
-        if (originConstraint != null) known.Add(originConstraint);
         var stack = new Stack<Body>();
         stack.Push(start);
 
         while (stack.Count > 0)
         {
             var currentBody = stack.Pop();
-            var constraints = currentBody.Constraints;
+            var constraints = startConstraint == null ? currentBody.Constraints : new List<Constraint>();
+            startConstraint = null;
 
             var solveResult = constraints
                               .Where(constraint => !known.Contains(constraint))
@@ -80,18 +81,18 @@ public class DirectInverseConstraintSolver : IDirectInverseConstraintSolver
             var unsolved = solveResult.Where(x => !x.isSolved).ToList();
             if (!unsolved.Any())
             {
-                solveResult.ForEach(x => stack.Push(x.Body));
+                solveResult.ForEach(x => stack.Push(x.BreakingBody));
             }
             else
             {
-                var breakingBody = solveResult.First(x => !x.isSolved).Body;
-                return (false, breakingBody);
+                var breakingReason = solveResult.First(x => !x.isSolved);
+                return breakingReason;
             }
 
             known.UnionWith(constraints);
         }
 
-        return (true, null);
+        return (true, null, null);
     }
 
     private bool IsValid(Constraint constraint)
@@ -100,17 +101,18 @@ public class DirectInverseConstraintSolver : IDirectInverseConstraintSolver
         return isValid;
     }
 
-    private (bool isSolved, Body Body) Execute(Constraint constraint, Body currentBody)
+    private (bool isSolved, Body BreakingBody, Constraint BreakinConstraint)
+    Execute(Constraint constraint, Body currentBody)
     {
         var isSolved = _solvers.Values.Select(x => x.Solve(constraint, currentBody)).All(x => x);
 
         if (isSolved)
         {
-            return (isSolved, constraint.First.Body == currentBody ? constraint.Second.Body : constraint.First.Body);
+            return (isSolved, constraint.First.Body == currentBody ? constraint.Second.Body : constraint.First.Body, constraint);
         }
         else
         {
-            return (isSolved, constraint.First.Body == currentBody ? constraint.First.Body : constraint.Second.Body);
+            return (isSolved, constraint.First.Body == currentBody ? constraint.First.Body : constraint.Second.Body, constraint);
         }
     }
 }

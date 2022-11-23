@@ -16,7 +16,7 @@ namespace CylinderDemonstration
 
             // floor
             var floor = Floor.Create(10, 100);
-            floor.Name = "Floor";
+            floor.Name = "floor";
             scene.AddBody(floor);
             var fixedToWorldConstraint = new FixedConstraint(new Anchor(scene.World, Matrix44D.Identity), new Anchor(floor, Matrix44D.Identity));
 
@@ -24,6 +24,7 @@ namespace CylinderDemonstration
             // first socket
             var firstSocket = Cube.Create(100);
             firstSocket.Name = "first socket";
+            firstSocket.Frame = Matrix44D.CreateTranslation(new Vector3D(-250, 0, 50));
             scene.AddBody(firstSocket);
 
             var fixedFirstSocketToFloor = new FixedConstraint(new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(-250, 0,0))), new Anchor(firstSocket, Matrix44D.CreateTranslation(new Vector3D(0,0,-50))));
@@ -31,6 +32,7 @@ namespace CylinderDemonstration
             // second socket
             var secondSocket = Cube.Create(100);
             secondSocket.Name = "second socket";
+            secondSocket.Frame = Matrix44D.CreateTranslation(new Vector3D(250, 0, 50));
             scene.AddBody(secondSocket);
 
             var fixedSecondSocketToFloor = new FixedConstraint(new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(250, 0, 0))), new Anchor(secondSocket, Matrix44D.CreateTranslation(new Vector3D(0, 0, -50))));

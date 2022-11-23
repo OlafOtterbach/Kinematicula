@@ -40,7 +40,7 @@ public class TelescopeLinearAxisSolver : DirectInverseSolver<TelescopeLinearAxis
 
         constraint.LinearPosition = wagonPosition;
 
-        return true;
+        return isValid;
     }
 
     protected override bool SolveSecondToFirst(TelescopeLinearAxisConstraint constraint)
@@ -75,6 +75,6 @@ public class TelescopeLinearAxisSolver : DirectInverseSolver<TelescopeLinearAxis
 
         constraint.LinearPosition = wagonPosition;
 
-        return true;
+        return isValid;
     }
 }

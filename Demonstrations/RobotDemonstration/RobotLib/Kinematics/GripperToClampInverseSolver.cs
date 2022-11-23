@@ -7,22 +7,20 @@ using Kinematicula.Mathematics.Extensions;
 
 public class GripperToClampInverseSolver : DirectInverseSolver<GripperToClampConstraint>
 {
-    private readonly LinearAxisSolver _linearSolver;
-
-    public GripperToClampInverseSolver()
-    {
-        _linearSolver = new LinearAxisSolver();
-    }
-
     protected override bool IsConstraintValid(GripperToClampConstraint constraint) => false;
 
     protected override bool SolveFirstToSecond(GripperToClampConstraint constraint)
     {
-        var gripper = constraint.First.Body;
+        var railAnchor = constraint.First;
+        var wagonAnchor = constraint.Second;
+        var railMat = railAnchor.Body.Frame;
+        var railAnchorMat = railAnchor.ConnectionFrame;
+        var waggonAnchorMat = wagonAnchor.ConnectionFrame;
+        var linMat = Matrix44D.CreateTranslation(new Vector3D(constraint.LinearPosition, 0.0, 0.0));
+        var wagonFrame = railMat * railAnchorMat * linMat * (waggonAnchorMat.Inverse());
+        wagonAnchor.Body.Frame = wagonFrame;
 
-        var result = _linearSolver.Solve(constraint, gripper);
-
-        return result;
+        return true;
     }
 
     protected override bool SolveSecondToFirst(GripperToClampConstraint constraint)

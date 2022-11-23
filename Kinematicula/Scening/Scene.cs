@@ -60,11 +60,8 @@ public class Scene
             {
                 // reset scene and kinematics
                 freezedScene.ResetScene();
-                //InverseSolver.TrySolve(body);
+                InverseSolver.TrySolve(body);
             }
-
-            // correction for precision of calculated solve result.
-            ForwardSolver.Solve(this);
         }
     }
 

@@ -1,4 +1,4 @@
-﻿const lineWidth = 2.0;
+﻿const lineWidth = 3.0;
 const backgroundColor = "#FFFFFF";
 const defaultForegroundColor = "#000000"
 let lock = false;
@@ -11,18 +11,11 @@ let currentCamera;
 let mouseMoved = false;
 let currentMousePosition;
 
-let canvasOne = document.getElementById("CanvasOne");
-canvasOne.addEventListener("mousedown", onMouseDown);
-canvasOne.addEventListener("mouseup", onMouseUp);
-var ctxOne = canvasOne.getContext("2d");
-
-let canvasTwo = document.getElementById("CanvasTwo");
-var ctxTwo = canvasTwo.getContext("2d");
-
-
-initScenery(canvasOne, ctxOne, "CameraOne");
-getScenery(canvasTwo, ctxTwo, "CameraTwo");
-
+let canvas = document.querySelector("canvas");
+canvas.addEventListener("mousedown", onMouseDown);
+canvas.addEventListener("mouseup", onMouseUp);
+var ctx = canvas.getContext("2d");
+getScenery();
 
 function Position(x, y) {
     this.x = x;
@@ -50,6 +43,7 @@ function TouchEventDto() {
     this.canvasWidth = 0;
     this.canvasHeight = 0;
     this.camera = null;
+    this.bodyStates = null;
 }
 
 function MoveEventDto() {
@@ -63,6 +57,7 @@ function MoveEventDto() {
     this.canvasWidth = 0;
     this.canvasHeight = 0;
     this.camera = null;
+    this.bodyStates = null;
 }
 
 function ZoomEventDto() {
@@ -70,6 +65,7 @@ function ZoomEventDto() {
     this.canvasWidth = 0;
     this.canvasHeight = 0;
     this.camera = null;
+    this.bodyStates = null;
 }
 
 function sleep(ms) {
@@ -78,19 +74,19 @@ function sleep(ms) {
 
 function onMouseDown(event) {
     if (event.button === 0 || event.button === 2) {
-        canvasOne.addEventListener("mousemove", onMouseMoved);
-        canvasOne.addEventListener("contextmenu", onContextMenu);
+        canvas.addEventListener("mousemove", onMouseMoved);
+        canvas.addEventListener("contextmenu", onContextMenu);
 
         mouseMoved = false;
-        currentMousePosition = getPosition(event, canvasOne)
+        currentMousePosition = getPosition(event, canvas)
         select(currentMousePosition.x, currentMousePosition.y, currentCamera);
     }
 }
 
 function onMouseUp(event) {
     if (event.button === 0) {
-        canvasOne.removeEventListener("mousemove", onMouseMoved);
-        canvasOne.removeEventListener("contextmenu", onContextMenu);
+        canvas.removeEventListener("mousemove", onMouseMoved);
+        canvas.removeEventListener("contextmenu", onContextMenu);
 
         if (!mouseMoved) {
             touch();
@@ -101,11 +97,11 @@ function onMouseUp(event) {
 
 function onMouseMoved(event) {
     if (event.buttons === 0) {
-        canvasOne.removeEventListener("mousemove", onMouseMoved);
+        canvas.removeEventListener("mousemove", onMouseMoved);
     } else {
         if (event.buttons === 1 || event.buttons === 2) {
             mouseMoved = true;
-            let movedMousePosition = getPosition(event, canvasOne)
+            let movedMousePosition = getPosition(event, canvas)
             if (event.buttons === 1) {
                 let eventSource = event.ctrlKey ? "left mouse button and control key" : event.shiftKey ? "left mouse button and shift key" : "left mouse button"
                 move(eventSource, currentBodyId, currentMousePosition, movedMousePosition);
@@ -121,26 +117,17 @@ function onContextMenu(event) {
     return false;
 }
 
-function getPosition(event, canvasOne) {
-    let rect = canvasOne.getBoundingClientRect();
+function getPosition(event, canvas) {
+    let rect = canvas.getBoundingClientRect();
     return new Position(event.clientX - rect.left, event.clientY - rect.top);
 }
 
-async function initScenery(canvas, ctx, cameraName) {
+async function getScenery() {
     lock = true;
-    let url = encodeURI("http://localhost:5000/initial-graphics?cameraName=" + cameraName + "&canvasWidth=" + canvas.width + "&canvasHeight=" + canvas.height);
+    let url = encodeURI("http://localhost:5000/initial-graphics?cameraName=CameraOne&canvasWidth=" + canvas.width + "&canvasHeight=" + canvas.height);
     let graphics = await fetchData(url);
     lock = false;
-    drawScene(ctx, graphics);
-    currentCamera = graphics.Camera;
-}
-
-async function getScenery(canvas, ctx, cameraName) {
-    lock = true;
-    let url = encodeURI("http://localhost:5000/initial-graphics?cameraName=" + cameraName + "&canvasWidth=" + canvas.width + "&canvasHeight=" + canvas.height);
-    let graphics = await fetchData(url);
-    lock = false;
-    drawScene(ctx, graphics);
+    drawScene(graphics);
 }
 
 async function select(x, y) {
@@ -149,8 +136,8 @@ async function select(x, y) {
     selectEvent.camera = currentCamera;
     selectEvent.selectPositionX = x;
     selectEvent.selectPositionY = y;
-    selectEvent.canvasWidth = canvasOne.width;
-    selectEvent.canvasHeight = canvasOne.height;
+    selectEvent.canvasWidth = canvas.width;
+    selectEvent.canvasHeight = canvas.height;
     let url = encodeURI("http://localhost:5000/select");
     let bodySelection = await postData(url, selectEvent);
     currentBodyId = bodySelection.BodyId;
@@ -166,13 +153,12 @@ async function touch() {
     touchEvent.touchPosition = currentBodyIntersection;
     touchEvent.isBodyTouched = currentlyIsBodySelected;
     touchEvent.camera = currentCamera;
-    touchEvent.canvasWidth = canvasOne.width;
-    touchEvent.canvasHeight = canvasOne.height;
+    touchEvent.canvasWidth = canvas.width;
+    touchEvent.canvasHeight = canvas.height;
     let url = encodeURI("http://localhost:5000/touch");
     let sceneState = await postData(url, touchEvent);
     lock = false;
-    drawScene(ctxOne, sceneState);
-    currentCamera = sceneState.Camera;
+    drawScene(sceneState);
 }
 
 async function move(eventSource, bodyId, start, end) {
@@ -188,15 +174,11 @@ async function move(eventSource, bodyId, start, end) {
         moveEvent.startY = start.y;
         moveEvent.endX = end.x;
         moveEvent.endY = end.y;
-        moveEvent.canvasWidth = canvasOne.width;
-        moveEvent.canvasHeight = canvasOne.height;
+        moveEvent.canvasWidth = canvas.width;
+        moveEvent.canvasHeight = canvas.height;
         let url = encodeURI("http://localhost:5000/move");
         let sceneState = await postData(url, moveEvent);
-
-        getScenery(canvasTwo, ctxTwo, "CameraTwo");
-        drawScene(ctxOne, sceneState);
-        currentCamera = sceneState.Camera;
-
+        drawScene(sceneState);
         currentMousePosition = end;
         lock = false;
     }
@@ -210,22 +192,22 @@ async function zoom(start, end) {
         let zoomEvent = new ZoomEventDto();
         zoomEvent.camera = currentCamera;
         zoomEvent.delta = delta;
-        zoomEvent.canvasWidth = canvasOne.width;
-        zoomEvent.canvasHeight = canvasOne.height;
+        zoomEvent.canvasWidth = canvas.width;
+        zoomEvent.canvasHeight = canvas.height;
         let url = encodeURI("http://localhost:5000/zoom");
         let sceneState = await postData(url, zoomEvent);
-        drawScene(ctxOne, sceneState);
-        currentCamera = sceneState.Camera;
+        drawScene(sceneState);
         currentMousePosition = end;
         lock = false;
     }
 }
 
-function drawScene(ctx, sceneState) {
+function drawScene(sceneState) {
     if (sceneState !== undefined) {
+        currentCamera = sceneState.Camera;
         ctx.beginPath();
         ctx.fillStyle = backgroundColor;
-        ctx.fillRect(0, 0, canvasOne.width, canvasOne.height);
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.closePath();
         ctx.stroke();
 
@@ -246,7 +228,7 @@ function drawScene(ctx, sceneState) {
                 let y1 = lines[i + 1];
                 let x2 = lines[i + 2];
                 let y2 = lines[i + 3];
-                drawLine(ctx, x1, y1, x2, y2);
+                drawLine(x1, y1, x2, y2);
             }
 
             ctx.closePath();
@@ -255,7 +237,7 @@ function drawScene(ctx, sceneState) {
     }
 }
 
-function drawLine(ctx, x1, y1, x2, y2) {
+function drawLine(x1, y1, x2, y2) {
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
 }

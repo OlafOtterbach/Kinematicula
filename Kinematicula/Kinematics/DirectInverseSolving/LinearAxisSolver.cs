@@ -6,18 +6,19 @@ using Kinematicula.Mathematics;
 
 public class LinearAxisSolver : DirectInverseSolver<LinearAxisConstraint>
 {
-    protected override bool IsConstraintValid(LinearAxisConstraint constraint) => false;
+    protected override bool IsConstraintValid(LinearAxisConstraint constraint)
+        => false;
 
     protected override bool SolveFirstToSecond(LinearAxisConstraint constraint)
     {
         // move second relative to linearposition to first body
         var railAnchor = constraint.First;
         var wagonAnchor = constraint.Second;
-        var firstMat = railAnchor.Body.Frame;
-        var firstAnchorMat = railAnchor.ConnectionFrame;
-        var secondAnchorMat = wagonAnchor.ConnectionFrame;
+        var railMat = railAnchor.Body.Frame;
+        var railAnchorMat = railAnchor.ConnectionFrame;
+        var waggonAnchorMat = wagonAnchor.ConnectionFrame;
         var linMat = Matrix44D.CreateTranslation(new Vector3D(constraint.LinearPosition, 0.0, 0.0));
-        var wagonFrame = firstMat * firstAnchorMat * linMat * (secondAnchorMat.Inverse());
+        var wagonFrame = railMat * railAnchorMat * linMat * (waggonAnchorMat.Inverse());
         wagonAnchor.Body.Frame = wagonFrame;
 
         return true;
