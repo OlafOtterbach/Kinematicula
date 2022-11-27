@@ -13,8 +13,6 @@ public class RobotInverseSolver : DirectInverseSolver<RobotConstraint>
         _forwardSolver = forwardSolver;
     }
 
-    protected override bool IsConstraintValid(RobotConstraint constraint) => false;
-
     protected override bool SolveFirstToSecond(RobotConstraint robotConstraint)
     {
         var first = robotConstraint.First;

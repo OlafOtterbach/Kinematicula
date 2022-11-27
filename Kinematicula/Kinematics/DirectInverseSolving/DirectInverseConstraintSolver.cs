@@ -97,7 +97,14 @@ public class DirectInverseConstraintSolver : IDirectInverseConstraintSolver
 
     private bool IsValid(Constraint constraint)
     {
-        var isValid = _solvers.Values.Select(x => x.IsValid(constraint)).Any(x => x);
+        var isValid = false;
+
+        if(constraint is FixedConstraint fixedConstraint)
+        {
+            var fixedSolver = _solvers[typeof(FixedSolver)] as FixedSolver;
+            isValid = fixedSolver.IsValid(fixedConstraint);
+        }
+
         return isValid;
     }
 

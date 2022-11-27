@@ -14,8 +14,6 @@ public class WheelRotationInverseSolver : DirectInverseSolver<WheelRotationConst
         _forwardSolver = new DirectForwardConstraintSolver();
     }
 
-    protected override bool IsConstraintValid(WheelRotationConstraint constraint) => false;
-
     protected override bool SolveFirstToSecond(WheelRotationConstraint constraint)
         => _rotationSolver.Solve(constraint, constraint.First.Body);
 

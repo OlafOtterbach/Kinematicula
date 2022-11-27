@@ -4,16 +4,6 @@ using Kinematicula.Graphics;
 
 public abstract class DirectInverseSolver<T> : IDirectInverseSolver where T : Constraint
 {
-	public bool IsValid(Constraint constraint)
-    {
-		if (constraint is T concreteConstraint)
-		{
-			return IsConstraintValid(concreteConstraint);
-		}
-
-		return false;
-	}
-
 	public bool Solve(Constraint constraint, Body startEntity)
 	{
 		var success = true;
@@ -32,8 +22,6 @@ public abstract class DirectInverseSolver<T> : IDirectInverseSolver where T : Co
 
 		return success;
 	}
-
-	protected abstract bool IsConstraintValid(T constraint);
 
 	protected abstract bool SolveFirstToSecond(T concreteConstraint);
 

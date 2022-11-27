@@ -6,14 +6,11 @@ using Kinematicula.Mathematics;
 
 public class TelescopeRotationAxisSolver : DirectInverseSolver<TelescopeRotationAxisConstraint>
 {
-    protected override bool IsConstraintValid(TelescopeRotationAxisConstraint constraint) => false;
-
     protected override bool SolveFirstToSecond(TelescopeRotationAxisConstraint constraint)
     {
         var isValid = true;
         var thread = constraint.First.Body;
         var screw = constraint.Second.Body;
-        var screwFrame = screw.Frame;
         var threadConnectionFrame = thread.Frame * constraint.First.ConnectionFrame;
         var screwConnectionFrame = screw.Frame * constraint.Second.ConnectionFrame;
 

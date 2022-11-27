@@ -6,9 +6,6 @@ using Kinematicula.Mathematics;
 
 public class LinearAxisSolver : DirectInverseSolver<LinearAxisConstraint>
 {
-    protected override bool IsConstraintValid(LinearAxisConstraint constraint)
-        => false;
-
     protected override bool SolveFirstToSecond(LinearAxisConstraint constraint)
     {
         // move second relative to linearposition to first body

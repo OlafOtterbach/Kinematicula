@@ -1,4 +1,4 @@
-﻿namespace TelescopeRotationTowerDemonstration.Controllers;
+﻿namespace TelescopeLinearTowerDemonstration.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
 using HiddenLineViewerApi;
@@ -12,7 +12,6 @@ public class HomeController : Controller
         _logicView = logicView;
     }
 
-    // GET: HomeController
     public ActionResult Index()
     {
         return View();

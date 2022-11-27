@@ -4,7 +4,7 @@ using Kinematicula.Graphics;
 
 public class FixedSolver : DirectInverseSolver<FixedConstraint>
 {
-    protected override bool IsConstraintValid(FixedConstraint constraint)
+    public bool IsValid(FixedConstraint constraint)
     {
         var shouldFrame = constraint.First.Body.Frame * constraint.First.ConnectionFrame * constraint.Second.ConnectionFrame.Inverse();
         var result = constraint.Second.Body.Frame == shouldFrame;
@@ -12,10 +12,9 @@ public class FixedSolver : DirectInverseSolver<FixedConstraint>
         return result;
     }
 
-
     protected override bool SolveFirstToSecond(FixedConstraint fixedConstraint)
     {
-        if (IsConstraintValid(fixedConstraint))
+        if (IsValid(fixedConstraint))
             return true;
 
         var result = Solve(fixedConstraint.First, fixedConstraint.Second);
@@ -24,7 +23,7 @@ public class FixedSolver : DirectInverseSolver<FixedConstraint>
 
     protected override bool SolveSecondToFirst(FixedConstraint fixedConstraint)
     {
-        if (IsConstraintValid(fixedConstraint))
+        if (IsValid(fixedConstraint))
             return true;
 
         var result = Solve(fixedConstraint.Second, fixedConstraint.First);

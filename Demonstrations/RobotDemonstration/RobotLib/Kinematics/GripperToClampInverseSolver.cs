@@ -7,8 +7,6 @@ using Kinematicula.Mathematics.Extensions;
 
 public class GripperToClampInverseSolver : DirectInverseSolver<GripperToClampConstraint>
 {
-    protected override bool IsConstraintValid(GripperToClampConstraint constraint) => false;
-
     protected override bool SolveFirstToSecond(GripperToClampConstraint constraint)
     {
         var railAnchor = constraint.First;

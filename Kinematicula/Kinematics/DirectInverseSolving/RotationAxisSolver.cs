@@ -6,8 +6,6 @@ using Kinematicula.Mathematics.Extensions;
 
 public class RotationAxisSolver : DirectInverseSolver<RotationAxisConstraint>
 {
-    protected override bool IsConstraintValid(RotationAxisConstraint constraint) => false;
-
     protected override bool SolveFirstToSecond(RotationAxisConstraint constraint)
     {
         var thread = constraint.First.Body;

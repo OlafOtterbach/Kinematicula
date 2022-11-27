@@ -6,8 +6,6 @@ using Kinematicula.Mathematics;
 
 public class TelescopeLinearAxisSolver : DirectInverseSolver<TelescopeLinearAxisConstraint>
 {
-    protected override bool IsConstraintValid(TelescopeLinearAxisConstraint constraint) => false;
-
     protected override bool SolveFirstToSecond(TelescopeLinearAxisConstraint constraint)
     {
         var rail = constraint.First.Body;

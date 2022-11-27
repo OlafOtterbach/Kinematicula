@@ -15,8 +15,6 @@ public class PistonLinearAxisInverseSolver : DirectInverseSolver<PistonLinearAxi
         _forwardSolver = new DirectForwardConstraintSolver();
     }
 
-    protected override bool IsConstraintValid(PistonLinearAxisConstraint constraint) => false;
-
     protected override bool SolveFirstToSecond(PistonLinearAxisConstraint constraint)
         => _linearSolver.Solve(constraint, constraint.First.Body);
 

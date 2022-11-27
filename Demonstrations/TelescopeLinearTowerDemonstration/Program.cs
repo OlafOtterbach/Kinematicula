@@ -1,4 +1,4 @@
-namespace TelescopeRotationTowerDemonstration;
+namespace TelescopeLinearTowerDemonstration;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
