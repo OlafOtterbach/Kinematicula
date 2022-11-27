@@ -1,7 +1,6 @@
-﻿namespace Kinematicula.Graphics
+﻿namespace Kinematicula.Graphics;
+
+public interface ISensor
 {
-    public interface ISensor
-    {
-        string EventSource { get; }
-    }
+    string EventSource { get; }
 }

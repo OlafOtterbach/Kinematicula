@@ -1,24 +1,23 @@
-﻿namespace Kinematicula.Graphics
+﻿namespace Kinematicula.Graphics;
+
+public class CoEdge
 {
-    public class CoEdge
+    public Triangle ParentTriangle { get; set; }
+    public Point3D Start { get; set; }
+    public Point3D End { get; set; }
+
+    public int GetHashCode(Edge edge)
     {
-        public Triangle ParentTriangle { get; set; }
-        public Point3D Start { get; set; }
-        public Point3D End { get; set; }
+        if (ReferenceEquals(edge, null)) return 0;
 
-        public int GetHashCode(Edge edge)
+        int start = edge.Start.GetHashCode();
+        int end = edge.End.GetHashCode();
+
+        if (start > end)
         {
-            if (ReferenceEquals(edge, null)) return 0;
-
-            int start = edge.Start.GetHashCode();
-            int end = edge.End.GetHashCode();
-
-            if (start > end)
-            {
-                (start, end) = (end, start);
-            }
-
-            return start ^ end;
+            (start, end) = (end, start);
         }
+
+        return start ^ end;
     }
 }

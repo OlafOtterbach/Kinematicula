@@ -1,7 +1,6 @@
-﻿namespace Kinematicula.Graphics.Memento
+﻿namespace Kinematicula.Graphics.Memento;
+
+public interface IMementoCreator
 {
-    public interface IMementoCreator
-    {
-        IMemento GetMemento();
-    }
+    IMemento GetMemento();
 }

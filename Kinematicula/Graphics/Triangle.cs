@@ -1,16 +1,15 @@
-﻿using Kinematicula.Mathematics;
+﻿namespace Kinematicula.Graphics;
 
-namespace Kinematicula.Graphics
+using Kinematicula.Mathematics;
+
+public class Triangle
 {
-    public class Triangle
-    {
-        public Face ParentFace { get; set; }
+    public Face ParentFace { get; set; }
 
-        public Vertex P1 { get; set; }
-        public Vertex P2 { get; set; }
-        public Vertex P3 { get; set; }
-        public Vector3D Normal { get; set; }
+    public Vertex P1 { get; set; }
+    public Vertex P2 { get; set; }
+    public Vertex P3 { get; set; }
+    public Vector3D Normal { get; set; }
 
-        public CoEdge[] CoEdges { get; set; }
-    }
+    public CoEdge[] CoEdges { get; set; }
 }

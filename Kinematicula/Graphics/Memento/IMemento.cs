@@ -1,7 +1,6 @@
-﻿namespace Kinematicula.Graphics.Memento
+﻿namespace Kinematicula.Graphics.Memento;
+
+public interface IMemento
 {
-    public interface IMemento
-    {
-        void Restore();
-    }
+    void Restore();
 }
