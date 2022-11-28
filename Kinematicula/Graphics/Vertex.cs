@@ -1,10 +1,9 @@
-﻿using Kinematicula.Mathematics;
+﻿namespace Kinematicula.Graphics;
 
-namespace Kinematicula.Graphics
+using Kinematicula.Mathematics;
+
+public class Vertex
 {
-    public class Vertex
-    {
-        public Point3D Point { get; set; }
-        public Vector3D Normal { get; set; }
-    }
+    public Point3D Point { get; set; }
+    public Vector3D Normal { get; set; }
 }

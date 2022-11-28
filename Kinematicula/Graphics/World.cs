@@ -1,12 +1,18 @@
-﻿using Kinematicula.Mathematics;
+﻿namespace Kinematicula.Graphics;
 
-namespace Kinematicula.Graphics
+using Kinematicula.Mathematics;
+
+public class World : Body
 {
-    public class World : Body
+    public override Matrix44D Frame
     {
-        protected override Matrix44D OnFrameChange(Matrix44D currentFrame, Matrix44D newFrame)
+        get
         {
-            return currentFrame;
+            return Matrix44D.Identity;
+        }
+        set
+        {
+
         }
     }
 }

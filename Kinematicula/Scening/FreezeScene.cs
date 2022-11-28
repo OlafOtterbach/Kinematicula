@@ -1,20 +1,24 @@
-﻿using Kinematicula.Graphics;
-using Kinematicula.Mathematics;
-
-namespace Kinematicula.Scening
+﻿namespace Kinematicula.Scening
 {
+    using Kinematicula.Graphics.Memento;
+
     internal class FreezeScene
     {
-        private Dictionary<Body, Matrix44D> _snapShot;
+        private readonly List<IMemento> _mementos;
 
         public FreezeScene(Scene scene)
         {
-            _snapShot = scene.Bodies.ToDictionary(body => body, body => body.Frame);
+            var bodyMementos = scene.Bodies.Select(body => body.GetMemento()).ToList();
+            var constraintMementos = scene.Bodies.SelectMany(b => b.Constraints).Distinct().Select(constraint => constraint.GetMemento()).ToList();
+            _mementos = bodyMementos.Concat(constraintMementos).ToList();
         }
 
         public void ResetScene()
         {
-            _snapShot.ToList().ForEach(pair => pair.Key.Frame = pair.Value);
+            foreach(var memento in _mementos)
+            {
+                memento.Restore();
+            }
         }
     }
 }

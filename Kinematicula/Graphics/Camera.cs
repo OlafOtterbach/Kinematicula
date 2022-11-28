@@ -1,13 +1,12 @@
-﻿using Kinematicula.Mathematics;
+﻿namespace Kinematicula.Graphics;
 
-namespace Kinematicula.Graphics
+using Kinematicula.Mathematics;
+
+public class Camera : Body
 {
-    public class Camera : Body
-    {
-        public double Distance => (Target - Frame.Offset).Length;
+    public double Distance => (Target - Frame.Offset).Length;
 
-        public double NearPlane { get; set; }
+    public double NearPlane { get; set; }
 
-        public Position3D Target { get; set; }
-    }
+    public Position3D Target { get; set; }
 }

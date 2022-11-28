@@ -1,4 +1,4 @@
-﻿const lineWidth = 4.0;
+﻿const lineWidth = 2.0;
 const backgroundColor = "#FFFFFF";
 const defaultForegroundColor = "#000000"
 let lock = false;
