@@ -21,7 +21,7 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore ./Kinematicula/Kinematicula.csproj
+      run: dotnet restore ./Kinematicula.sln
     - name: Build
       run: dotnet build ./Kinematicula.sln --no-restore --configuration Release
     - name: Test
