@@ -1,4 +1,4 @@
-namespace LinearAxisDemo;
+namespace LinearAxisDemonstration;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;

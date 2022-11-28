@@ -1,4 +1,4 @@
-﻿namespace LinearAxisDemo;
+﻿namespace LinearAxisDemonstration;
 
 using Kinematicula.Scening;
 using Kinematicula.Graphics;
