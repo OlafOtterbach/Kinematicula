@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Kinematicula\Kinematicula.csproj" />
+    <ProjectReference Include="..\..\Views\HiddenLineViewerApi\HiddenLineViewerApi.csproj" />
     <ProjectReference Include="..\HiddenLineViewerApi\HiddenLineViewerApi.csproj" />
   </ItemGroup>
 
