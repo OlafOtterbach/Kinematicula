@@ -1,6 +1,6 @@
 ﻿namespace ThreeJsViewerApi.Model;
 
-public record PositionApi(
+public record struct PositionTjs(
     double X,
     double Y,
     double Z);
