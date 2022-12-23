@@ -1,6 +1,6 @@
 ﻿namespace ThreeJsViewerApi.Model;
 
-public record struct EulerTjs(
+public record struct EulerFrameTjs(
     double X,
     double Y,
     double Z,

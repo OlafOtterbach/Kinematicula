@@ -3,7 +3,7 @@
     public record BodyTjs(
         Guid Id,
         string Name,
-        EulerTjs Frame,
+        EulerFrameTjs Frame,
         TriangleTjs[] Triangles,
         VertexTjs[] Vertices,
         EdgeTjs[] Edges);

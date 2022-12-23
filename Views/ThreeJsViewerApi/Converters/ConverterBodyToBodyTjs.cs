@@ -8,13 +8,13 @@ namespace ThreeJsViewerApi.Converters;
 
 public static class ConverterBodyToBodyTjs
 {
-    public static BodyTjs ToBodyTjs(Body body)
+    public static BodyTjs ToBodyTjs(this Body body)
     {
         var triangles = body.Faces.SelectMany(face => face.Triangles).ToList();
         var result = ConvertTrianglesToTrianglesTjsAndVerticesTjs(triangles);
         var edgseTjs = body.Edges.ToEdgesTjs();
 
-        BodyTjs bodyTjs = new BodyTjs(body.Id, body.Name, body.Frame.ToEulerTjs(), result.TrianglesTjs, result.VerticesTjs, edgseTjs);
+        BodyTjs bodyTjs = new BodyTjs(body.Id, body.Name, body.Frame.ToEulerFrameTjs(), result.TrianglesTjs, result.VerticesTjs, edgseTjs);
         return bodyTjs;
     }
 
@@ -77,13 +77,6 @@ public static class ConverterBodyToBodyTjs
         var vertexTjs = new VertexTjs(position, normal, color);
 
         return vertexTjs;
-    }
-
-    private static EulerTjs ToEulerTjs(this Matrix44D matrix)
-    {
-        var cardanFrame = matrix.ToCardanFrame();
-        var eulerTjs = new EulerTjs(cardanFrame.Offset.X, cardanFrame.Offset.Y, cardanFrame.Offset.Z, cardanFrame.AlphaAngleAxisX, cardanFrame.BetaAngleAxisY, cardanFrame.GammaAngleAxisZ);
-        return eulerTjs;
     }
 
     private static EdgeTjs[] ToEdgesTjs(this Edge[] edges)
