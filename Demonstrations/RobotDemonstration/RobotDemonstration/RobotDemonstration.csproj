@@ -12,7 +12,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Kinematicula\Kinematicula.csproj" />
     <ProjectReference Include="..\..\..\Views\HiddenLineViewerApi\HiddenLineViewerApi.csproj" />
-    <ProjectReference Include="..\..\HiddenLineViewerApi\HiddenLineViewerApi.csproj" />
     <ProjectReference Include="..\RobotLib\RobotLib.csproj" />
   </ItemGroup>
 

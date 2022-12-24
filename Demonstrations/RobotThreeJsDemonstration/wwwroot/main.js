@@ -1,4 +1,9 @@
-﻿const lineWidth = 1.0;
+﻿const sceneTjs = new THREE.Scene();
+const cameraTjs = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+
+
+const lineWidth = 1.0;
 const backgroundColor = "#FFFFFF";
 const defaultForegroundColor = "#000000"
 let lock = false;
