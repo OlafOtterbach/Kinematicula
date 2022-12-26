@@ -2,12 +2,14 @@
 
 using Microsoft.AspNetCore.Mvc;
 using HiddenLineViewerApi;
+using ThreeJsViewerApi;
+using ThreeJsViewerApi.Model;
 
 public class HomeController : Controller
 {
-    private IHiddenLineViewerLogic _logicView;
+    private IThreeJsViewerLogic _logicView;
 
-    public HomeController(IHiddenLineViewerLogic logicView)
+    public HomeController(IThreeJsViewerLogic logicView)
     {
         _logicView = logicView;
     }
@@ -18,37 +20,39 @@ public class HomeController : Controller
         return View();
     }
 
-    [HttpGet("initial-graphics")]
-    public ActionResult<SceneStateDto> GetScene([FromQuery] string cameraName, [FromQuery] int canvasWidth, [FromQuery] int canvasHeight)
+    [HttpGet("scene")]
+    public ActionResult<SceneTjs> GetScene()
     {
-        return Ok(_logicView.GetScene(cameraName, canvasWidth, canvasHeight));
+        var scene = _logicView.GetScene();
+
+        return Ok(scene);
     }
 
-    [HttpPost("select")]
-    public ActionResult<SelectedBodyStateDto> Select([FromBody] SelectEventDto selectEventDto)
-    {
-        var selection = _logicView.SelectBody(selectEventDto);
-        return Ok(selection);
-    }
+    //[HttpPost("select")]
+    //public ActionResult<SelectedBodyStateDto> Select([FromBody] SelectEventDto selectEventDto)
+    //{
+    //    var selection = _logicView.SelectBody(selectEventDto);
+    //    return Ok(selection);
+    //}
 
-    [HttpPost("touch")]
-    public ActionResult<SceneStateDto> Touch([FromBody] TouchEventDto touchEventDto)
-    {
-        var sceneState = _logicView.Touch(touchEventDto);
-        return Ok(sceneState);
-    }
+    //[HttpPost("touch")]
+    //public ActionResult<SceneStateDto> Touch([FromBody] TouchEventDto touchEventDto)
+    //{
+    //    var sceneState = _logicView.Touch(touchEventDto);
+    //    return Ok(sceneState);
+    //}
 
-    [HttpPost("move")]
-    public ActionResult<SceneStateDto> Move([FromBody] MoveEventDto moveEventDto)
-    {
-        var sceneState = _logicView.Move(moveEventDto);
-        return Ok(sceneState);
-    }
+    //[HttpPost("move")]
+    //public ActionResult<SceneStateDto> Move([FromBody] MoveEventDto moveEventDto)
+    //{
+    //    var sceneState = _logicView.Move(moveEventDto);
+    //    return Ok(sceneState);
+    //}
 
-    [HttpPost("zoom")]
-    public ActionResult<SceneStateDto> Zoom([FromBody] ZoomEventDto zoomEventDto)
-    {
-        var sceneState = _logicView.Zoom(zoomEventDto);
-        return Ok(sceneState);
-    }
+    //[HttpPost("zoom")]
+    //public ActionResult<SceneStateDto> Zoom([FromBody] ZoomEventDto zoomEventDto)
+    //{
+    //    var sceneState = _logicView.Zoom(zoomEventDto);
+    //    return Ok(sceneState);
+    //}
 }

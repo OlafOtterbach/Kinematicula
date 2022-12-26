@@ -1,4 +1,5 @@
-﻿using Kinematicula.LogicViewing;
+﻿using Kinematicula.Graphics;
+using Kinematicula.LogicViewing;
 using ThreeJsViewerApi.Converters;
 using ThreeJsViewerApi.Model;
 
@@ -13,14 +14,11 @@ public class ThreeJsViewerLogic : IThreeJsViewerLogic
         _view = view;
     }
 
-    public SceneTjs GetScene(string cameraName)
+    public SceneTjs GetScene()
     {
-        var camera = _view.GetCamera(cameraName);
-        var cameraTjs = new CameraTjs(camera.Name, camera.Frame.ToEulerFrameTjs());
-
-        var bodiesTjs = _view.Scene.Bodies.Select(body => body.ToBodyTjs()).ToArray();
-
-        var sceneTjs = new SceneTjs(cameraTjs, bodiesTjs);
+        var bodiesTjs = _view.Scene.Bodies.Where(body => !(body is Camera)).Select(body => body.ToBodyTjs()).ToArray();
+        var camerasTjs = _view.Scene.Bodies.OfType<Camera>().Select(camera => camera.ToCameraTjs()).ToArray();
+        var sceneTjs = new SceneTjs(bodiesTjs, camerasTjs);
 
         return sceneTjs;
     }

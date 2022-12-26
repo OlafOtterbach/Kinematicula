@@ -4,5 +4,5 @@ namespace ThreeJsViewerApi;
 
 public interface IThreeJsViewerLogic
 {
-    SceneTjs GetScene(string cameraName);
+    SceneTjs GetScene();
 }

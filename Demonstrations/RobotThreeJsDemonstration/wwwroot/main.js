@@ -1,8 +1,58 @@
 ﻿const sceneTjs = new THREE.Scene();
 const cameraTjs = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+let scene = getScene();
+console.log(scene.Bodies.length())
 
 
 
+async function getScene() {
+    lock = true;
+    let url = encodeURI("http://localhost:5000/scene");
+    let scene = await fetchData(url);
+    lock = false;
+
+    return scene;
+}
+
+
+function fetchData(url) {
+    let result = fetch(url)
+        .then(function (response) {
+            if (response.ok)
+                return response.json();
+            else
+                throw new Error('server can has not connected');
+        }).catch(function (err) {
+            // Error
+        });
+    return result;
+}
+
+function postData(url, data) {
+    let result = fetch(url, {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        redirect: "follow",
+        referrer: "no-referrer",
+        body: JSON.stringify(data),
+    }).then(function (response) {
+        if (response.ok)
+            return response.json();
+        else
+            throw new Error('server can has not connected');
+    }).catch(function (err) {
+        // Error
+    });
+    return result;
+}
+
+
+/*
 const lineWidth = 1.0;
 const backgroundColor = "#FFFFFF";
 const defaultForegroundColor = "#000000"
@@ -281,38 +331,4 @@ function getColorValue(colorIn) {
     }
 }
 
-function fetchData(url) {
-    let result = fetch(url)
-        .then(function (response) {
-            if (response.ok)
-                return response.json();
-            else
-                throw new Error('server can has not connected');
-        }).catch(function (err) {
-            // Error
-        });
-    return result;
-}
-
-function postData(url, data) {
-    let result = fetch(url, {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "same-origin",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        redirect: "follow",
-        referrer: "no-referrer",
-        body: JSON.stringify(data),
-    }).then(function (response) {
-        if (response.ok)
-            return response.json();
-        else
-            throw new Error('server can has not connected');
-    }).catch(function (err) {
-        // Error
-    });
-    return result;
-}
+*/

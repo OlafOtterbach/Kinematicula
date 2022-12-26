@@ -18,7 +18,6 @@ public static class ConverterBodyToBodyTjs
         return bodyTjs;
     }
 
-
     private static (TriangleTjs[] TrianglesTjs, VertexTjs[] VerticesTjs) ConvertTrianglesToTrianglesTjsAndVerticesTjs(IEnumerable<Triangle> triangles)
     {
         var vertexComparer = new VertexComparer();

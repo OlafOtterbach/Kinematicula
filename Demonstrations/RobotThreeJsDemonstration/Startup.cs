@@ -10,6 +10,7 @@ using Newtonsoft.Json.Serialization;
 using Kinematicula.HiddenLineGraphics;
 using Kinematicula.LogicViewing;
 using HiddenLineViewerApi;
+using ThreeJsViewerApi;
 
 public class Startup
 {
@@ -32,8 +33,7 @@ public class Startup
         var scene = SeedScene.CreateAndPopulateScene();
         var logicView = new LogicView(scene);
         services.AddSingleton<ILogicView>(logicView);
-        services.AddSingleton(typeof(IHiddenLineService), typeof(HiddenLineService));
-        services.AddSingleton(typeof(IHiddenLineViewerLogic), typeof(HiddenLineViewerLogic));
+        services.AddSingleton(typeof(IThreeJsViewerLogic), typeof(ThreeJsViewerLogic));
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
