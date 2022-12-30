@@ -1,8 +1,98 @@
-﻿const sceneTjs = new THREE.Scene();
-const cameraTjs = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-let scene = getScene();
-console.log(scene.Bodies.length())
+﻿main();
 
+async function main() {
+    var canvas = document.getElementById("MyCanvas");
+    const renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        canvas: canvas
+        });
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 2000);
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.2); // soft white light
+    scene.add(ambientLight);
+
+    var light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(0, 0, 0);
+    light.rotation.set(new THREE.Euler(0, 0, 0, 'XYZ'));
+    light.castShadow = true;
+    var lightParent = new THREE.Object3D();
+    lightParent.add(light);
+    scene.add(lightParent);
+
+    let scenery = await getScene();
+    addBodiesToScene(scene, scenery.Bodies);
+
+    let sceneCamera = scenery.Cameras[0];
+    camera.position.x = sceneCamera.Frame.X;
+    camera.position.y = sceneCamera.Frame.Y;
+    camera.position.z = sceneCamera.Frame.Z;
+    camera.rotation.x = sceneCamera.Frame.AngleX;
+    camera.rotation.y = sceneCamera.Frame.AngleZ;
+    camera.rotation.z = sceneCamera.Frame.AngleY;
+
+
+
+    function addBodiesToScene(scene, bodies) {
+
+        function addBodyToScene(scene, body) {
+            const positions = [];
+            const normals = [];
+            const colors = [];
+            for (const vertex of body.Vertices) {
+                positions.push(vertex.Position.X);
+                positions.push(vertex.Position.Y);
+                positions.push(vertex.Position.Z);
+                normals.push(vertex.Normal.Vx);
+                normals.push(vertex.Normal.Vy);
+                normals.push(vertex.Normal.Vz);
+                colors.push(vertex.Color.Red);
+                colors.push(vertex.Color.Green);
+                colors.push(vertex.Color.Blue);
+            }
+
+            const indices = [];
+            for (let i = 0; i < body.Triangles.length; i++) {
+                indices.push(body.Triangles[i].Vertex1);
+                indices.push(body.Triangles[i].Vertex2);
+                indices.push(body.Triangles[i].Vertex3);
+            }
+
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(positions), 3));
+            geometry.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(normals), 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(colors), 3));
+            geometry.setIndex(new THREE.BufferAttribute(new Uint16Array(indices), 1));
+            var material = new THREE.MeshPhongMaterial({ vertexColors: true });
+            let bodyTjs = new THREE.Mesh(geometry, material);
+
+            bodyTjs.position.x = body.Frame.X;
+            bodyTjs.position.y = body.Frame.Y;
+            bodyTjs.position.z = body.Frame.Z;
+            bodyTjs.rotation.x = body.Frame.AngleX;
+            bodyTjs.rotation.y = body.Frame.AngleZ;
+            bodyTjs.rotation.z = body.Frame.AngleY;
+
+            scene.add(bodyTjs);
+        }
+
+        for (let body of bodies) {
+            addBodyToScene(scene, body);
+        }
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+
+        lightParent.position.copy(camera.position);
+        lightParent.rotation.copy(camera.rotation);
+
+        renderer.render(scene, camera);
+    };
+
+    animate();
+}
 
 
 async function getScene() {

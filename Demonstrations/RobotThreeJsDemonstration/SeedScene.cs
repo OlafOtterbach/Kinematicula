@@ -20,6 +20,16 @@ public static class SeedScene
         scene.AddForwardSolver(new RobotForwardSolver());
         scene.AddForwardSolver(new GripperToClampForwardSolver());
 
+        //var cube = Cube.Create(100);
+        //scene.AddBody(cube);
+
+        //var cylinder = Cylinder.Create(10, 50, 200);
+        //scene.AddBody(cylinder);
+
+        //var sphere = Sphere.Create(8, 100);
+        //scene.AddBody(sphere);
+
+
         // floor
         var floor = Floor.Create(10, 100);
         floor.Name = "floor";
@@ -59,7 +69,7 @@ public static class SeedScene
         var fixedRobot2ToAntBody = new FixedConstraint(
             new Anchor(cubeBody, Matrix44D.CreateCoordinateSystem(new Position3D(100, 0, 0), new Vector3D(0, 0, -1), new Vector3D(-1, 0, 0))),
             new Anchor(robot2.Gripper, Matrix44D.CreateTranslation(new Vector3D(0, 0, 50))));
-
+        
         // camera
         var camera = new Camera()
         {
@@ -70,7 +80,7 @@ public static class SeedScene
         camera.SetCamera(30.0, 30.0, 1800.0);
         scene.AddBody(camera);
 
-        var result = scene.InverseSolver.TrySolve(cubeBody);
+        //var result = scene.InverseSolver.TrySolve(cubeBody);
 
         scene.InitScene();
         return scene;

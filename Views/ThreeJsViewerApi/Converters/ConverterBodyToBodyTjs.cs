@@ -40,7 +40,7 @@ public static class ConverterBodyToBodyTjs
             var vertex2 = -1;
             if (vertexDict.ContainsKey(triangle.P2))
             {
-                vertex1 = vertexDict[triangle.P2].Index;
+                vertex2 = vertexDict[triangle.P2].Index;
             }
             else
             {
