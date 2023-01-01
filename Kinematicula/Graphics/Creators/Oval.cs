@@ -1,5 +1,6 @@
 ﻿using Kinematicula.Graphics.Creators.Creator;
 using Kinematicula.Mathematics;
+using Kinematicula.Mathematics.Extensions;
 
 namespace Kinematicula.Graphics.Creators
 {
@@ -66,7 +67,10 @@ namespace Kinematicula.Graphics.Creators
                 var p1 = new Position3D(x0, y0, z);
                 var p2 = new Position3D(x1, y1, z);
                 var p3 = new Position3D(x2, y2, z);
-                creator.AddTriangle(p1, p2, p3);
+                if (!(p1.X.EqualsTo(p2.X) && p2.X.EqualsTo(p3.X)))
+                {
+                    creator.AddTriangle(p1, p2, p3);
+                }
                 pointsRadius2.Add(p1);
                 if (i == segments2 - 1) pointsRadius2.Add(p2);
             }
@@ -77,6 +81,7 @@ namespace Kinematicula.Graphics.Creators
             var s2 = pointsRadius2.First();
             var e2 = pointsRadius2.Last();
             var m2 = new Position3D(length, 0.0, z);
+
 
             creator.AddTriangle(s1, m1, e2);
             creator.AddTriangle(e2, m1, m2);

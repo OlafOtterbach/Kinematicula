@@ -3,7 +3,7 @@
 using Kinematicula.Graphics.Creators;
 using Xunit;
 
-public class CylinderTest
+public class CylinderCreatorTest
 {
     [Fact]
     public void Test()

@@ -8,10 +8,16 @@ async function main() {
         });
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 2000);
+    const camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 10000);
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.2); // soft white light
     scene.add(ambientLight);
+
+    var lamp = new THREE.DirectionalLight(0xffffff, 1);
+    lamp.position.set(0, 0, 100);
+    lamp.rotation.set(new THREE.Euler(0, 0, 0, 'XYZ'));
+    lamp.castShadow = true;
+    scene.add(lamp);
 
     var light = new THREE.DirectionalLight(0xffffff, 1);
     light.position.set(0, 0, 0);
@@ -21,18 +27,24 @@ async function main() {
     lightParent.add(light);
     scene.add(lightParent);
 
+    var oval = null;
+
     let scenery = await getScene();
     addBodiesToScene(scene, scenery.Bodies);
 
-    let sceneCamera = scenery.Cameras[0];
-    camera.position.x = sceneCamera.Frame.X;
-    camera.position.y = sceneCamera.Frame.Y;
-    camera.position.z = sceneCamera.Frame.Z;
-    camera.rotation.x = sceneCamera.Frame.AngleX;
-    camera.rotation.y = sceneCamera.Frame.AngleZ;
-    camera.rotation.z = sceneCamera.Frame.AngleY;
 
+    //let sceneCamera = scenery.Cameras[1];
+    //camera.position.x = sceneCamera.Frame.X;
+    //camera.position.y = sceneCamera.Frame.Y;
+    //camera.position.z = -sceneCamera.Frame.Z;
+    //camera.rotation.x = sceneCamera.Frame.AngleX;
+    //camera.rotation.y = sceneCamera.Frame.AngleZ;
+    //camera.rotation.z = sceneCamera.Frame.AngleY;
 
+    camera.position.x = 0;
+    camera.position.y = 0;
+    camera.position.z = 100;
+    //camera.lookAt(new THREE.Vector3(0,0,0));
 
     function addBodiesToScene(scene, bodies) {
 
@@ -74,6 +86,8 @@ async function main() {
             bodyTjs.rotation.y = body.Frame.AngleZ;
             bodyTjs.rotation.z = body.Frame.AngleY;
 
+            oval = bodyTjs;
+
             scene.add(bodyTjs);
         }
 
@@ -87,6 +101,10 @@ async function main() {
 
         lightParent.position.copy(camera.position);
         lightParent.rotation.copy(camera.rotation);
+
+        oval.rotation.x += 0.01;
+        oval.rotation.y += 0.01;
+        oval.rotation.z += 0.01;
 
         renderer.render(scene, camera);
     };
