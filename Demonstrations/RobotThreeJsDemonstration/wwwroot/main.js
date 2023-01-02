@@ -43,7 +43,7 @@ async function main() {
 
     camera.position.x = 0;
     camera.position.y = 0;
-    camera.position.z = 100;
+    camera.position.z = 500;
     //camera.lookAt(new THREE.Vector3(0,0,0));
 
     function addBodiesToScene(scene, bodies) {
@@ -83,8 +83,8 @@ async function main() {
             bodyTjs.position.y = body.Frame.Y;
             bodyTjs.position.z = body.Frame.Z;
             bodyTjs.rotation.x = body.Frame.AngleX;
-            bodyTjs.rotation.y = body.Frame.AngleZ;
-            bodyTjs.rotation.z = body.Frame.AngleY;
+            bodyTjs.rotation.y = body.Frame.AngleY;
+            bodyTjs.rotation.z = body.Frame.AngleZ;
 
             oval = bodyTjs;
 
@@ -101,10 +101,6 @@ async function main() {
 
         lightParent.position.copy(camera.position);
         lightParent.rotation.copy(camera.rotation);
-
-        oval.rotation.x += 0.01;
-        oval.rotation.y += 0.01;
-        oval.rotation.z += 0.01;
 
         renderer.render(scene, camera);
     };

@@ -31,6 +31,16 @@ public static class SeedScene
 
         //var oval = Oval.Create(5, 5, 50, 50, true, true, false, false, 200, 50, Matrix44D.Identity);
         var oval = Oval.Create(32, 1, 50, 50, false, true, false, true, 200, 50, Matrix44D.Identity);
+
+        var ex = new Vector3D(1, 1, 1);
+        var ez = new Vector3D(0, 0, 1);
+        var ey = ez & ex;
+        ez = ex & ey;
+        ex = ex.Normalize();
+        ey = ey.Normalize();
+        ez = ez.Normalize();
+
+        oval.Frame = Matrix44D.CreateCoordinateSystem(ex, ez);
         scene.AddBody(oval);
 
         /*
