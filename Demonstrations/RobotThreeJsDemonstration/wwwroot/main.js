@@ -42,9 +42,9 @@ async function main() {
     //camera.rotation.z = sceneCamera.Frame.AngleY;
 
     camera.position.x = 0;
-    camera.position.y = 0;
-    camera.position.z = 500;
-    //camera.lookAt(new THREE.Vector3(0,0,0));
+    camera.position.y = -1000;
+    camera.position.z = 200;
+    camera.rotation.x = 1.5;
 
     function addBodiesToScene(scene, bodies) {
 
@@ -85,6 +85,9 @@ async function main() {
             bodyTjs.rotation.x = body.Frame.AngleX;
             bodyTjs.rotation.y = body.Frame.AngleY;
             bodyTjs.rotation.z = body.Frame.AngleZ;
+
+            //let euler = new THREE.Euler(body.Frame.AngleX, body.Frame.AngleY, body.Frame.AngleZ, "XYZ");
+            //bodyTjs.setRotationFromEuler(euler);
 
             oval = bodyTjs;
 
