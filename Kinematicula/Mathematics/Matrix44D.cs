@@ -203,7 +203,7 @@ namespace Kinematicula.Mathematics
 
         public static Matrix44D CreateCoordinateSystem(Position3D offset, Vector3D ex, Vector3D ey, Vector3D ez)
         {
-            return new Matrix44D(new Matrix4x4((float)ex.X, (float)ex.Y, (float)ex.Z, 0f,
+            return new Matrix44D(new Matrix4x4( (float)ex.X, (float)ex.Y, (float)ex.Z, 0f,
                                                 (float)ey.X, (float)ey.Y, (float)ey.Z, 0f,
                                                 (float)ez.X, (float)ez.Y, (float)ez.Z, 0f,
                                                 (float)offset.X, (float)offset.Y, (float)offset.Z, 1f));
