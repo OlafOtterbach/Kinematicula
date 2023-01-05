@@ -2,4 +2,4 @@
 
 public record CameraTjs(
     string Name,
-    EulerFrameTjs Frame);
+    FrameTjs Frame);

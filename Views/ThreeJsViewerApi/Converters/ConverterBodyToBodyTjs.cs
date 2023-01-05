@@ -14,7 +14,7 @@ public static class ConverterBodyToBodyTjs
         var result = ConvertTrianglesToTrianglesTjsAndVerticesTjs(triangles);
         var edgseTjs = body.Edges.ToEdgesTjs();
 
-        BodyTjs bodyTjs = new BodyTjs(body.Id, body.Name, body.Frame.ToEulerFrameTjs(), result.TrianglesTjs, result.VerticesTjs, edgseTjs);
+        BodyTjs bodyTjs = new BodyTjs(body.Id, body.Name, body.Frame.ToFrameTjs(), result.TrianglesTjs, result.VerticesTjs, edgseTjs);
         return bodyTjs;
     }
 

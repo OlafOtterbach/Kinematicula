@@ -27,24 +27,23 @@ async function main() {
     lightParent.add(light);
     scene.add(lightParent);
 
-    var oval = null;
-
     let scenery = await getScene();
     addBodiesToScene(scene, scenery.Bodies);
 
-
-    //let sceneCamera = scenery.Cameras[1];
-    //camera.position.x = sceneCamera.Frame.X;
-    //camera.position.y = sceneCamera.Frame.Y;
-    //camera.position.z = -sceneCamera.Frame.Z;
-    //camera.rotation.x = sceneCamera.Frame.AngleX;
-    //camera.rotation.y = sceneCamera.Frame.AngleZ;
-    //camera.rotation.z = sceneCamera.Frame.AngleY;
+    //camera.matrixAutoUpdate = false;
+    const frame = scenery.Cameras[1].Frame;
+    camera.matrix.set(
+        frame.A11, frame.A12, frame.A13, frame.A14,
+        frame.A21, frame.A22, frame.A23, frame.A24,
+        frame.A31, frame.A32, frame.A33, frame.A34,
+        frame.A41, frame.A42, frame.A43, frame.A44);
 
     camera.position.x = 0;
     camera.position.y = -1000;
-    camera.position.z = 200;
-    camera.rotation.x = 1.5;
+    camera.position.z = 800;
+    camera.rotation.x = 1.0;
+    camera.rotation.y = 0.2;
+    camera.rotation.z = 0.2;
 
     function addBodiesToScene(scene, bodies) {
 
@@ -79,17 +78,13 @@ async function main() {
             var material = new THREE.MeshPhongMaterial({ vertexColors: true });
             let bodyTjs = new THREE.Mesh(geometry, material);
 
-            bodyTjs.position.x = body.Frame.X;
-            bodyTjs.position.y = body.Frame.Y;
-            bodyTjs.position.z = body.Frame.Z;
-            bodyTjs.rotation.x = body.Frame.AngleX;
-            bodyTjs.rotation.y = body.Frame.AngleY;
-            bodyTjs.rotation.z = body.Frame.AngleZ;
-
-            //let euler = new THREE.Euler(body.Frame.AngleX, body.Frame.AngleY, body.Frame.AngleZ, "XYZ");
-            //bodyTjs.setRotationFromEuler(euler);
-
-            oval = bodyTjs;
+            bodyTjs.matrixAutoUpdate = false;
+            const frame = body.Frame;
+            bodyTjs.matrix.set(
+                frame.A11, frame.A12, frame.A13, frame.A14,
+                frame.A21, frame.A22, frame.A23, frame.A24,
+                frame.A31, frame.A32, frame.A33, frame.A34,
+                frame.A41, frame.A42, frame.A43, frame.A44);
 
             scene.add(bodyTjs);
         }

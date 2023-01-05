@@ -9,7 +9,7 @@ public static class ConverterCameraToCameraTjs
     {
         var cameraTjs = new CameraTjs(
             camera.Name,
-            camera.Frame.ToEulerFrameTjs());
+            camera.Frame.ToFrameTjs());
 
         return cameraTjs;
     }
