@@ -4,7 +4,7 @@
         Guid Id,
         string Name,
         FrameTjs Frame,
-        TriangleTjs[] Triangles,
         VertexTjs[] Vertices,
+        int[] Indices,
         EdgeTjs[] Edges);
 }

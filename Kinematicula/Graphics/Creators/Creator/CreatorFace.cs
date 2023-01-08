@@ -12,6 +12,8 @@ namespace Kinematicula.Graphics.Creators.Creator
 
         public bool HasFacets { get; set; }
 
+        public Color Color { get; set; }
+
         public void AddTriangle(CreatorTriangle triangle)
         {
             _triangles.Add(triangle);

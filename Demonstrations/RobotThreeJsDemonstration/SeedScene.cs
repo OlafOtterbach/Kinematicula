@@ -34,7 +34,7 @@ public static class SeedScene
 
         
         // floor
-        var floor = new Body();// Floor.Create(10, 100);
+        var floor = Floor.Create(10, 100);
         floor.Name = "floor";
         scene.AddBody(floor);
         var floorToWorldConstraint = new FixedConstraint(new Anchor(scene.World, Matrix44D.Identity), new Anchor(floor, Matrix44D.Identity));

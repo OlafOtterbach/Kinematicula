@@ -30,7 +30,7 @@ namespace Kinematicula.Graphics.Creators.Creator
             var vertexDict = dict.ToDictionary(p => p.Key, p => Aggregate(p.Value));
             var triangles = CreatorTriangles.Select(bt => ConvertToTriangle(bt, vertexDict)).ToArray();
 
-            var face = new Face() { Triangles = triangles, HasBorder = CreatorFace.HasBorder, HasFacets = CreatorFace.HasFacets };
+            var face = new Face() { Triangles = triangles, HasBorder = CreatorFace.HasBorder, HasFacets = CreatorFace.HasFacets, Color = CreatorFace.Color };
 
             triangles.ForEach(triangle => triangle.ParentFace = face);
 

@@ -16,11 +16,13 @@ namespace Kinematicula.Graphics.Creators
             {
                 for (var x = 0; x < count; x++)
                 {
+                    var color = ((y % 2) + (x % 2)) % 2 == 0 ? new Color(0.8, 0.8, 0.8) : new Color(0, 0, 0);
+
                     var point1 = positions[x][y];
                     var point2 = positions[x][y + 1];
                     var point3 = positions[x + 1][y + 1];
                     var point4 = positions[x + 1][y];
-                    creator.AddFace(true, false);
+                    creator.AddFace(true, false, color);
                     creator.AddTriangle(point1, point2, point4);
                     creator.AddTriangle(point3, point4, point2);
                 }
@@ -39,32 +41,6 @@ namespace Kinematicula.Graphics.Creators
             var p6 = new Position3D(size, size, -hight);
             var p7 = new Position3D(size, size, 0);
             var p8 = new Position3D(-size, size, 0);
-
-            //// South
-            //creator.AddFace(true, false);
-            //creator.AddTriangle(p1, p2, p3);
-            //creator.AddTriangle(p3, p4, p1);
-
-            //// East
-            //creator.AddFace(true, false);
-            //creator.AddTriangle(p2, p6, p7);
-            //creator.AddTriangle(p7, p3, p2);
-
-            //// North
-            //creator.AddFace(true, false);
-            //creator.AddTriangle(p6, p5, p8);
-            //creator.AddTriangle(p8, p7, p6);
-
-            //// West
-            //creator.AddFace(true, false);
-            //creator.AddTriangle(p5, p1, p4);
-            //creator.AddTriangle(p4, p8, p5);
-
-            //// Bottom
-            //creator.AddFace(true, false);
-            //creator.AddTriangle(p2, p1, p5);
-            //creator.AddTriangle(p5, p6, p2);
-
 
             var body = creator.CreateBody();
 

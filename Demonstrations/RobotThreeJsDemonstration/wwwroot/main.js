@@ -63,12 +63,7 @@ async function main() {
                 colors.push(vertex.Color.Blue);
             }
 
-            const indices = [];
-            for (let i = 0; i < body.Triangles.length; i++) {
-                indices.push(body.Triangles[i].Vertex1);
-                indices.push(body.Triangles[i].Vertex2);
-                indices.push(body.Triangles[i].Vertex3);
-            }
+            const indices = body.Indices;
 
             const geometry = new THREE.BufferGeometry();
             geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(positions), 3));

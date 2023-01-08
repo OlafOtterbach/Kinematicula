@@ -32,7 +32,12 @@ namespace Kinematicula.Graphics.Creators.Creator
 
         public void AddFace(bool hasBorder, bool hasFacets)
         {
-            Faces.Add(new CreatorFace() { HasBorder = hasBorder, HasFacets = hasFacets });
+            AddFace(hasBorder, hasFacets, new Color(0, 0, 1));
+        }
+
+        public void AddFace(bool hasBorder, bool hasFacets, Color color)
+        {
+            Faces.Add(new CreatorFace() { HasBorder = hasBorder, HasFacets = hasFacets, Color = color });
         }
 
 

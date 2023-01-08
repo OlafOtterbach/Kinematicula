@@ -10,70 +10,75 @@ public static class ConverterBodyToBodyTjs
 {
     public static BodyTjs ToBodyTjs(this Body body)
     {
-        var triangles = body.Faces.SelectMany(face => face.Triangles).ToList();
-        var result = ConvertTrianglesToTrianglesTjsAndVerticesTjs(triangles);
+        var result = ConvertFacesToTrianglesTjsAndVerticesTjs(body.Faces);
         var edgseTjs = body.Edges.ToEdgesTjs();
 
-        BodyTjs bodyTjs = new BodyTjs(body.Id, body.Name, body.Frame.ToFrameTjs(), result.TrianglesTjs, result.VerticesTjs, edgseTjs);
+        BodyTjs bodyTjs = new BodyTjs(body.Id, body.Name, body.Frame.ToFrameTjs(), result.VerticesTjs, result.IndicesTjs, edgseTjs);
         return bodyTjs;
     }
 
-    private static (TriangleTjs[] TrianglesTjs, VertexTjs[] VerticesTjs) ConvertTrianglesToTrianglesTjsAndVerticesTjs(IEnumerable<Triangle> triangles)
+    private static (int[] IndicesTjs, VertexTjs[] VerticesTjs) ConvertFacesToTrianglesTjsAndVerticesTjs(IEnumerable<Face> faces)
     {
         var vertexComparer = new VertexComparer();
         var index = 0;
         var trianglesTjs = new List<TriangleTjs>();
+        var indices = new List<int>();
         var vertexDict = new Dictionary<Vertex, (int Index, VertexTjs Vertex)>(vertexComparer);
-        foreach (var triangle in triangles)
+        foreach (var face in faces)
         {
-            var vertex1 = -1;
-            if (vertexDict.ContainsKey(triangle.P1))
+            var triangles = face.Triangles;
+            foreach (var triangle in triangles)
             {
-                vertex1 = vertexDict[triangle.P1].Index;
-            }
-            else
-            {
-                vertexDict[triangle.P1] = (index, triangle.P1.ToVertexTjs());
-                vertex1 = index++;
-            }
+                var vertex1 = -1;
+                if (vertexDict.ContainsKey(triangle.P1))
+                {
+                    vertex1 = vertexDict[triangle.P1].Index;
+                }
+                else
+                {
+                    vertexDict[triangle.P1] = (index, triangle.P1.ToVertexTjs(face.Color));
+                    vertex1 = index++;
+                }
 
-            var vertex2 = -1;
-            if (vertexDict.ContainsKey(triangle.P2))
-            {
-                vertex2 = vertexDict[triangle.P2].Index;
-            }
-            else
-            {
-                vertexDict[triangle.P2] = (index, triangle.P2.ToVertexTjs());
-                vertex2 = index++;
-            }
+                var vertex2 = -1;
+                if (vertexDict.ContainsKey(triangle.P2))
+                {
+                    vertex2 = vertexDict[triangle.P2].Index;
+                }
+                else
+                {
+                    vertexDict[triangle.P2] = (index, triangle.P2.ToVertexTjs(face.Color));
+                    vertex2 = index++;
+                }
 
-            var vertex3 = -1;
-            if (vertexDict.ContainsKey(triangle.P3))
-            {
-                vertex3 = vertexDict[triangle.P3].Index;
-            }
-            else
-            {
-                vertexDict[triangle.P3] = (index, triangle.P3.ToVertexTjs());
-                vertex3 = index++;
-            }
+                var vertex3 = -1;
+                if (vertexDict.ContainsKey(triangle.P3))
+                {
+                    vertex3 = vertexDict[triangle.P3].Index;
+                }
+                else
+                {
+                    vertexDict[triangle.P3] = (index, triangle.P3.ToVertexTjs(face.Color));
+                    vertex3 = index++;
+                }
 
-            var triangleTjs = new TriangleTjs(vertex1, vertex2, vertex3);
-            trianglesTjs.Add(triangleTjs);
+                indices.Add(vertex1);
+                indices.Add(vertex2);
+                indices.Add(vertex3);
+            }
         }
 
         var verticesTjs = vertexDict.Values.Select(pair => pair.Vertex).ToArray();
 
-        return (trianglesTjs.ToArray(), verticesTjs);
+        return (indices.ToArray(), verticesTjs);
     }
 
-    private static VertexTjs ToVertexTjs(this Vertex vertex)
+    private static VertexTjs ToVertexTjs(this Vertex vertex, Color color)
     {
-        var position = new PositionTjs(vertex.Point.Position.X, vertex.Point.Position.Y, vertex.Point.Position.Z);
-        var normal = new NormalTjs(vertex.Normal.X, vertex.Normal.Y, vertex.Normal.Z);
-        var color = new ColorTjs(1.0, 0.0, 0.0, 1.0);
-        var vertexTjs = new VertexTjs(position, normal, color);
+        var positionTjs = new PositionTjs(vertex.Point.Position.X, vertex.Point.Position.Y, vertex.Point.Position.Z);
+        var normalTjs = new NormalTjs(vertex.Normal.X, vertex.Normal.Y, vertex.Normal.Z);
+        var colorTjs = new ColorTjs(color.Alpha, color.Red, color.Green, color.Blue);
+        var vertexTjs = new VertexTjs(positionTjs, normalTjs, colorTjs);
 
         return vertexTjs;
     }
