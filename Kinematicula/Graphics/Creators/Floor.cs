@@ -16,7 +16,7 @@ namespace Kinematicula.Graphics.Creators
             {
                 for (var x = 0; x < count; x++)
                 {
-                    var color = ((y % 2) + (x % 2)) % 2 == 0 ? new Color(0.8, 0.8, 0.8) : new Color(0, 0, 0);
+                    var color = ((y % 2) + (x % 2)) % 2 == 0 ? new Color(0.8, 0.8, 0.8) : new Color(0.2, 0.2, 0.2);
 
                     var point1 = positions[x][y];
                     var point2 = positions[x][y + 1];

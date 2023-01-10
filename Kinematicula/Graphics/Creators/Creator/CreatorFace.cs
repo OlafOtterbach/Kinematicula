@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Kinematicula.Graphics.Creators.Creator
+﻿namespace Kinematicula.Graphics.Creators.Creator
 {
     public class CreatorFace
     {

@@ -23,42 +23,45 @@ public static class ConverterBodyToBodyTjs
         var index = 0;
         var trianglesTjs = new List<TriangleTjs>();
         var indices = new List<int>();
-        var vertexDict = new Dictionary<Vertex, (int Index, VertexTjs Vertex)>(vertexComparer);
+        var vertexDict = new Dictionary<VertexTjs, (int Index, VertexTjs Vertex)>(vertexComparer);
         foreach (var face in faces)
         {
             var triangles = face.Triangles;
             foreach (var triangle in triangles)
             {
                 var vertex1 = -1;
-                if (vertexDict.ContainsKey(triangle.P1))
+                var vertexTjs1 = triangle.P1.ToVertexTjs(face.Color);
+                if (vertexDict.ContainsKey(vertexTjs1))
                 {
-                    vertex1 = vertexDict[triangle.P1].Index;
+                    vertex1 = vertexDict[vertexTjs1].Index;
                 }
                 else
                 {
-                    vertexDict[triangle.P1] = (index, triangle.P1.ToVertexTjs(face.Color));
+                    vertexDict[vertexTjs1] = (index, vertexTjs1);
                     vertex1 = index++;
                 }
 
                 var vertex2 = -1;
-                if (vertexDict.ContainsKey(triangle.P2))
+                var vertexTjs2 = triangle.P2.ToVertexTjs(face.Color);
+                if (vertexDict.ContainsKey(vertexTjs2))
                 {
-                    vertex2 = vertexDict[triangle.P2].Index;
+                    vertex2 = vertexDict[vertexTjs2].Index;
                 }
                 else
                 {
-                    vertexDict[triangle.P2] = (index, triangle.P2.ToVertexTjs(face.Color));
+                    vertexDict[vertexTjs2] = (index, vertexTjs2);
                     vertex2 = index++;
                 }
 
                 var vertex3 = -1;
-                if (vertexDict.ContainsKey(triangle.P3))
+                var vertexTjs3 = triangle.P3.ToVertexTjs(face.Color);
+                if (vertexDict.ContainsKey(vertexTjs3))
                 {
-                    vertex3 = vertexDict[triangle.P3].Index;
+                    vertex3 = vertexDict[vertexTjs3].Index;
                 }
                 else
                 {
-                    vertexDict[triangle.P3] = (index, triangle.P3.ToVertexTjs(face.Color));
+                    vertexDict[vertexTjs3] = (index, vertexTjs3);
                     vertex3 = index++;
                 }
 
