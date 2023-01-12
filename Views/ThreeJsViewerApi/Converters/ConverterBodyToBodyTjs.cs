@@ -1,6 +1,4 @@
 ﻿using Kinematicula.Graphics;
-using Kinematicula.Mathematics;
-using Kinematicula.Mathematics.Extensions;
 using ThreeJsViewerApi.Helpers;
 using ThreeJsViewerApi.Model;
 
@@ -23,7 +21,7 @@ public static class ConverterBodyToBodyTjs
         var index = 0;
         var trianglesTjs = new List<TriangleTjs>();
         var indices = new List<int>();
-        var vertexDict = new Dictionary<VertexTjs, (int Index, VertexTjs Vertex)>(vertexComparer);
+        var vertexDict = new Dictionary<VertexTjs,int>(vertexComparer);
         foreach (var face in faces)
         {
             var triangles = face.Triangles;
@@ -33,11 +31,11 @@ public static class ConverterBodyToBodyTjs
                 var vertexTjs1 = triangle.P1.ToVertexTjs(face.Color);
                 if (vertexDict.ContainsKey(vertexTjs1))
                 {
-                    vertex1 = vertexDict[vertexTjs1].Index;
+                    vertex1 = vertexDict[vertexTjs1];
                 }
                 else
                 {
-                    vertexDict[vertexTjs1] = (index, vertexTjs1);
+                    vertexDict[vertexTjs1] = index;
                     vertex1 = index++;
                 }
 
@@ -45,11 +43,11 @@ public static class ConverterBodyToBodyTjs
                 var vertexTjs2 = triangle.P2.ToVertexTjs(face.Color);
                 if (vertexDict.ContainsKey(vertexTjs2))
                 {
-                    vertex2 = vertexDict[vertexTjs2].Index;
+                    vertex2 = vertexDict[vertexTjs2];
                 }
                 else
                 {
-                    vertexDict[vertexTjs2] = (index, vertexTjs2);
+                    vertexDict[vertexTjs2] = index;
                     vertex2 = index++;
                 }
 
@@ -57,11 +55,11 @@ public static class ConverterBodyToBodyTjs
                 var vertexTjs3 = triangle.P3.ToVertexTjs(face.Color);
                 if (vertexDict.ContainsKey(vertexTjs3))
                 {
-                    vertex3 = vertexDict[vertexTjs3].Index;
+                    vertex3 = vertexDict[vertexTjs3];
                 }
                 else
                 {
-                    vertexDict[vertexTjs3] = (index, vertexTjs3);
+                    vertexDict[vertexTjs3] = index;
                     vertex3 = index++;
                 }
 
@@ -71,9 +69,7 @@ public static class ConverterBodyToBodyTjs
             }
         }
 
-        var verticesTjs = vertexDict.Values.Select(pair => pair.Vertex).ToArray();
-
-        return (indices.ToArray(), verticesTjs);
+        return (indices.ToArray(), vertexDict.Keys.ToArray());
     }
 
     private static VertexTjs ToVertexTjs(this Vertex vertex, Color color)

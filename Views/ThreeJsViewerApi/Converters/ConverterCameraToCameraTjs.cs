@@ -1,7 +1,7 @@
-﻿using Kinematicula.Graphics;
-using ThreeJsViewerApi.Model;
+﻿namespace ThreeJsViewerApi.Converters;
 
-namespace ThreeJsViewerApi.Converters;
+using Kinematicula.Graphics;
+using ThreeJsViewerApi.Model;
 
 public static class ConverterCameraToCameraTjs
 {
@@ -9,6 +9,7 @@ public static class ConverterCameraToCameraTjs
     {
         var cameraTjs = new CameraTjs(
             camera.Name,
+            camera.Frame.ToEulerFrameTjs(),
             camera.Frame.ToFrameTjs());
 
         return cameraTjs;

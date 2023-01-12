@@ -30,20 +30,21 @@ async function main() {
     let scenery = await getScene();
     addBodiesToScene(scene, scenery.Bodies);
 
-    //camera.matrixAutoUpdate = false;
-    const frame = scenery.Cameras[1].Frame;
-    camera.matrix.set(
-        frame.A11, frame.A12, frame.A13, frame.A14,
-        frame.A21, frame.A22, frame.A23, frame.A24,
-        frame.A31, frame.A32, frame.A33, frame.A34,
-        frame.A41, frame.A42, frame.A43, frame.A44);
+    const euler = scenery.Cameras[1].EulerFrame;
+    camera.position.x = euler.X;
+    camera.position.y = euler.Y;
+    camera.position.z = euler.Z;
+    camera.rotation.x = euler.AngleX;
+    camera.rotation.y = euler.AngleY;
+    camera.rotation.z = euler.AngleZ;
 
-    camera.position.x = 0;
-    camera.position.y = -1000;
-    camera.position.z = 800;
-    camera.rotation.x = 1.0;
-    camera.rotation.y = 0.2;
-    camera.rotation.z = 0.2;
+
+    //camera.position.x = 0;
+    //camera.position.y = -2000;
+    //camera.position.z = 800;
+    //camera.rotation.x = 1.4;
+    //camera.rotation.y = 0.2;
+    //camera.rotation.z = 0.2;
 
     function addBodiesToScene(scene, bodies) {
 
