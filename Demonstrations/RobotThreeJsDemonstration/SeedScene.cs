@@ -9,6 +9,7 @@ using Kinematicula.Mathematics;
 using Kinematicula.Scening;
 using RobotLib.Graphics;
 using RobotLib.Kinematics;
+using System;
 
 public static class SeedScene
 {
@@ -202,7 +203,25 @@ public static class SeedScene
             Target = new Position3D(),
         };
         //cameraOne.SetCamera(45.0, 45.0, 3500.0);
-        cameraOne.Frame = Matrix44D.CreateCoordinateSystem(new Position3D(0, 200, 1800), new Vector3D(1, 0, 0), new Vector3D(0, 0, 1));
+        //cameraOne.SetCamera(30.0, 30.0, 1800.0);
+        //cameraOne.Frame = Matrix44D.CreateCoordinateSystem(new Position3D(0, 200, 1800), new Vector3D(1, 0, 0), new Vector3D(0, 0, 1));
+
+        var rotz = Matrix44D.CreateRotation(new Vector3D(0, 0, 1), Math.PI / 4.0);
+
+        var ex = new Vector3D(1, 0, 0);
+        var ey = new Vector3D(0, 1, 0);
+        var ez = ex & ey;
+        var rotY = Matrix44D.CreateRotation(new Vector3D(0, 1, 0), 0 * ConstantsMath.Pi / 4.0);
+        var rotZ = Matrix44D.CreateRotation(new Vector3D(0, 0, 1), ConstantsMath.Pi / 4.0);
+        ex = rotY * rotZ * ex;
+        ez = rotY * rotZ * ez;
+
+        cameraOne.Frame = Matrix44D.CreateCoordinateSystem(
+            new Position3D(-1500, -1500, 1000),
+            ex,
+            ez);
+
+
 
 
         scene.AddBody(cameraOne);
@@ -215,11 +234,11 @@ public static class SeedScene
         };
         scene.AddBody(cameraTwo);
 
-        var ez = new Vector3D(0, -1, 1).Normalize();
+        //var ez = new Vector3D(0, -1, 1).Normalize();
 
-        var cameraTwoToWagonFixedConstraint = new FixedConstraint(
-            new Anchor(waggon, Matrix44D.CreateTranslation(new Vector3D(0, -1000, 1000))),
-            new Anchor(cameraTwo, Matrix44D.CreateCoordinateSystem(new Position3D(), new Vector3D(1, 0, 0), ez)));
+        //var cameraTwoToWagonFixedConstraint = new FixedConstraint(
+        //    new Anchor(waggon, Matrix44D.CreateTranslation(new Vector3D(0, -1000, 1000))),
+        //    new Anchor(cameraTwo, Matrix44D.CreateCoordinateSystem(new Position3D(), new Vector3D(1, 0, 0), ez)));
 
 
         scene.InitScene();
