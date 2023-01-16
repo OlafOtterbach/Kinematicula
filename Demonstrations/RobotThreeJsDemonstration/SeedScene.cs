@@ -211,16 +211,17 @@ public static class SeedScene
         var ex = new Vector3D(1, 0, 0);
         var ey = new Vector3D(0, 1, 0);
         var ez = ex & ey;
-        var rotY = Matrix44D.CreateRotation(new Vector3D(0, 1, 0), 0 * ConstantsMath.Pi / 4.0);
+        var rotY = Matrix44D.CreateRotation(new Vector3D(0, 1, 0), ConstantsMath.Pi / 4.0);
         var rotZ = Matrix44D.CreateRotation(new Vector3D(0, 0, 1), ConstantsMath.Pi / 4.0);
-        ex = rotY * rotZ * ex;
-        ez = rotY * rotZ * ez;
+        ex = rotZ * rotY * ex;
+        ez = rotZ * rotY * ez;
 
         cameraOne.Frame = Matrix44D.CreateCoordinateSystem(
-            new Position3D(-1500, -1500, 1000),
+            new Position3D(-1300, -1300, 1800),
             ex,
             ez);
 
+        //cameraOne.SetCamera(45.0, 45.0, 3500.0);
 
 
 

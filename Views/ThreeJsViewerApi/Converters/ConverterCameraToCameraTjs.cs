@@ -9,19 +9,24 @@ public static class ConverterCameraToCameraTjs
 {
     public static CameraTjs ToCameraTjs(this Camera camera)
     {
-        var frame = camera.Frame;
+        var offset = camera.Frame.Offset;
+        var ex = camera.Frame.Ex;
+        var ey = camera.Frame.Ey;
+        var ez = camera.Frame.Ez;
 
-        var back = Matrix44D.CreateTranslation(-1.0 * frame.Offset.ToVector3D());
-        var trans = Matrix44D.CreateTranslation(frame.Offset.ToVector3D());
-        var rotY = Matrix44D.CreateRotation(frame.Ey, -ConstantsMath.HalfPi);
-        var rotZ = Matrix44D.CreateRotation(frame.Ez, -ConstantsMath.HalfPi);
-        var frameTjs = trans * rotY * rotZ * back * frame;
+        var rotY = Matrix44D.CreateRotation(ey, -ConstantsMath.HalfPi);
+        var rotZ = Matrix44D.CreateRotation(ez, -ConstantsMath.HalfPi);
+        var offsetTjs = offset;
+        var exTjs = (rotY * rotZ * ex).Normalize();
+        var eyTjs = (rotY * rotZ * ey).Normalize();
+        var ezTjs = (rotY * rotZ * ez).Normalize();
+        var frameTjs = Matrix44D.CreateCoordinateSystem(offsetTjs, exTjs, eyTjs, ezTjs);
 
 
         var cameraTjs = new CameraTjs(
             camera.Name,
             frameTjs.ToEulerFrameTjs(),
-            frameTjs.ToFrameTjs());
+            camera.Frame.ToFrameTjs());
 
         return cameraTjs;
     }
