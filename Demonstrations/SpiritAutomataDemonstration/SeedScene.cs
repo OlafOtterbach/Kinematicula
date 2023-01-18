@@ -122,7 +122,7 @@ public static class SeedScene
             NearPlane = 1.0,
             Target = new Position3D(),
         };
-        cameraOne.SetCamera(45.0, 45.0, 3500.0);
+        cameraOne.SetCameraToOrigin(45.0, 45.0, 3500.0);
         scene.AddBody(cameraOne);
 
         var cameraTwo = new Camera()

@@ -23,7 +23,7 @@ public class Scene
             Target = new Position3D(),
         };
 
-        defaultCamera.SetCamera(0.0, 45.0, 3000.0);
+        defaultCamera.SetCameraToOrigin(0.0, 45.0, 3000.0);
 
         Bodies = new List<Body>() { world, defaultCamera };
         ForwardSolver = forwardSolver;

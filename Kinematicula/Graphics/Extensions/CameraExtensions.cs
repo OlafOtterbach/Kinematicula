@@ -5,38 +5,29 @@ namespace Kinematicula.Graphics.Extensions
 {
     public static class CameraExtensions
     {
-        public static void SetCamera2(this Camera camera, double alpha, double beta, double distance)
+        public static void SetCameraToOrigin(this Camera camera, double alpha, double beta, double distance)
         {
-            alpha = alpha.ToRadiant();
-            beta = beta.ToRadiant();
+            camera.SetCamera(new Position3D(), alpha, beta, distance);
+        }
+
+        public static void SetCameraToTarget(this Camera camera, double alpha, double beta, double distance)
+        {
+            camera.SetCamera(camera.Target, alpha, beta, distance);
+        }
+
+        public static void SetCamera(this Camera camera, Position3D targetPosition, double alpha, double beta, double distance)
+        {
+            var targetTranslation = Matrix44D.CreateTranslation(targetPosition.ToVector3D());
+
             var rotZ = Matrix44D.CreateRotation(new Vector3D(0, 0, 1), alpha);
             var rotY = Matrix44D.CreateRotation(new Vector3D(0, 1, 0), beta);
             var rotation = rotZ * rotY;
 
             var translation = Matrix44D.CreateTranslation(new Vector3D(-distance, 0.0, 0.0));
-            var frame = rotation * translation;
+            var frame = targetTranslation * rotation * translation;
 
             camera.Frame = frame;
             camera.Target = new Position3D(0.0, 0.0, 0.0);
-        }
-
-
-        public static void SetCamera(this Camera camera, double alpha, double beta, double distance)
-        {
-            camera.SetCamera(new Position3D(), alpha, beta, distance);
-        }
-
-        public static void SetCamera(this Camera camera, Position3D target, double alpha, double beta, double distance)
-        {
-            alpha = alpha.ToRadiant();
-            beta = beta.ToRadiant();
-            var rotAlpha = Matrix44D.CreateRotation(new Position3D(), new Vector3D(0, 0, 1), alpha);
-            var rotBeta = Matrix44D.CreateRotation(new Position3D(), new Vector3D(1, 0, 0), -beta);
-            var translation = Matrix44D.CreateTranslation(new Vector3D(0.0, -distance, 0.0));
-            var targetTranslation = Matrix44D.CreateTranslation(camera.Target.ToVector3D());
-            var frame = targetTranslation * rotAlpha * rotBeta * translation;
-            camera.Frame = frame;
-            camera.Target = target;
         }
 
         public static void OrbitXY(this Camera camera, double alpha)
