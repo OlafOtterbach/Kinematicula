@@ -5,6 +5,22 @@ namespace Kinematicula.Graphics.Extensions
 {
     public static class CameraExtensions
     {
+        public static void SetCamera2(this Camera camera, double alpha, double beta, double distance)
+        {
+            alpha = alpha.ToRadiant();
+            beta = beta.ToRadiant();
+            var rotZ = Matrix44D.CreateRotation(new Vector3D(0, 0, 1), alpha);
+            var rotY = Matrix44D.CreateRotation(new Vector3D(0, 1, 0), beta);
+            var rotation = rotZ * rotY;
+
+            var translation = Matrix44D.CreateTranslation(new Vector3D(-distance, 0.0, 0.0));
+            var frame = rotation * translation;
+
+            camera.Frame = frame;
+            camera.Target = new Position3D(0.0, 0.0, 0.0);
+        }
+
+
         public static void SetCamera(this Camera camera, double alpha, double beta, double distance)
         {
             camera.SetCamera(new Position3D(), alpha, beta, distance);

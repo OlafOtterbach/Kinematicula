@@ -221,7 +221,7 @@ public static class SeedScene
             ex,
             ez);
 
-        //cameraOne.SetCamera(45.0, 45.0, 3500.0);
+        cameraOne.SetCamera2(45.0, 45.0, 2500.0);
 
 
 
