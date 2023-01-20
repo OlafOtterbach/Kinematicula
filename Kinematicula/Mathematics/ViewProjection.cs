@@ -1,4 +1,6 @@
-﻿namespace Kinematicula.Mathematics
+﻿using Kinematicula.Graphics;
+
+namespace Kinematicula.Mathematics
 {
     public static class ViewProjection
     {
@@ -20,8 +22,15 @@
 
         public static Position3D ProjectCameraSystemToSceneSystem(this Position3D position, Matrix44D cameraFrame)
         {
-            var scenePosition = cameraFrame * position;
-            return scenePosition;
+            var rotationZToHiddenLineCameraSystem = Matrix44D.CreateRotation(new Vector3D(0, 0, 1), -ConstantsMath.HalfPi);
+            var frameInHiddenLineScene = (cameraFrame.Translation * cameraFrame.Affine * rotationZToHiddenLineCameraSystem);
+            var positionInHiddenLineScene = frameInHiddenLineScene * position;
+            //var rotationZToInternalCameraSystem = Matrix44D.CreateRotation(new Vector3D(0, 0, 1), ConstantsMath.HalfPi);
+            //var positionInScene = rotationZToInternalCameraSystem * positionInHiddenLineScene;
+
+
+
+            return positionInHiddenLineScene;
         }
 
         public static Position3D ProjectSceneSystemToCameraSystem(this Position3D position, Matrix44D cameraFrame)

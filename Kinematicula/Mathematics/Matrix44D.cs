@@ -68,11 +68,11 @@ namespace Kinematicula.Mathematics
             }
         }
 
-        public Vector3D Translation
+        public Matrix44D Translation
         {
             get
             {
-                return new Vector3D(_matrix.Translation);
+                return Matrix44D.CreateTranslation(new Vector3D(_matrix.Translation));
             }
         }
 

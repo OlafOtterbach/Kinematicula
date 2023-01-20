@@ -41,7 +41,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Views", "Views", "{122DCC81
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThreeJsViewerApi", "Views\ThreeJsViewerApi\ThreeJsViewerApi.csproj", "{7337DF9D-EBA1-437B-A600-D0E5C7A02970}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreeJsViewerApi.Test", "ThreeJsViewerApi.Test\ThreeJsViewerApi.Test.csproj", "{D3739F2C-DA39-4DF5-A95D-CBBF011DE4CF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreeJsViewerApi.Test", "Views\ThreeJsViewerApi.Test\ThreeJsViewerApi.Test.csproj", "{D3739F2C-DA39-4DF5-A95D-CBBF011DE4CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
