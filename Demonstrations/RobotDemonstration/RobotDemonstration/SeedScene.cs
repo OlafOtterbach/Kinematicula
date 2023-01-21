@@ -39,7 +39,7 @@ public static class SeedScene
             NearPlane = 1.0,
             Target = new Position3D(),
         };
-        camera.SetCameraToOrigin(30.0.ToRadiant(), 30.0.ToRadiant(), 1800.0);
+        camera.SetCameraToOrigin(-230.0.ToRadiant(), 30.0.ToRadiant(), 1800.0);
         scene.AddBody(camera);
 
         scene.InitScene();

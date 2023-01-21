@@ -100,7 +100,7 @@ namespace Kinematicula.LogicViewing
             var alpha = -(360.0 * pixelDeltaX / horicontalPixelFor360Degree).ToRadiant();
             var beta = -(360.0 * pixelDeltaY / verticalPixelFor360Degree).ToRadiant();
             camera.OrbitXY(alpha);
-            camera.OrbitYZ(beta);
+            camera.OrbitXZ(beta);
             return camera;
         }
     }

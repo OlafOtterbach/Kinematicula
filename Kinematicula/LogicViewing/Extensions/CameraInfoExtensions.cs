@@ -11,7 +11,7 @@ namespace Kinematicula.LogicViewing.Extensions
             var ex = camera.Frame.Ex;
             var ey = camera.Frame.Ey;
             var ez = camera.Frame.Ez;
-            var target = offset + ey * camera.Distance;
+            var target = offset + ex * camera.Distance;
             var back = Matrix44D.CreateCoordinateSystem(target, ex, ey, ez);
             var trans = back.Inverse();
             ex = new Vector3D(1.0, 0.0, 0.0);
@@ -32,26 +32,26 @@ namespace Kinematicula.LogicViewing.Extensions
             camera.Frame = newFrame;
         }
 
-        public static void OrbitYZ(this CameraInfo camera, double alpha)
+        public static void OrbitXZ(this CameraInfo camera, double alpha)
         {
             var offset = camera.Frame.Offset;
             var ex = camera.Frame.Ex;
             var ey = camera.Frame.Ey;
             var ez = camera.Frame.Ez;
-            var target = offset + ey * camera.Distance;
+            var target = offset + ex * camera.Distance;
             var back = Matrix44D.CreateCoordinateSystem(target, ex, ey, ez);
             var trans = back.Inverse();
-            ey = new Vector3D(0.0, 1.0, 0.0);
+            ex = new Vector3D(1.0, 0.0, 0.0);
             ez = new Vector3D(0.0, 0.0, 1.0);
             offset = trans * offset;
-            var rotateYZ = Matrix44D.CreateRotation(new Vector3D(1, 0, 0), alpha);
-            ey = rotateYZ * ey;
-            ez = rotateYZ * ez;
-            offset = rotateYZ * offset;
+            var rotateXZ = Matrix44D.CreateRotation(new Vector3D(0, 1, 0), -alpha);
+            ex = rotateXZ * ex;
+            ez = rotateXZ * ez;
+            offset = rotateXZ * offset;
             offset = back * offset;
-            ey = back * ey;
+            ex = back * ex;
             ez = back * ez;
-            ey.Normalize();
+            ex.Normalize();
             ez.Normalize();
             var newFrame = Matrix44D.CreateCoordinateSystem(offset, ex, ez);
             camera.Frame = newFrame;
@@ -67,7 +67,7 @@ namespace Kinematicula.LogicViewing.Extensions
             var ex = camera.Frame.Ex;
             var ey = camera.Frame.Ey;
             var ez = camera.Frame.Ez;
-            offset = offset + ey * delta;
+            offset = offset + ex * delta;
             camera.Frame = Matrix44D.CreateCoordinateSystem(offset, ex, ey, ez);
         }
 
