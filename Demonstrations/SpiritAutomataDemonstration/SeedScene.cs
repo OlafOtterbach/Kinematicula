@@ -84,7 +84,7 @@ public static class SeedScene
 
         // waggon
         var waggon = Cube.Create(100);
-        waggon.Name = "rail";
+        waggon.Name = "waggon";
         waggon.AddSensor(new PlaneSensor(new Vector3D(0, 0, 1)));
         scene.AddBody(waggon);
         var waggonRailToWaggonlinearConstraint = new TelescopeLinearAxisConstraint(
@@ -131,14 +131,19 @@ public static class SeedScene
             NearPlane = 1.0,
             Target = new Position3D(),
         };
-        cameraTwo.SetCameraToOrigin(0.0.ToRadiant(), 45.0.ToRadiant(), 1000.0);
         scene.AddBody(cameraTwo);
 
-        var ezTwo = new Vector3D(0, -1, 1).Normalize();
+        var exTwo = new Vector3D(0, 1, 1).Normalize();
+        var eyTwo = new Vector3D(-1, 0, 0);
+        var ezTwo = exTwo & eyTwo;
+
+
+        exTwo = new Vector3D(0, 0, -1);
+        ezTwo = new Vector3D(0, 1, 0);
 
         var cameraTwoToWagonFixedConstraint = new FixedConstraint(
-            new Anchor(waggon, Matrix44D.CreateTranslation(new Vector3D(0, -1000, 1000))),
-            new Anchor(cameraTwo, Matrix44D.CreateCoordinateSystem(new Position3D(), new Vector3D(1,0,0), ezTwo)));
+            new Anchor(waggon, Matrix44D.CreateTranslation(new Vector3D(-1000, 0, 1000))),
+            new Anchor(cameraTwo, Matrix44D.CreateCoordinateSystem(new Position3D(), exTwo, ezTwo)));
 
 
         scene.InitScene();

@@ -1,7 +1,7 @@
 ﻿namespace HiddenLineViewerApi;
 
+using HiddenLineViewerApi.HiddenLine;
 using Kinematicula.LogicViewing;
-using Kinematicula.HiddenLineGraphics;
 
 public class HiddenLineViewerLogic : IHiddenLineViewerLogic
 {
