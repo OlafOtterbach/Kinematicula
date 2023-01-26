@@ -21,9 +21,9 @@ public static class NearPlaneClipping
         var start = edge.Start;
         var end = edge.End;
 
-        if ((start.Y < nearPlaneDist) || (end.Y < nearPlaneDist))
+        if ((start.X < nearPlaneDist) || (end.X < nearPlaneDist))
         {
-            if ((start.Y < nearPlaneDist) && (end.Y < nearPlaneDist))
+            if ((start.X < nearPlaneDist) && (end.X < nearPlaneDist))
             {
                 return (false, null);
             }
@@ -31,10 +31,10 @@ public static class NearPlaneClipping
             var intersection = start;
             if (direction.Y != 0.0)
             {
-                double lamda = Math.Abs((start.Y - nearPlaneDist) / direction.Y);
+                double lamda = Math.Abs((start.X - nearPlaneDist) / direction.X);
                 intersection += direction * lamda;
             }
-            if (start.Y < nearPlaneDist)
+            if (start.X < nearPlaneDist)
             {
                 start = intersection;
             }

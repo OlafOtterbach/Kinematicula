@@ -4,7 +4,6 @@ using Kinematicula.Scening;
 using Kinematicula.LogicViewing;
 using Kinematicula.Mathematics;
 using HiddenLineViewerApi.HiddenLine.Model;
-using HiddenLineViewerApi.HiddenLine.Services;
 
 public class HiddenLineService : IHiddenLineService
 {

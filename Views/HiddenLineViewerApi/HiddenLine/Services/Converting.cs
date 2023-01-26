@@ -10,10 +10,7 @@ public static class Converting
 {
     public static SceneHL ToHiddenLineScene(this Scene scene, CameraInfo camera)
     {
-        // Rotate XZ-Plane in x axis of camera with y of plane is x - axis like game plane.
-        var rotationZ = Matrix44D.CreateRotation(new Vector3D(0,0,1), -ConstantsMath.HalfPi);
-        var frame = (camera.Frame.Translation * camera.Frame.Affine * rotationZ);
-        var cameraFrame = frame.Inverse();
+        var cameraFrame = camera.Frame.Inverse();
 
         var dict = new Dictionary<Triangle, TriangleHL>();
         scene.Bodies.ForEach(body => ConvertTrianglesOfBody(body, dict, cameraFrame, camera.NearPlane));
