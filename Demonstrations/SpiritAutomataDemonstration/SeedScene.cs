@@ -132,18 +132,11 @@ public static class SeedScene
             Target = new Position3D(),
         };
         scene.AddBody(cameraTwo);
-
-        var exTwo = new Vector3D(0, 1, 1).Normalize();
-        var eyTwo = new Vector3D(-1, 0, 0);
-        var ezTwo = exTwo & eyTwo;
-
-
-        exTwo = new Vector3D(0, 0, -1);
-        ezTwo = new Vector3D(0, 1, 0);
+        cameraTwo.SetCameraToOrigin(0.0.ToRadiant(), -90.0.ToRadiant(), 1500.0);
 
         var cameraTwoToWagonFixedConstraint = new FixedConstraint(
-            new Anchor(waggon, Matrix44D.CreateTranslation(new Vector3D(-1000, 0, 1000))),
-            new Anchor(cameraTwo, Matrix44D.CreateCoordinateSystem(new Position3D(), exTwo, ezTwo)));
+            new Anchor(waggon, Matrix44D.CreateTranslation(new Vector3D(0, 0, 1200))),
+            new Anchor(cameraTwo, Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, 0), cameraTwo.Frame.Ex, cameraTwo.Frame.Ez)));
 
 
         scene.InitScene();
