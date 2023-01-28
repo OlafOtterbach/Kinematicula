@@ -13,12 +13,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<None Include="LICENSE" Pack="true" PackagePath="" />
-    <None Include="Kinematicula.png" Pack="true" PackagePath="" />
+    <Compile Remove="HiddenLine\**" />
+    <EmbeddedResource Remove="HiddenLine\**" />
+    <None Remove="HiddenLine\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="HiddenLine\" />
+	<None Include="LICENSE" Pack="true" PackagePath="" />
+    <None Include="Kinematicula.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>
