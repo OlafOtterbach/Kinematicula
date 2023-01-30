@@ -1,13 +1,13 @@
 ﻿namespace HiddenLineViewerApi.HiddenLine.Services;
 
 using Kinematicula.Scening;
-using Kinematicula.LogicViewing;
 using Kinematicula.Mathematics;
 using HiddenLineViewerApi.HiddenLine.Model;
+using Kinematicula.Graphics;
 
 public class HiddenLineService : IHiddenLineService
 {
-    public Dictionary<ushort, ushort[]> GetHiddenLineGraphics(Scene scene, CameraInfo camera, double canvasWidth, double canvasHeight)
+    public Dictionary<ushort, ushort[]> GetHiddenLineGraphics(Scene scene, Camera camera, double canvasWidth, double canvasHeight)
     {
         // Convert to hidden line graphics scene
         var sceneHL = scene.ToHiddenLineScene(camera);

@@ -1,33 +1,29 @@
-﻿using Kinematicula.Graphics;
+﻿namespace Kinematicula.LogicViewing.Extensions;
+
+using Kinematicula.Graphics;
 using Kinematicula.Scening;
 
-namespace Kinematicula.LogicViewing.Extensions
+public static class SceneExtensions
 {
-    internal static class SceneExtensions
+    public static Camera GetCamera(this Scene scene, string name)
     {
-        public static CameraInfo GetCamera(this Scene scene, string name)
-        {
-            var cameraBody = scene.GetCameraBody(name);
-            var camera = cameraBody.ToCamera();
-            return camera;
-        }
+        var camera = scene.GetCameraBody(name);
+        return camera;
+    }
 
-        public static void UpdateCamera(this Scene scene, CameraInfo camera)
+    public static void UpdateCamera(this Scene scene, Camera camera)
+    {
+        if (camera != null)
         {
-            if (camera != null)
-            {
-                var cameraBody = scene.GetCameraBody(camera.Name);
-                cameraBody.Update(camera);
-                scene.SetBodyFrame(cameraBody, camera.Frame);
-            }
+            scene.SetBodyFrame(camera, camera.Frame);
         }
+    }
 
-        private static Camera GetCameraBody(this Scene scene, string name)
-        {
-            var cameras = scene.Bodies.OfType<Camera>().ToList();
-            var matchingCamera = cameras.Where(body => body.Name == name).Concat(cameras.Where(body => string.IsNullOrEmpty(body.Name))).First();
+    private static Camera GetCameraBody(this Scene scene, string name)
+    {
+        var cameras = scene.Bodies.OfType<Camera>().ToList();
+        var matchingCamera = cameras.Where(body => body.Name == name).Concat(cameras.Where(body => string.IsNullOrEmpty(body.Name))).First();
 
-            return matchingCamera;
-        }
+        return matchingCamera;
     }
 }

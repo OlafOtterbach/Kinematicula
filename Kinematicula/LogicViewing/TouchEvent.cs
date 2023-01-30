@@ -1,20 +1,19 @@
-﻿using Kinematicula.Mathematics;
-using System;
+﻿namespace Kinematicula.LogicViewing;
 
-namespace Kinematicula.LogicViewing
+using Kinematicula.Graphics;
+using Kinematicula.Mathematics;
+
+public class TouchEvent
 {
-    public class TouchEvent
-    {
-        public bool IsBodyTouched { get; set; }
+    public bool IsBodyTouched { get; set; }
 
-        public Guid BodyId { get; set; }
+    public Guid BodyId { get; set; }
 
-        public Position3D TouchPosition { get; set; }
+    public Position3D TouchPosition { get; set; }
 
-        public CameraInfo Camera { get; set; }
+    public Camera Camera { get; set; }
 
-        public int CanvasWidth { get; set; }
+    public int CanvasWidth { get; set; }
 
-        public int CanvasHeight { get; set; }
-    }
+    public int CanvasHeight { get; set; }
 }
