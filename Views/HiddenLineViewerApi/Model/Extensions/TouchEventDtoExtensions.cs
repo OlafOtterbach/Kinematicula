@@ -13,7 +13,7 @@ public static class TouchEventDtoExtensions
             IsBodyTouched = touchEventDto.IsBodyTouched,
             BodyId = touchEventDto.BodyId,
             TouchPosition = touchEventDto.TouchPosition.ToPosition3D(),
-            Camera = scene.GetCamera(touchEventDto.Camera.Name),
+            Camera = scene.GetCamera(touchEventDto.Camera.Id),
             CanvasWidth = touchEventDto.CanvasWidth,
             CanvasHeight = touchEventDto.CanvasHeight
         };

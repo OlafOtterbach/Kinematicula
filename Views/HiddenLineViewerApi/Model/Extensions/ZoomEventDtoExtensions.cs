@@ -11,7 +11,7 @@ public static class ZoomEventDtoExtensions
         var zoomEvent = new ZoomEvent
         {
             Delta = zoomEventDto.delta,
-            Camera = scene.GetCamera(zoomEventDto.camera.Name),
+            Camera = scene.GetCamera(zoomEventDto.camera.Id),
             CanvasWidth = zoomEventDto.canvasWidth,
             CanvasHeight = zoomEventDto.canvasHeight
         };

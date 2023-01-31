@@ -38,6 +38,12 @@ public class Scene
 
     public List<Body> Bodies { get; }
 
+    public Body GetBody(Guid id)
+    {
+        var body = Bodies.FirstOrDefault(b => b.Id == id);
+        return body;
+    }
+
     public void AddBody(Body body)
     {
         var bodies = body.GetBodyAndDescendants();

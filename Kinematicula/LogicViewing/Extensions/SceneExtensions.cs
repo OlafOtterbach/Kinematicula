@@ -5,9 +5,9 @@ using Kinematicula.Scening;
 
 public static class SceneExtensions
 {
-    public static Camera GetCamera(this Scene scene, string name)
+    public static Camera GetCamera(this Scene scene, Guid cameraId)
     {
-        var camera = scene.GetCameraBody(name);
+        var camera = scene.GetBody(cameraId) as Camera;
         return camera;
     }
 
@@ -17,13 +17,5 @@ public static class SceneExtensions
         {
             scene.SetBodyFrame(camera, camera.Frame);
         }
-    }
-
-    private static Camera GetCameraBody(this Scene scene, string name)
-    {
-        var cameras = scene.Bodies.OfType<Camera>().ToList();
-        var matchingCamera = cameras.Where(body => body.Name == name).Concat(cameras.Where(body => string.IsNullOrEmpty(body.Name))).First();
-
-        return matchingCamera;
     }
 }

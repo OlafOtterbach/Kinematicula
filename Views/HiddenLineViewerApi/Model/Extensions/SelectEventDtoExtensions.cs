@@ -12,7 +12,7 @@ namespace HiddenLineViewerApi
             {
                 selectPositionX = selectEventDto.selectPositionX,
                 selectPositionY = selectEventDto.selectPositionY,
-                Camera = scene.GetCamera(selectEventDto.camera.Name),
+                Camera = scene.GetCamera(selectEventDto.camera.Id),
                 CanvasWidth = selectEventDto.canvasWidth,
                 CanvasHeight = selectEventDto.canvasHeight
             };

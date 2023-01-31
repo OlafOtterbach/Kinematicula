@@ -50,7 +50,7 @@ public class LogicView : ILogicView
             Scene.UpdateCamera(touchEvent.Camera);
         }
 
-        return Scene.GetCamera(touchEvent.Camera.Name);
+        return Scene.GetCamera(touchEvent.Camera.Id);
     }
 
     public Camera Select(SelectEvent selectEvent)
@@ -66,7 +66,7 @@ public class LogicView : ILogicView
             Scene.UpdateCamera(selectEvent.Camera);
         }
 
-        return Scene.GetCamera(selectEvent.Camera.Name);
+        return Scene.GetCamera(selectEvent.Camera.Id);
     }
 
     public Camera Move(MoveEvent moveEvent)
@@ -79,7 +79,7 @@ public class LogicView : ILogicView
             Scene.UpdateCamera(moveEvent.Camera);
         }
 
-        return Scene.GetCamera(moveEvent.Camera.Name);
+        return Scene.GetCamera(moveEvent.Camera.Id);
     }
 
     public Camera Zoom(ZoomEvent zoomEvent)
@@ -89,7 +89,7 @@ public class LogicView : ILogicView
         zoomEvent.Camera.Zoom(dy);
         Scene.UpdateCamera(zoomEvent.Camera);
 
-        return Scene.GetCamera(zoomEvent.Camera.Name);
+        return Scene.GetCamera(zoomEvent.Camera.Id);
     }
 
     private Camera Orbit(double pixelDeltaX, double pixelDeltaY, int canvasWidth, int canvasHeight, Camera camera)

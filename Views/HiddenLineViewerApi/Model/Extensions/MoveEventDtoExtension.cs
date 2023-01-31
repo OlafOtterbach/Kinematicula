@@ -18,7 +18,7 @@ public static class MoveEventDtoExtension
             StartMoveY = moveEventDto.StartY,
             EndMoveX = moveEventDto.EndX,
             EndMoveY = moveEventDto.EndY,
-            Camera = scene.GetCamera(moveEventDto.Camera.Name),
+            Camera = scene.GetCamera(moveEventDto.Camera.Id),
             CanvasWidth = moveEventDto.CanvasWidth,
             CanvasHeight = moveEventDto.CanvasHeight,
         };
