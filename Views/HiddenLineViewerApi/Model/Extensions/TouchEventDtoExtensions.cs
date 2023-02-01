@@ -1,7 +1,6 @@
 ﻿namespace HiddenLineViewerApi;
 
 using Kinematicula.LogicViewing;
-using Kinematicula.LogicViewing.Extensions;
 using Kinematicula.Scening;
 
 public static class TouchEventDtoExtensions
@@ -13,7 +12,7 @@ public static class TouchEventDtoExtensions
             IsBodyTouched = touchEventDto.IsBodyTouched,
             BodyId = touchEventDto.BodyId,
             TouchPosition = touchEventDto.TouchPosition.ToPosition3D(),
-            Camera = scene.GetCamera(touchEventDto.Camera.Id),
+            CameraId = touchEventDto.Camera.Id,
             CanvasWidth = touchEventDto.CanvasWidth,
             CanvasHeight = touchEventDto.CanvasHeight
         };

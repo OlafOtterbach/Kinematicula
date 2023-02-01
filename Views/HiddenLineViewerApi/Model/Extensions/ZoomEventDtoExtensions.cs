@@ -1,7 +1,6 @@
 ﻿namespace HiddenLineViewerApi;
 
 using Kinematicula.LogicViewing;
-using Kinematicula.LogicViewing.Extensions;
 using Kinematicula.Scening;
 
 public static class ZoomEventDtoExtensions
@@ -11,7 +10,7 @@ public static class ZoomEventDtoExtensions
         var zoomEvent = new ZoomEvent
         {
             Delta = zoomEventDto.delta,
-            Camera = scene.GetCamera(zoomEventDto.camera.Id),
+            CameraId = zoomEventDto.camera.Id,
             CanvasWidth = zoomEventDto.canvasWidth,
             CanvasHeight = zoomEventDto.canvasHeight
         };

@@ -32,8 +32,9 @@ public class LogicView : ILogicView
 
     public SelectedBodyState SelectBody(SelectEvent selectEvent)
     {
-        var posScene = ViewProjection.ProjectCanvasToSceneSystem(selectEvent.selectPositionX, selectEvent.selectPositionY, selectEvent.CanvasWidth, selectEvent.CanvasHeight, selectEvent.Camera.NearPlane, selectEvent.Camera.Frame);
-        var rayOffset = selectEvent.Camera.Frame.Offset;
+        var camera = Scene.GetCamera(selectEvent.CameraId);
+        var posScene = ViewProjection.ProjectCanvasToSceneSystem(selectEvent.selectPositionX, selectEvent.selectPositionY, selectEvent.CanvasWidth, selectEvent.CanvasHeight, camera.NearPlane,camera.Frame);
+        var rayOffset = camera.Frame.Offset;
         var rayDirection = posScene - rayOffset;
         var (isIntersected, intersection, body) = Scene.GetIntersectionOfRayAndScene(rayOffset, rayDirection);
 
@@ -42,57 +43,65 @@ public class LogicView : ILogicView
 
     public Camera Touch(TouchEvent touchEvent)
     {
+        var camera = Scene.GetCamera(touchEvent.CameraId);
+
         if (touchEvent.IsBodyTouched)
         {
             var body = Scene.GetBody(touchEvent.BodyId);
             var absoluteTouchPosition = body.Frame * touchEvent.TouchPosition;
-            touchEvent.Camera.MoveTargetTo(absoluteTouchPosition);
-            Scene.UpdateCamera(touchEvent.Camera);
+            camera.MoveTargetTo(absoluteTouchPosition);
+            Scene.UpdateCamera(camera);
         }
 
-        return Scene.GetCamera(touchEvent.Camera.Id);
+        return camera;
     }
 
     public Camera Select(SelectEvent selectEvent)
     {
-        var posScene = ViewProjection.ProjectCanvasToSceneSystem(selectEvent.selectPositionX, selectEvent.selectPositionY, selectEvent.CanvasWidth, selectEvent.CanvasHeight, selectEvent.Camera.NearPlane, selectEvent.Camera.Frame);
-        var rayOffset = selectEvent.Camera.Frame.Offset;
+        var camera = Scene.GetCamera(selectEvent.CameraId);
+
+        var posScene = ViewProjection.ProjectCanvasToSceneSystem(selectEvent.selectPositionX, selectEvent.selectPositionY, selectEvent.CanvasWidth, selectEvent.CanvasHeight, camera.NearPlane, camera.Frame);
+        var rayOffset = camera.Frame.Offset;
         var rayDirection = posScene - rayOffset;
 
         var (isintersected, intersection, body) = Scene.GetIntersectionOfRayAndScene(rayOffset, rayDirection);
         if (isintersected)
         {
-            selectEvent.Camera.MoveTargetTo(intersection);
-            Scene.UpdateCamera(selectEvent.Camera);
+            camera.MoveTargetTo(intersection);
+            Scene.UpdateCamera(camera);
         }
 
-        return Scene.GetCamera(selectEvent.Camera.Id);
+        return camera;
     }
 
     public Camera Move(MoveEvent moveEvent)
     {
+        var camera = Scene.GetCamera(moveEvent.CameraId);
+
         if (!_moveSensorProcessors.Process(moveEvent.ToMoveAction(Scene), Scene))
         {
             var deltaX = moveEvent.EndMoveX - moveEvent.StartMoveX;
             var deltaY = moveEvent.EndMoveY - moveEvent.StartMoveY;
-            moveEvent.Camera = Orbit(deltaX, deltaY, moveEvent.CanvasWidth, moveEvent.CanvasHeight, moveEvent.Camera);
-            Scene.UpdateCamera(moveEvent.Camera);
+            Orbit(camera, deltaX, deltaY, moveEvent.CanvasWidth, moveEvent.CanvasHeight);
+            Scene.UpdateCamera(camera);
         }
 
-        return Scene.GetCamera(moveEvent.Camera.Id);
+        return camera;
     }
 
     public Camera Zoom(ZoomEvent zoomEvent)
     {
+        var camera = Scene.GetCamera(zoomEvent.CameraId);
+
         var dy = zoomEvent.Delta * 2.0;
 
-        zoomEvent.Camera.Zoom(dy);
-        Scene.UpdateCamera(zoomEvent.Camera);
+        camera.Zoom(dy);
+        Scene.UpdateCamera(camera);
 
-        return Scene.GetCamera(zoomEvent.Camera.Id);
+        return camera;
     }
 
-    private Camera Orbit(double pixelDeltaX, double pixelDeltaY, int canvasWidth, int canvasHeight, Camera camera)
+    private void Orbit(Camera camera, double pixelDeltaX, double pixelDeltaY, int canvasWidth, int canvasHeight)
     {
         var horicontalPixelFor360Degree = canvasWidth;
         var verticalPixelFor360Degree = canvasHeight;
@@ -100,6 +109,5 @@ public class LogicView : ILogicView
         var beta = -(360.0 * pixelDeltaY / verticalPixelFor360Degree).ToRadiant();
         camera.OrbitXY(alpha);
         camera.OrbitXZ(beta);
-        return camera;
     }
 }

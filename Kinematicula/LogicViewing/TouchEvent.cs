@@ -1,6 +1,5 @@
 ﻿namespace Kinematicula.LogicViewing;
 
-using Kinematicula.Graphics;
 using Kinematicula.Mathematics;
 
 public class TouchEvent
@@ -11,7 +10,7 @@ public class TouchEvent
 
     public Position3D TouchPosition { get; set; }
 
-    public Camera Camera { get; set; }
+    public Guid CameraId { get; set; }
 
     public int CanvasWidth { get; set; }
 

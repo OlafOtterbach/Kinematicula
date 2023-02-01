@@ -1,6 +1,5 @@
 ﻿namespace Kinematicula.LogicViewing;
 
-using Kinematicula.Graphics;
 using Kinematicula.Mathematics;
 
 public class MoveEvent
@@ -15,7 +14,7 @@ public class MoveEvent
     public double EndMoveX { get; set; }
     public double EndMoveY { get; set; }
 
-    public Camera Camera { get; set; }
+    public Guid CameraId { get; set; }
     public int CanvasWidth { get; set; }
     public int CanvasHeight { get; set; }
 }
