@@ -74,7 +74,7 @@ namespace Kinematicula.LogicViewing.Services
             Axis3D cylinderAxis,
             double canvasWidth,
             double canvasHeight,
-            CameraInfo camera
+            Camera camera
         )
         {
             var angle = 0.0;

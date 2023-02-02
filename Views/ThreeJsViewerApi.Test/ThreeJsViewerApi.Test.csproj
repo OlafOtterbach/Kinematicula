@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Views\ThreeJsViewerApi\ThreeJsViewerApi.csproj" />
+    <ProjectReference Include="..\ThreeJsViewerApi\ThreeJsViewerApi.csproj" />
   </ItemGroup>
 
 </Project>

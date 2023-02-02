@@ -17,7 +17,7 @@
             var ey1 = rotationXZ * rotationXY * ey;
             var alphaAngleAxisX = (ey1.Y, ey1.Z).ToAngle();
 
-            return new CardanFrame(matrix.Translation, alphaAngleAxisX, betaAngleAxisY, gammaAngleAxisZ);
+            return new CardanFrame(matrix.Offset, alphaAngleAxisX, betaAngleAxisY, gammaAngleAxisZ);
         }
     }
 }

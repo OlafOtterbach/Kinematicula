@@ -1,7 +1,7 @@
 ﻿namespace HiddenLineViewerApi;
 
+using HiddenLineViewerApi.HiddenLine;
 using Kinematicula.LogicViewing;
-using Kinematicula.HiddenLineGraphics;
 
 public class HiddenLineViewerLogic : IHiddenLineViewerLogic
 {
@@ -28,14 +28,14 @@ public class HiddenLineViewerLogic : IHiddenLineViewerLogic
 
     public SelectedBodyStateDto SelectBody(SelectEventDto selectEventDto)
     {
-        var selectEvent = selectEventDto.ToSelectEvent();
+        var selectEvent = selectEventDto.ToSelectEvent(_view.Scene);
         var selection = _view.SelectBody(selectEvent).ToBodySelectionDto();
         return selection;
     }
 
     public SceneStateDto Touch(TouchEventDto touchEventDto)
     {
-        var touchEvent = touchEventDto.ToTouchEvent();
+        var touchEvent = touchEventDto.ToTouchEvent(_view.Scene);
         var touchCamera = _view.Touch(touchEvent);
         var lines = _hiddenLineService.GetHiddenLineGraphics(_view.Scene, touchCamera, touchEvent.CanvasWidth, touchEvent.CanvasHeight).ToColoredLines();
         var sceneState = new SceneStateDto()
@@ -49,7 +49,7 @@ public class HiddenLineViewerLogic : IHiddenLineViewerLogic
 
     public SceneStateDto Move(MoveEventDto moveEventDto)
     {
-        var moveEvent = moveEventDto.ToMoveEvent();
+        var moveEvent = moveEventDto.ToMoveEvent(_view.Scene);
         var rotatedCamera = _view.Move(moveEvent);
         var lines = _hiddenLineService.GetHiddenLineGraphics(_view.Scene, rotatedCamera, moveEvent.CanvasWidth, moveEvent.CanvasHeight).ToColoredLines();
         var sceneState = new SceneStateDto()
@@ -63,7 +63,7 @@ public class HiddenLineViewerLogic : IHiddenLineViewerLogic
 
     public SceneStateDto Zoom(ZoomEventDto zoomEventDto)
     {
-        var zoomEvent = zoomEventDto.ToZoomEvent();
+        var zoomEvent = zoomEventDto.ToZoomEvent(_view.Scene);
         var zoomedCamera = _view.Zoom(zoomEvent);
         var lines = _hiddenLineService.GetHiddenLineGraphics(_view.Scene, zoomedCamera, zoomEvent.CanvasWidth, zoomEvent.CanvasHeight).ToColoredLines();
         var sceneState = new SceneStateDto()

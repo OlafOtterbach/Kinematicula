@@ -1,4 +1,5 @@
-﻿using Kinematicula.Scening;
+﻿using Kinematicula.Graphics;
+using Kinematicula.Scening;
 
 namespace Kinematicula.LogicViewing
 {
@@ -6,14 +7,14 @@ namespace Kinematicula.LogicViewing
     {
         Scene Scene { get; }
 
-        CameraInfo GetCamera(string cameraName);
+        Camera GetCamera(string cameraName);
 
         SelectedBodyState SelectBody(SelectEvent selectEvent);
 
-        CameraInfo Touch(TouchEvent touchEvent);
+        Camera Touch(TouchEvent touchEvent);
 
-        CameraInfo Move(MoveEvent moveEvent);
+        Camera Move(MoveEvent moveEvent);
 
-        CameraInfo Zoom(ZoomEvent zoomEvent);
+        Camera Zoom(ZoomEvent zoomEvent);
     }
 }

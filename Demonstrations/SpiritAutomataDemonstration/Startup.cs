@@ -7,9 +7,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Kinematicula.HiddenLineGraphics;
 using Kinematicula.LogicViewing;
 using HiddenLineViewerApi;
+using HiddenLineViewerApi.HiddenLine;
+using HiddenLineViewerApi.HiddenLine.Services;
 
 public class Startup
 {

@@ -1,27 +1,25 @@
-﻿using Kinematicula.Graphics.Extensions;
+﻿namespace Kinematicula.LogicViewing.Extensions;
+
 using Kinematicula.Scening;
 
-namespace Kinematicula.LogicViewing.Extensions
+public static class MoveEventExtensions
 {
-    public static class MoveEventExtensions
+    public static MoveAction ToMoveAction(this MoveEvent moveEvent, Scene scene)
     {
-        public static MoveAction ToMoveAction(this MoveEvent moveEvent, Scene Scene)
+        var moveAction = new MoveAction()
         {
-            var moveAction = new MoveAction()
-            {
-                EventSource = moveEvent.EventSource,
-                Body = Scene.GetBody(moveEvent.SelectedBodyId),
-                BodyTouchPosition = moveEvent.BodyTouchPosition,
-                StartMoveX = moveEvent.StartMoveX,
-                StartMoveY = moveEvent.StartMoveY,
-                EndMoveX = moveEvent.EndMoveX,
-                EndMoveY = moveEvent.EndMoveY,
-                Camera = moveEvent.Camera,
-                CanvasWidth = moveEvent.CanvasWidth,
-                CanvasHeight = moveEvent.CanvasHeight
-            };
+            EventSource = moveEvent.EventSource,
+            Body = scene.GetBody(moveEvent.SelectedBodyId),
+            BodyTouchPosition = moveEvent.BodyTouchPosition,
+            StartMoveX = moveEvent.StartMoveX,
+            StartMoveY = moveEvent.StartMoveY,
+            EndMoveX = moveEvent.EndMoveX,
+            EndMoveY = moveEvent.EndMoveY,
+            Camera = scene.GetCamera(moveEvent.CameraId),
+            CanvasWidth = moveEvent.CanvasWidth,
+            CanvasHeight = moveEvent.CanvasHeight
+        };
 
-            return moveAction;
-        }
+        return moveAction;
     }
 }

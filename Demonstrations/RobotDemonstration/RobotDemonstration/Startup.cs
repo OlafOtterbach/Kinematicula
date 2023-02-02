@@ -1,7 +1,8 @@
 namespace RobotDemonstration;
 
 using HiddenLineViewerApi;
-using Kinematicula.HiddenLineGraphics;
+using HiddenLineViewerApi.HiddenLine;
+using HiddenLineViewerApi.HiddenLine.Services;
 using Kinematicula.LogicViewing;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

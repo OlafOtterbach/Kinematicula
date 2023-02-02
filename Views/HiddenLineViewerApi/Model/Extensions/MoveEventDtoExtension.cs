@@ -1,27 +1,27 @@
-﻿using Kinematicula.LogicViewing;
+﻿namespace HiddenLineViewerApi;
+
+using Kinematicula.LogicViewing;
 using Kinematicula.Mathematics;
+using Kinematicula.Scening;
 
-namespace HiddenLineViewerApi
+public static class MoveEventDtoExtension
 {
-    public static class MoveEventDtoExtension
+    public static MoveEvent ToMoveEvent(this MoveEventDto moveEventDto, Scene scene)
     {
-        public static MoveEvent ToMoveEvent(this MoveEventDto moveEventDto)
+        var moveEvent = new MoveEvent()
         {
-            var moveEvent = new MoveEvent()
-            {
-                EventSource = moveEventDto.EventSource,
-                SelectedBodyId = moveEventDto.BodyId,
-                BodyTouchPosition = new Position3D(moveEventDto.BodyIntersection.X, moveEventDto.BodyIntersection.Y, moveEventDto.BodyIntersection.Z),
-                StartMoveX = moveEventDto.StartX,
-                StartMoveY = moveEventDto.StartY,
-                EndMoveX = moveEventDto.EndX,
-                EndMoveY = moveEventDto.EndY,
-                Camera = moveEventDto.Camera.ToCameraInfo(),
-                CanvasWidth = moveEventDto.CanvasWidth,
-                CanvasHeight = moveEventDto.CanvasHeight,
-            };
+            EventSource = moveEventDto.EventSource,
+            SelectedBodyId = moveEventDto.BodyId,
+            BodyTouchPosition = new Position3D(moveEventDto.BodyIntersection.X, moveEventDto.BodyIntersection.Y, moveEventDto.BodyIntersection.Z),
+            StartMoveX = moveEventDto.StartX,
+            StartMoveY = moveEventDto.StartY,
+            EndMoveX = moveEventDto.EndX,
+            EndMoveY = moveEventDto.EndY,
+            CameraId = moveEventDto.Camera.Id,
+            CanvasWidth = moveEventDto.CanvasWidth,
+            CanvasHeight = moveEventDto.CanvasHeight,
+        };
 
-            return moveEvent;
-        }
+        return moveEvent;
     }
 }

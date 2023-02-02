@@ -23,7 +23,7 @@ public class Scene
             Target = new Position3D(),
         };
 
-        defaultCamera.SetCamera(0.0, 45.0, 3000.0);
+        defaultCamera.SetCameraToOrigin(0.0.ToRadiant(), 45.0.ToRadiant(), 3000.0);
 
         Bodies = new List<Body>() { world, defaultCamera };
         ForwardSolver = forwardSolver;
@@ -37,6 +37,12 @@ public class Scene
     public World World => Bodies.OfType<World>().First();
 
     public List<Body> Bodies { get; }
+
+    public Body GetBody(Guid id)
+    {
+        var body = Bodies.FirstOrDefault(b => b.Id == id);
+        return body;
+    }
 
     public void AddBody(Body body)
     {

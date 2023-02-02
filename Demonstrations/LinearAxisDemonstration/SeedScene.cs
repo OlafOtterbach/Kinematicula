@@ -29,7 +29,7 @@ public static class SeedScene
 
         var fixedFirstSocketToFloor = new FixedConstraint(new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(-250, 0,0))), new Anchor(firstSocket, Matrix44D.CreateTranslation(new Vector3D(0,0,-50))));
 
-        // second socket
+        //// second socket
         var secondSocket = Cube.Create(100);
         secondSocket.Name = "second socket";
         secondSocket.Frame = Matrix44D.CreateTranslation(new Vector3D(250, 0, 50));
@@ -76,7 +76,7 @@ public static class SeedScene
             NearPlane = 1.0,
             Target = new Position3D(),
         };
-        camera.SetCamera(0.0, 45.0, 1500.0);
+        camera.SetCameraToOrigin(0.0.ToRadiant(), 45.0.ToRadiant(), 1500.0);
         scene.AddBody(camera);
 
         scene.InitScene();

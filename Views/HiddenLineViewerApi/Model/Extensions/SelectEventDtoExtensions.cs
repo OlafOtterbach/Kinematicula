@@ -1,21 +1,21 @@
-﻿using Kinematicula.LogicViewing;
+﻿namespace HiddenLineViewerApi;
 
-namespace HiddenLineViewerApi
+using Kinematicula.LogicViewing;
+using Kinematicula.Scening;
+
+public static class SelectEventDtoExtensions
 {
-    public static class SelectEventDtoExtensions
+    public static SelectEvent ToSelectEvent(this SelectEventDto selectEventDto, Scene scene)
     {
-        public static SelectEvent ToSelectEvent(this SelectEventDto selectEventDto)
+        var selectEvent = new SelectEvent
         {
-            var selectEvent = new SelectEvent
-            {
-                selectPositionX = selectEventDto.selectPositionX,
-                selectPositionY = selectEventDto.selectPositionY,
-                Camera = selectEventDto.camera.ToCameraInfo(),
-                CanvasWidth = selectEventDto.canvasWidth,
-                CanvasHeight = selectEventDto.canvasHeight
-            };
+            selectPositionX = selectEventDto.selectPositionX,
+            selectPositionY = selectEventDto.selectPositionY,
+            CameraId = selectEventDto.camera.Id,
+            CanvasWidth = selectEventDto.canvasWidth,
+            CanvasHeight = selectEventDto.canvasHeight
+        };
 
-            return selectEvent;
-        }
+        return selectEvent;
     }
 }

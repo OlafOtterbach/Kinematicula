@@ -1,107 +1,95 @@
-﻿using Kinematicula.Graphics;
+﻿namespace Kinematicula.LogicViewing;
+
+using Kinematicula.Graphics;
 using Kinematicula.Graphics.Extensions;
 using Kinematicula.LogicViewing.Extensions;
 using Kinematicula.LogicViewing.Services;
 using Kinematicula.Mathematics;
 using Kinematicula.Scening;
 
-namespace Kinematicula.LogicViewing
+public class LogicView : ILogicView
 {
-    public class LogicView : ILogicView
+    private readonly IMoveSensorProcessor _moveSensorProcessors;
+
+    public LogicView(Scene scene) : this(scene, new MoveSensorProcessor())
+    { }
+
+    public LogicView(Scene scene, IMoveSensorProcessor moveSensorProcessor)
     {
-        private readonly IMoveSensorProcessor _moveSensorProcessors;
+        Scene = scene;
+        _moveSensorProcessors = moveSensorProcessor;
+    }
 
-        public LogicView(Scene scene) : this(scene, new MoveSensorProcessor())
-        { }
+    public Scene Scene { get; }
 
-        public LogicView(Scene scene, IMoveSensorProcessor moveSensorProcessor)
+
+    public Camera GetCamera(string cameraName)
+    {
+        var cameras = Scene.Bodies.OfType<Camera>().ToList();
+        var camera = cameras.FirstOrDefault(x => x.Name == cameraName) ?? cameras.First();
+        return camera;
+    }
+
+    public SelectedBodyState SelectBody(SelectEvent selectEvent)
+    {
+        var camera = Scene.GetCamera(selectEvent.CameraId);
+        var posScene = ViewProjection.ProjectCanvasToSceneSystem(selectEvent.selectPositionX, selectEvent.selectPositionY, selectEvent.CanvasWidth, selectEvent.CanvasHeight, camera.NearPlane,camera.Frame);
+        var rayOffset = camera.Frame.Offset;
+        var rayDirection = posScene - rayOffset;
+        var (isIntersected, intersection, body) = Scene.GetIntersectionOfRayAndScene(rayOffset, rayDirection);
+
+        return new SelectedBodyState { SelectedBodyId = isIntersected ? body.Id : Guid.Empty, IsBodySelected = isIntersected, BodyIntersection = intersection };
+    }
+
+    public Camera Touch(TouchEvent touchEvent)
+    {
+        var camera = Scene.GetCamera(touchEvent.CameraId);
+
+        if (touchEvent.IsBodyTouched)
         {
-            Scene = scene;
-            _moveSensorProcessors = moveSensorProcessor;
+            var body = Scene.GetBody(touchEvent.BodyId);
+            var absoluteTouchPosition = body.Frame * touchEvent.TouchPosition;
+            camera.MoveTargetTo(absoluteTouchPosition);
+            Scene.UpdateCamera(camera);
         }
 
-        public Scene Scene { get; }
+        return camera;
+    }
 
+    public Camera Move(MoveEvent moveEvent)
+    {
+        var camera = Scene.GetCamera(moveEvent.CameraId);
 
-        public CameraInfo GetCamera(string cameraName)
+        if (!_moveSensorProcessors.Process(moveEvent.ToMoveAction(Scene), Scene))
         {
-            var cameras = Scene.Bodies.OfType<Camera>().ToList();
-            var camera = cameras.FirstOrDefault(x => x.Name == cameraName) ?? cameras.First();
-            var cameraInfo = camera.ToCamera();
-            return cameraInfo;
+            var deltaX = moveEvent.EndMoveX - moveEvent.StartMoveX;
+            var deltaY = moveEvent.EndMoveY - moveEvent.StartMoveY;
+            Orbit(camera, deltaX, deltaY, moveEvent.CanvasWidth, moveEvent.CanvasHeight);
+            Scene.UpdateCamera(camera);
         }
 
-        public SelectedBodyState SelectBody(SelectEvent selectEvent)
-        {
-            var posScene = ViewProjection.ProjectCanvasToSceneSystem(selectEvent.selectPositionX, selectEvent.selectPositionY, selectEvent.CanvasWidth, selectEvent.CanvasHeight, selectEvent.Camera.NearPlane, selectEvent.Camera.Frame);
-            var rayOffset = selectEvent.Camera.Frame.Offset;
-            var rayDirection = posScene - rayOffset;
-            var (isIntersected, intersection, body) = Scene.GetIntersectionOfRayAndScene(rayOffset, rayDirection);
+        return camera;
+    }
 
-            return new SelectedBodyState { SelectedBodyId = isIntersected ? body.Id : Guid.Empty, IsBodySelected = isIntersected, BodyIntersection = intersection };
-        }
+    public Camera Zoom(ZoomEvent zoomEvent)
+    {
+        var camera = Scene.GetCamera(zoomEvent.CameraId);
 
-        public CameraInfo Touch(TouchEvent touchEvent)
-        {
-            if (touchEvent.IsBodyTouched)
-            {
-                var body = Scene.GetBody(touchEvent.BodyId);
-                var absoluteTouchPosition = body.Frame * touchEvent.TouchPosition;
-                touchEvent.Camera.MoveTargetTo(absoluteTouchPosition);
-                Scene.UpdateCamera(touchEvent.Camera);
-            }
+        var dy = zoomEvent.Delta * 2.0;
 
-            return Scene.GetCamera(touchEvent.Camera.Name);
-        }
+        camera.Zoom(dy);
+        Scene.UpdateCamera(camera);
 
-        public CameraInfo Select(SelectEvent selectEvent)
-        {
-            var posScene = ViewProjection.ProjectCanvasToSceneSystem(selectEvent.selectPositionX, selectEvent.selectPositionY, selectEvent.CanvasWidth, selectEvent.CanvasHeight, selectEvent.Camera.NearPlane, selectEvent.Camera.Frame);
-            var rayOffset = selectEvent.Camera.Frame.Offset;
-            var rayDirection = posScene - rayOffset;
+        return camera;
+    }
 
-            var (isintersected, intersection, body) = Scene.GetIntersectionOfRayAndScene(rayOffset, rayDirection);
-            if (isintersected)
-            {
-                selectEvent.Camera.MoveTargetTo(intersection);
-                Scene.UpdateCamera(selectEvent.Camera);
-            }
-
-            return Scene.GetCamera(selectEvent.Camera.Name);
-        }
-
-        public CameraInfo Move(MoveEvent moveEvent)
-        {
-            if (!_moveSensorProcessors.Process(moveEvent.ToMoveAction(Scene), Scene))
-            {
-                var deltaX = moveEvent.EndMoveX - moveEvent.StartMoveX;
-                var deltaY = moveEvent.EndMoveY - moveEvent.StartMoveY;
-                moveEvent.Camera = Orbit(deltaX, deltaY, moveEvent.CanvasWidth, moveEvent.CanvasHeight, moveEvent.Camera);
-                Scene.UpdateCamera(moveEvent.Camera);
-            }
-
-            return Scene.GetCamera(moveEvent.Camera.Name);
-        }
-
-        public CameraInfo Zoom(ZoomEvent zoomEvent)
-        {
-            var dy = zoomEvent.Delta * 2.0;
-
-            zoomEvent.Camera.Zoom(dy);
-            Scene.UpdateCamera(zoomEvent.Camera);
-
-            return Scene.GetCamera(zoomEvent.Camera.Name);
-        }
-
-        private CameraInfo Orbit(double pixelDeltaX, double pixelDeltaY, int canvasWidth, int canvasHeight, CameraInfo camera)
-        {
-            var horicontalPixelFor360Degree = canvasWidth;
-            var verticalPixelFor360Degree = canvasHeight;
-            var alpha = -(360.0 * pixelDeltaX / horicontalPixelFor360Degree).ToRadiant();
-            var beta = -(360.0 * pixelDeltaY / verticalPixelFor360Degree).ToRadiant();
-            camera.OrbitXY(alpha);
-            camera.OrbitYZ(beta);
-            return camera;
-        }
+    private void Orbit(Camera camera, double pixelDeltaX, double pixelDeltaY, int canvasWidth, int canvasHeight)
+    {
+        var horicontalPixelFor360Degree = canvasWidth;
+        var verticalPixelFor360Degree = canvasHeight;
+        var alpha = -(360.0 * pixelDeltaX / horicontalPixelFor360Degree).ToRadiant();
+        var beta = -(360.0 * pixelDeltaY / verticalPixelFor360Degree).ToRadiant();
+        camera.OrbitXY(alpha);
+        camera.OrbitXZ(beta);
     }
 }

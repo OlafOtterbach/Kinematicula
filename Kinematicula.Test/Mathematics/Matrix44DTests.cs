@@ -60,7 +60,7 @@ namespace Kinematicula.Tests.Mathematics
             Assert.Equal(expectedEy, mat.Ey);
             Assert.Equal(expectedEz, mat.Ez);
             Assert.Equal(expectedOffset, mat.Offset);
-            Assert.Equal(expectedOffset.ToVector3D(), mat.Translation);
+            Assert.Equal(Matrix44D.CreateTranslation(expectedOffset.ToVector3D()), mat.Translation);
         }
 
         [Fact]
@@ -77,7 +77,7 @@ namespace Kinematicula.Tests.Mathematics
             Assert.Equal(mat.Ey, affine.Ey);
             Assert.Equal(mat.Ez, affine.Ez);
             Assert.Equal(new Position3D(0.0, 0.0, 0.0), affine.Offset);
-            Assert.Equal(new Vector3D(0.0, 0.0, 0.0), affine.Translation);
+            Assert.Equal(Matrix44D.CreateTranslation(new Vector3D(0.0, 0.0, 0.0)), affine.Translation);
             Assert.Equal(0.0, affine.A41, ConstantsMath.Precision);
             Assert.Equal(0.0, affine.A42, ConstantsMath.Precision);
             Assert.Equal(0.0, affine.A43, ConstantsMath.Precision);
@@ -332,7 +332,7 @@ namespace Kinematicula.Tests.Mathematics
             Assert.Equal(ey, mat.Ey);
             Assert.Equal(ez, mat.Ez);
             Assert.Equal(offset, mat.Offset);
-            Assert.Equal(offset.ToVector3D(), mat.Translation);
+            Assert.Equal(Matrix44D.CreateTranslation(offset.ToVector3D()), mat.Translation);
         }
 
         [Fact]
@@ -349,7 +349,7 @@ namespace Kinematicula.Tests.Mathematics
             Assert.Equal(ey, mat.Ey);
             Assert.Equal(ez, mat.Ez);
             Assert.Equal(offset, mat.Offset);
-            Assert.Equal(offset.ToVector3D(), mat.Translation);
+            Assert.Equal(Matrix44D.CreateTranslation(offset.ToVector3D()), mat.Translation);
         }
 
         [Fact]
@@ -365,7 +365,7 @@ namespace Kinematicula.Tests.Mathematics
             Assert.Equal(ey, mat.Ey);
             Assert.Equal(ez, mat.Ez);
             Assert.Equal(new Position3D(), mat.Offset);
-            Assert.Equal(new Vector3D(), mat.Translation);
+            Assert.Equal(Matrix44D.CreateTranslation(new Vector3D()), mat.Translation);
         }
 
         [Fact]
@@ -377,7 +377,7 @@ namespace Kinematicula.Tests.Mathematics
             var mat = Matrix44D.CreatePlaneCoordinateSystem(offset, normal);
 
             Assert.Equal(offset, mat.Offset);
-            Assert.Equal(offset.ToVector3D(), mat.Translation);
+            Assert.Equal(Matrix44D.CreateTranslation(offset.ToVector3D()), mat.Translation);
             Assert.Equal(normal, mat.Ez);
             Assert.Equal(0.0, mat.Ex * mat.Ey, ConstantsMath.Precision);
             Assert.Equal(0.0, mat.Ey * mat.Ez, ConstantsMath.Precision);
@@ -395,7 +395,7 @@ namespace Kinematicula.Tests.Mathematics
 
             var expectedNormal = (first & second).Normalize();
             Assert.Equal(offset, mat.Offset);
-            Assert.Equal(offset.ToVector3D(), mat.Translation);
+            Assert.Equal(Matrix44D.CreateTranslation(offset.ToVector3D()), mat.Translation);
             Assert.Equal(expectedNormal, mat.Ez);
             Assert.Equal(0.0, mat.Ex * mat.Ey, ConstantsMath.Precision);
             Assert.Equal(0.0, mat.Ey * mat.Ez, ConstantsMath.Precision);
@@ -427,7 +427,7 @@ namespace Kinematicula.Tests.Mathematics
             var rot = Matrix44D.CreateRotation(axis, 90.0.ToRadiant());
 
             Assert.Equal(new Position3D(), rot.Offset);
-            Assert.Equal(new Vector3D(), rot.Translation);
+            Assert.Equal(Matrix44D.CreateTranslation(new Vector3D()), rot.Translation);
             var pos = rot * new Position3D(0.0, 0.0, 1.0);
             Assert.Equal(new Position3D(0.0, -1.0, 0.0), pos);
         }

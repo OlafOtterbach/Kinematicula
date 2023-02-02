@@ -1,7 +1,7 @@
 ﻿namespace ThreeJsViewerApi.Model;
 
 public record struct ColorTjs(
-    double A,
+    double Alpha,
     double Red,
     double Green,
     double Blue);
