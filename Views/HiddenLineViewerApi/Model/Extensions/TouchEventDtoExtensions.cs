@@ -5,7 +5,7 @@ using Kinematicula.Scening;
 
 public static class TouchEventDtoExtensions
 {
-    public static TouchEvent ToTouchEvent(this TouchEventDto touchEventDto, Scene scene)
+    public static TouchEvent ToTouchEvent(this TouchEventDto touchEventDto)
     {
         var touchEvent = new TouchEvent
         {
