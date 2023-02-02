@@ -32,52 +32,16 @@ public static class CameraExtensions
 
     public static void OrbitXY(this Camera camera, double alpha)
     {
-        var offset = camera.Frame.Offset;
-        var ex = camera.Frame.Ex;
-        var ey = camera.Frame.Ey;
-        var ez = camera.Frame.Ez;
-        var target = offset + ex * camera.Distance;
-        var back = Matrix44D.CreateCoordinateSystem(target, ex, ey, ez);
-        var trans = back.Inverse();
-        ex = new Vector3D(1.0, 0.0, 0.0);
-        ey = new Vector3D(0.0, 1.0, 0.0);
-        offset = trans * offset;
-        var rotateXY = Matrix44D.CreateRotation(new Vector3D(0, 0, 1), alpha);
-        ex = rotateXY * ex;
-        ey = rotateXY * ey;
-        offset = rotateXY * offset;
-        offset = back * offset;
-        ex = back * ex;
-        ey = back * ey;
-        ex.Normalize();
-        ey.Normalize();
-        var newFrame = Matrix44D.CreateCoordinateSystem(offset, ex, ez);
-        camera.Frame = newFrame;
+        var rotationZ = Matrix44D.CreateRotation(camera.Target, camera.Frame.Ez, alpha);
+        var rotatedFrame = rotationZ * camera.Frame;
+        camera.Frame = rotatedFrame;
     }
 
     public static void OrbitXZ(this Camera camera, double alpha)
     {
-        var offset = camera.Frame.Offset;
-        var ex = camera.Frame.Ex;
-        var ey = camera.Frame.Ey;
-        var ez = camera.Frame.Ez;
-        var target = offset + ex * camera.Distance;
-        var back = Matrix44D.CreateCoordinateSystem(target, ex, ey, ez);
-        var trans = back.Inverse();
-        ex = new Vector3D(1.0, 0.0, 0.0);
-        ez = new Vector3D(0.0, 0.0, 1.0);
-        offset = trans * offset;
-        var rotateXZ = Matrix44D.CreateRotation(new Vector3D(0, 1, 0), -alpha);
-        ex = rotateXZ * ex;
-        ez = rotateXZ * ez;
-        offset = rotateXZ * offset;
-        offset = back * offset;
-        ex = back * ex;
-        ez = back * ez;
-        ex.Normalize();
-        ez.Normalize();
-        var newFrame = Matrix44D.CreateCoordinateSystem(offset, ex, ez);
-        camera.Frame = newFrame;
+        var rotationY = Matrix44D.CreateRotation(camera.Target, camera.Frame.Ey, -alpha);
+        var rotatedFrame = rotationY * camera.Frame;
+        camera.Frame = rotatedFrame;
     }
 
     public static void Zoom(this Camera camera, double delta)
@@ -86,12 +50,10 @@ public static class CameraExtensions
         {
             delta = camera.Distance;
         }
-        var offset = camera.Frame.Offset;
-        var ex = camera.Frame.Ex;
-        var ey = camera.Frame.Ey;
-        var ez = camera.Frame.Ez;
-        offset = offset + ex * delta;
-        camera.Frame = Matrix44D.CreateCoordinateSystem(offset, ex, ey, ez);
+
+        var translationX = Matrix44D.CreateTranslation(camera.Frame.Ex * delta);
+        var translatedFrame = translationX * camera.Frame;
+        camera.Frame = translatedFrame;
     }
 
     public static void MoveTargetTo(this Camera camera, Position3D target)

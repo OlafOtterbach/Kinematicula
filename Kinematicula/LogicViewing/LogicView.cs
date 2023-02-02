@@ -56,24 +56,6 @@ public class LogicView : ILogicView
         return camera;
     }
 
-    public Camera Select(SelectEvent selectEvent)
-    {
-        var camera = Scene.GetCamera(selectEvent.CameraId);
-
-        var posScene = ViewProjection.ProjectCanvasToSceneSystem(selectEvent.selectPositionX, selectEvent.selectPositionY, selectEvent.CanvasWidth, selectEvent.CanvasHeight, camera.NearPlane, camera.Frame);
-        var rayOffset = camera.Frame.Offset;
-        var rayDirection = posScene - rayOffset;
-
-        var (isintersected, intersection, body) = Scene.GetIntersectionOfRayAndScene(rayOffset, rayDirection);
-        if (isintersected)
-        {
-            camera.MoveTargetTo(intersection);
-            Scene.UpdateCamera(camera);
-        }
-
-        return camera;
-    }
-
     public Camera Move(MoveEvent moveEvent)
     {
         var camera = Scene.GetCamera(moveEvent.CameraId);
