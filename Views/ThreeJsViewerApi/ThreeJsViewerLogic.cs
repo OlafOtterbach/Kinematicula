@@ -1,9 +1,10 @@
-﻿using Kinematicula.Graphics;
+﻿namespace ThreeJsViewerApi;
+
+using Kinematicula.Graphics;
 using Kinematicula.LogicViewing;
 using ThreeJsViewerApi.Converters;
-using ThreeJsViewerApi.Model;
-
-namespace ThreeJsViewerApi;
+using ThreeJsViewerApi.EventModel;
+using ThreeJsViewerApi.GraphicsModel;
 
 public class ThreeJsViewerLogic : IThreeJsViewerLogic
 {
@@ -21,5 +22,26 @@ public class ThreeJsViewerLogic : IThreeJsViewerLogic
         var sceneTjs = new SceneTjs(bodiesTjs, camerasTjs);
 
         return sceneTjs;
+    }
+
+    public SelectedBodyStateTjs SelectBody(SelectEventTjs selectEventTjs)
+    {
+        var selectEvent = selectEventTjs.ToSelectEvent();
+        var selection = _view.SelectBody(selectEvent).ToBodySelectionTjs();
+        return selection;
+    }
+
+    public SceneStateTjs Zoom(ZoomEventTjs zoomEventTjs)
+    {
+        var zoomEvent = zoomEventTjs.ToZoomEvent();
+        var zoomedCamera = _view.Zoom(zoomEvent);
+        var lines = _hiddenLineService.GetHiddenLineGraphics(_view.Scene, zoomedCamera, zoomEvent.CanvasWidth, zoomEvent.CanvasHeight).ToColoredLines();
+        var sceneState = new SceneStateTjs()
+        {
+            Camera = zoomedCamera.ToCameraTjs(),
+            ColoredDrawLines = lines
+        };
+
+        return sceneState;
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace ThreeJsViewerApi.Model;
+﻿namespace ThreeJsViewerApi.GraphicsModel;
 
 public record struct PositionTjs(
     double X,

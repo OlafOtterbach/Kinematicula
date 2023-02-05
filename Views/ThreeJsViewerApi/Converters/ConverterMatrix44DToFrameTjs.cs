@@ -1,7 +1,7 @@
-﻿using Kinematicula.Mathematics;
-using ThreeJsViewerApi.Model;
+﻿namespace ThreeJsViewerApi.Converters;
 
-namespace ThreeJsViewerApi.Converters;
+using Kinematicula.Mathematics;
+using ThreeJsViewerApi.GraphicsModel;
 
 public static class ConverterMatrix44DToFrameTjs
 {

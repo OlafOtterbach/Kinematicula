@@ -2,8 +2,7 @@
 
 using Kinematicula.Graphics;
 using Kinematicula.Mathematics;
-using Kinematicula.Mathematics.Extensions;
-using ThreeJsViewerApi.Model;
+using ThreeJsViewerApi.GraphicsModel;
 
 public static class ConverterCameraToCameraTjs
 {
@@ -22,11 +21,10 @@ public static class ConverterCameraToCameraTjs
         var ezTjs = (rotY * rotZ * ez).Normalize();
         var frameTjs = Matrix44D.CreateCoordinateSystem(offsetTjs, exTjs, eyTjs, ezTjs);
 
-
         var cameraTjs = new CameraTjs(
             camera.Name,
-            frameTjs.ToEulerFrameTjs(),
-            camera.Frame.ToFrameTjs());
+            camera.Id,
+            frameTjs.ToEulerFrameTjs());
 
         return cameraTjs;
     }

@@ -1,8 +1,8 @@
-﻿using Kinematicula.Graphics;
-using ThreeJsViewerApi.Helpers;
-using ThreeJsViewerApi.Model;
+﻿namespace ThreeJsViewerApi.Converters;
 
-namespace ThreeJsViewerApi.Converters;
+using Kinematicula.Graphics;
+using ThreeJsViewerApi.GraphicsModel;
+using ThreeJsViewerApi.Helpers;
 
 public static class ConverterBodyToBodyTjs
 {

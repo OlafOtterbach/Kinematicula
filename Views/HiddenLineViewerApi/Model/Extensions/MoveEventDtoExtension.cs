@@ -2,11 +2,10 @@
 
 using Kinematicula.LogicViewing;
 using Kinematicula.Mathematics;
-using Kinematicula.Scening;
 
 public static class MoveEventDtoExtension
 {
-    public static MoveEvent ToMoveEvent(this MoveEventDto moveEventDto, Scene scene)
+    public static MoveEvent ToMoveEvent(this MoveEventDto moveEventDto)
     {
         var moveEvent = new MoveEvent()
         {

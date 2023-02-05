@@ -1,11 +1,10 @@
 ﻿namespace HiddenLineViewerApi;
 
 using Kinematicula.LogicViewing;
-using Kinematicula.Scening;
 
 public static class ZoomEventDtoExtensions
 {
-    public static ZoomEvent ToZoomEvent(this ZoomEventDto zoomEventDto, Scene scene)
+    public static ZoomEvent ToZoomEvent(this ZoomEventDto zoomEventDto)
     {
         var zoomEvent = new ZoomEvent
         {
