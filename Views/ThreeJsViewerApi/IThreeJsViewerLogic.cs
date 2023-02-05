@@ -9,5 +9,9 @@ public interface IThreeJsViewerLogic
 
     SelectedBodyStateTjs SelectBody(SelectEventTjs selectEventTjs);
 
+    SceneStateTjs Touch(TouchEventTjs touchEventTjs);
+
+    SceneStateTjs Move(MoveEventTjs moveEventTjs);
+
     SceneStateTjs Zoom(ZoomEventTjs zoomEventTjs);
 }

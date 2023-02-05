@@ -31,16 +31,36 @@ public class ThreeJsViewerLogic : IThreeJsViewerLogic
         return selection;
     }
 
+    public SceneStateTjs Touch(TouchEventTjs touchEventTjs)
+    {
+        var touchEvent = touchEventTjs.ToTouchEvent();
+        var touchCamera = _view.Touch(touchEvent);
+
+        var dict = _view.Scene.Bodies.Where(body => !(body is Camera)).Select(body => body.ToBodyTjs()).ToDictionary(x => x.Id, x => x.Frame);
+        var sceneState = new SceneStateTjs(touchCamera.ToCameraTjs(), dict);
+
+        return sceneState;
+    }
+
+    public SceneStateTjs Move(MoveEventTjs moveEventTjs)
+    {
+        var moveEvent = moveEventTjs.ToMoveEvent();
+        var rotatedCamera = _view.Move(moveEvent);
+
+        var dict = _view.Scene.Bodies.Where(body => !(body is Camera)).Select(body => body.ToBodyTjs()).ToDictionary(x => x.Id, x => x.Frame);
+        var sceneState = new SceneStateTjs(rotatedCamera.ToCameraTjs(), dict);
+
+        return sceneState;
+    }
+
+
     public SceneStateTjs Zoom(ZoomEventTjs zoomEventTjs)
     {
         var zoomEvent = zoomEventTjs.ToZoomEvent();
         var zoomedCamera = _view.Zoom(zoomEvent);
-        var lines = _hiddenLineService.GetHiddenLineGraphics(_view.Scene, zoomedCamera, zoomEvent.CanvasWidth, zoomEvent.CanvasHeight).ToColoredLines();
-        var sceneState = new SceneStateTjs()
-        {
-            Camera = zoomedCamera.ToCameraTjs(),
-            ColoredDrawLines = lines
-        };
+        var dict = _view.Scene.Bodies.Where(body => !(body is Camera)).Select(body => body.ToBodyTjs()).ToDictionary(x => x.Id, x => x.Frame);
+
+        var sceneState = new SceneStateTjs(zoomedCamera.ToCameraTjs(), dict);
 
         return sceneState;
     }
