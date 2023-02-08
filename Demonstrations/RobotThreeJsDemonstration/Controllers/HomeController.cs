@@ -1,9 +1,8 @@
 ﻿namespace DoubleRobotDemonstration.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
-using HiddenLineViewerApi;
 using ThreeJsViewerApi;
-using ThreeJsViewerApi.Model;
+using ThreeJsViewerApi.GraphicsModel;
 
 public class HomeController : Controller
 {

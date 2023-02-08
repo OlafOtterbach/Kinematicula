@@ -1,4 +1,20 @@
-﻿main();
+﻿class Scene {
+    constructor(cameraTjs, cameraLightTjs, sceneTjs) {
+        this.cameraTjs = cameraTjs;
+        this.cameraLight = cameraLightTjs;
+        this.sceneTjs = sceneTjs;
+        this.bodyDictionary = {};
+    }
+
+    addBody(id, bodyTjs)
+    {
+        this.sceneTjs.add(bodyTjs);
+        this.bodyDictionary[id] = bodyTjs;
+    }
+}
+
+
+main();
 
 async function main() {
     var canvas = document.getElementById("MyCanvas");
@@ -7,48 +23,23 @@ async function main() {
         canvas: canvas
         });
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 10000);
+    const scene = createSceneTjs(canvas);
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.2); // soft white light
-    scene.add(ambientLight);
-
-    var lamp = new THREE.DirectionalLight(0xffffff, 1);
-    lamp.position.set(0, 0, 100);
-    lamp.rotation.set(new THREE.Euler(0, 0, 0, 'XYZ'));
-    lamp.castShadow = true;
-    scene.add(lamp);
-
-    var light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(0, 0, 0);
-    light.rotation.set(new THREE.Euler(0, 0, 0, 'XYZ'));
-    light.castShadow = true;
-    var lightParent = new THREE.Object3D();
-    lightParent.add(light);
-    scene.add(lightParent);
-
-    let scenery = await getScene();
+    let scenery = await getSceneFromServer();
     addBodiesToScene(scene, scenery.Bodies);
 
     const euler = scenery.Cameras[1].EulerFrame;
-    camera.position.x = euler.X;
-    camera.position.y = euler.Y;
-    camera.position.z = euler.Z;
-    camera.rotation.x = euler.AngleX;
-    camera.rotation.y = euler.AngleY;
-    camera.rotation.z = euler.AngleZ;
+    scene.cameraTjs.position.x = euler.X;
+    scene.cameraTjs.position.y = euler.Y;
+    scene.cameraTjs.position.z = euler.Z;
+    scene.cameraTjs.rotation.x = euler.AngleX;
+    scene.cameraTjs.rotation.y = euler.AngleY;
+    scene.cameraTjs.rotation.z = euler.AngleZ;
 
-
-    //camera.position.x = 0;
-    //camera.position.y = -2000;
-    //camera.position.z = 800;
-    //camera.rotation.x = 1.4;
-    //camera.rotation.y = 0.2;
-    //camera.rotation.z = 0.2;
 
     function addBodiesToScene(scene, bodies) {
 
-        function addBodyToScene(scene, body) {
+        function convertBodyToBodyTjs(body) {
             const positions = [];
             const normals = [];
             const colors = [];
@@ -82,28 +73,63 @@ async function main() {
                 frame.A31, frame.A32, frame.A33, frame.A34,
                 frame.A41, frame.A42, frame.A43, frame.A44);
 
-            scene.add(bodyTjs);
+            return bodyTjs;
         }
 
+        let bodyDicionary = {};
+
         for (let body of bodies) {
-            addBodyToScene(scene, body);
+            let bodyTjs = convertBodyToBodyTjs(body);
+            scene.addBody(body.Id, bodyTjs);
         }
     }
 
     function animate() {
         requestAnimationFrame(animate);
 
-        lightParent.position.copy(camera.position);
-        lightParent.rotation.copy(camera.rotation);
+        scene.cameraLight.position.copy(scene.cameraTjs.position);
+        scene.cameraLight.rotation.copy(scene.cameraTjs.rotation);
 
-        renderer.render(scene, camera);
+        renderer.render(scene.sceneTjs, scene.cameraTjs);
     };
 
     animate();
 }
 
 
-async function getScene() {
+
+function createSceneTjs(canvas) {
+    const sceneTjs = new THREE.Scene();
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.2); // soft white light
+    sceneTjs.add(ambientLight);
+
+    var lamp = new THREE.DirectionalLight(0xffffff, 1);
+    lamp.position.set(0, 0, 100);
+    lamp.rotation.set(new THREE.Euler(0, 0, 0, 'XYZ'));
+    lamp.castShadow = true;
+    sceneTjs.add(lamp);
+
+    var light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(0, 0, 0);
+    light.rotation.set(new THREE.Euler(0, 0, 0, 'XYZ'));
+    light.castShadow = true;
+    var lightParent = new THREE.Object3D();
+    lightParent.add(light);
+    sceneTjs.add(lightParent);
+
+    const cameraTjs = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 1, 10000);
+
+    var scene = new Scene(cameraTjs, lightParent, sceneTjs);
+
+    return scene;
+}
+
+
+
+
+async function getSceneFromServer()
+{
     lock = true;
     let url = encodeURI("http://localhost:5000/scene");
     let scene = await fetchData(url);
