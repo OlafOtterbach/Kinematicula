@@ -10,7 +10,7 @@ function CameraItem(id, name, cameraTjs) {
 let canvas;
 let rendererTjs;
 let sceneTjs;
-let idAndBodyTjsDict = new object();
+let idAndBodyTjsDict = new Object();
 
 let currentCameraTjs;
 let currentCameraLightTjs;
@@ -130,7 +130,7 @@ function addBodiesToSceneTjs(bodies) {
     for (let body of bodies) {
         let bodyTjs = convertBodyToBodyTjs(body);
         idAndBodyTjsDict[body.Id] = bodyTjs;
-        sceneTjs.addBody(bodyTjs);
+        sceneTjs.add(bodyTjs);
     }
 }
 
@@ -149,7 +149,7 @@ function getCamerasTjs(cameras) {
         cameraTjs.rotation.z = euler.AngleZ;
 
         const cameraItem = new CameraItem(camera.Id, camera.Name, cameraTjs);
-        idAndNameAndCameraTjsDict.push(cameraItem);
+        idAndNameAndCameraTjs.push(cameraItem);
    }
 }
 
