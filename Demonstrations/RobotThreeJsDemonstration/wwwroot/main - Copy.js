@@ -1,69 +1,70 @@
-﻿// types /////////////////////////
-function CameraItem(id, name, cameraTjs) {
-    this.Id = id;
-    this.name = name;
-    this.cameraTjs = cameraTjs
+﻿class Scene {
+    constructor(rendererTjs, cameraTjs, cameraLightTjs, sceneTjs) {
+        this.renderer = rendererTjs;
+        this.currentCameraTjs = cameraTjs;
+        this.cameraLight = cameraLightTjs;
+        this.cameraName = "CameraOne"
+        this.sceneTjs = sceneTjs;
+        this.bodyDictionary = {};
+        this.cameraDictionary = {};
+    }
+
+    addBody(id, bodyTjs) {
+        this.sceneTjs.add(bodyTjs);
+        this.bodyDictionary[id] = bodyTjs;
+    }
+
+    addCamera(id, cameraTjs) {
+        this.cameraDictionary[id] = cameraTjs;
+    }
 }
 
 
-// variables /////////////////////////
-let canvas;
-let rendererTjs;
-let sceneTjs;
-let idAndBodyTjsDict = new object();
+main();
 
-let currentCameraTjs;
-let currentCameraLightTjs;
+async function main() {
+    const scene = createSceneTjs();
+
+    let sceneServer = await getSceneFromServer();
+    addBodiesToScene(scene, sceneServer.Bodies);
+
+    const euler = sceneServer.Cameras[1].EulerFrame;
+    scene.currentCameraTjs.position.x = euler.X;
+    scene.currentCameraTjs.position.y = euler.Y;
+    scene.currentCameraTjs.position.z = euler.Z;
+    scene.currentCameraTjs.rotation.x = euler.AngleX;
+    scene.currentCameraTjs.rotation.y = euler.AngleY;
+    scene.currentCameraTjs.rotation.z = euler.AngleZ;
 
 
-let idAndNameAndCameraTjs = [];
+    function animate() {
+        requestAnimationFrame(animate);
 
+        scene.cameraLight.position.copy(scene.currentCameraTjs.position);
+        scene.cameraLight.rotation.copy(scene.currentCameraTjs.rotation);
 
+        scene.renderer.render(scene.sceneTjs, scene.currentCameraTjs);
+    };
 
-// program ///////////////////////
-init();
-
-
-async function init() {
-    initCanvasAndRenderer();
-    createSceneTjs();
-    let sceneSrv = await getSceneFromServer();
-    addBodiesToSceneTjs(sceneSrv.Bodies);
-    getCamerasTjs(sceneSrv.Cameras);
-    setCurrentCamera("CameraOne");
     animate();
 }
 
 
-function animate() {
-    requestAnimationFrame(animate);
 
-    currentCameraLightTjs.position.copy(currentCameraTjsposition);
-    currentCameraLightTjs.rotation.copy(currentCameraTjs.rotation);
-
-    scene.renderer.render(sceneTjs, currentCameraTjs);
-};
-
-function initCanvasAndRenderer() {
-    canvas = document.getElementById("MyCanvas");
-    rendererTjs = new THREE.WebGLRenderer({
+function createSceneTjs() {
+    var canvas = document.getElementById("MyCanvas");
+    const rendererTjs = new THREE.WebGLRenderer({
         antialias: true,
         canvas: canvas
     });
 
-}
+    const sceneTjs = new THREE.Scene();
 
-
-function createSceneTjs() {
-    sceneTjs = new THREE.Scene();
-
-    // ambient light
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.2); // soft white light
     sceneTjs.add(ambientLight);
 
-    // direction light for abuff
     var lamp = new THREE.DirectionalLight(0xffffff, 1);
-    lamp.position.set(0, 0, 1000);
+    lamp.position.set(0, 0, 100);
     lamp.rotation.set(new THREE.Euler(0, 0, 0, 'XYZ'));
     lamp.castShadow = true;
     sceneTjs.add(lamp);
@@ -72,23 +73,19 @@ function createSceneTjs() {
     light.position.set(0, 0, 0);
     light.rotation.set(new THREE.Euler(0, 0, 0, 'XYZ'));
     light.castShadow = true;
-    var currentCameraLightTjs = new THREE.Object3D();
-    currentCameraLightTjs.add(light);
-    sceneTjs.add(currentCameraLightTjs);
-}
+    var lightParent = new THREE.Object3D();
+    lightParent.add(light);
+    sceneTjs.add(lightParent);
 
+    const cameraTjs = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 1, 10000);
 
-async function getSceneFromServer() {
-    lock = true;
-    let url = encodeURI("http://localhost:5000/scene");
-    let scene = await fetchData(url);
-    lock = false;
+    var scene = new Scene(rendererTjs, cameraTjs, lightParent, sceneTjs);
 
     return scene;
 }
 
 
-function addBodiesToSceneTjs(bodies) {
+function addBodiesToScene(scene, bodies) {
 
     function convertBodyToBodyTjs(body) {
         const positions = [];
@@ -129,57 +126,21 @@ function addBodiesToSceneTjs(bodies) {
 
     for (let body of bodies) {
         let bodyTjs = convertBodyToBodyTjs(body);
-        idAndBodyTjsDict[body.Id] = bodyTjs;
-        sceneTjs.addBody(bodyTjs);
+        scene.addBody(body.Id, bodyTjs);
     }
 }
 
 
-function getCamerasTjs(cameras) {
-    for (let i = 0; i < cameras.length; i++) {
-        var camera = cameras[i];
-        const euler = camera.EulerFrame;
 
-        const cameraTjs = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 10000);
-        cameraTjs.position.x = euler.X;
-        cameraTjs.position.y = euler.Y;
-        cameraTjs.position.z = euler.Z;
-        cameraTjs.rotation.x = euler.AngleX;
-        cameraTjs.rotation.y = euler.AngleY;
-        cameraTjs.rotation.z = euler.AngleZ;
+async function getSceneFromServer()
+{
+    lock = true;
+    let url = encodeURI("http://localhost:5000/scene");
+    let scene = await fetchData(url);
+    lock = false;
 
-        const cameraItem = new CameraItem(camera.Id, camera.Name, cameraTjs);
-        idAndNameAndCameraTjsDict.push(cameraItem);
-   }
+    return scene;
 }
-
-function setCurrentCamera(name) {
-    const cameraTjs = idAndNameAndCameraTjs.find(function (item) { return item.name === name });
-    if(cameraTjs != null)
-        currentCameraTjs = cameraTjs;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 function fetchData(url) {
