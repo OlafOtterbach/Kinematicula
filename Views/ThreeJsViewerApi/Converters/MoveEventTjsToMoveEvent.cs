@@ -17,7 +17,7 @@ public static class MoveEventTjsToMoveEvent
             StartMoveY = moveEventTjs.StartY,
             EndMoveX = moveEventTjs.EndX,
             EndMoveY = moveEventTjs.EndY,
-            CameraId = moveEventTjs.Camera.CameraId,
+            CameraId = moveEventTjs.Camera.Id,
             CanvasWidth = moveEventTjs.CanvasWidth,
             CanvasHeight = moveEventTjs.CanvasHeight,
         };

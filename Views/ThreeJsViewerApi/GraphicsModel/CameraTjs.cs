@@ -2,5 +2,5 @@
 
 public record CameraTjs(
     string Name,
-    Guid CameraId,
+    Guid Id,
     EulerFrameTjs EulerFrame);
