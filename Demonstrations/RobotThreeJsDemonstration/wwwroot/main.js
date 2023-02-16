@@ -38,7 +38,7 @@ async function init() {
 function animate() {
     requestAnimationFrame(animate);
 
-    currentCameraLightTjs.position.copy(currentCameraTjsposition);
+    currentCameraLightTjs.position.copy(currentCameraTjs.position);
     currentCameraLightTjs.rotation.copy(currentCameraTjs.rotation);
 
     scene.renderer.render(sceneTjs, currentCameraTjs);
@@ -72,7 +72,7 @@ function createSceneTjs() {
     light.position.set(0, 0, 0);
     light.rotation.set(new THREE.Euler(0, 0, 0, 'XYZ'));
     light.castShadow = true;
-    var currentCameraLightTjs = new THREE.Object3D();
+    currentCameraLightTjs = new THREE.Object3D();
     currentCameraLightTjs.add(light);
     sceneTjs.add(currentCameraLightTjs);
 }
@@ -155,8 +155,8 @@ function getCamerasTjs(cameras) {
 
 function setCurrentCamera(name) {
     const cameraTjs = idAndNameAndCameraTjs.find(function (item) { return item.name === name });
-    if(cameraTjs != null)
-        currentCameraTjs = cameraTjs;
+    if (cameraTjs != null)
+        currentCameraTjs = cameraTjs.cameraTjs;
 }
 
 
