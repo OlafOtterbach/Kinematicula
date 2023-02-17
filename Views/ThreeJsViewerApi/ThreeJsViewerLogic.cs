@@ -36,8 +36,13 @@ public class ThreeJsViewerLogic : IThreeJsViewerLogic
         var touchEvent = touchEventTjs.ToTouchEvent();
         var touchCamera = _view.Touch(touchEvent);
 
-        var dict = _view.Scene.Bodies.Where(body => !(body is Camera)).Select(body => body.ToBodyTjs()).ToDictionary(x => x.Id, x => x.Frame);
-        var sceneState = new SceneStateTjs(touchCamera.ToCameraTjs(), dict);
+        var items = _view.Scene
+                         .Bodies
+                         .Where(body => !(body is Camera))
+                         .Select(body => new BodyItemTjs(body.Id, body.Frame.ToFrameTjs()))
+                         .ToArray();
+
+        var sceneState = new SceneStateTjs(touchCamera.ToCameraTjs(), items);
 
         return sceneState;
     }
@@ -47,8 +52,13 @@ public class ThreeJsViewerLogic : IThreeJsViewerLogic
         var moveEvent = moveEventTjs.ToMoveEvent();
         var rotatedCamera = _view.Move(moveEvent);
 
-        var dict = _view.Scene.Bodies.Where(body => !(body is Camera)).Select(body => body.ToBodyTjs()).ToDictionary(x => x.Id, x => x.Frame);
-        var sceneState = new SceneStateTjs(rotatedCamera.ToCameraTjs(), dict);
+        var items = _view.Scene
+                         .Bodies
+                         .Where(body => !(body is Camera))
+                         .Select(body => new BodyItemTjs(body.Id, body.Frame.ToFrameTjs()))
+                         .ToArray();
+
+        var sceneState = new SceneStateTjs(rotatedCamera.ToCameraTjs(), items);
 
         return sceneState;
     }
@@ -58,9 +68,14 @@ public class ThreeJsViewerLogic : IThreeJsViewerLogic
     {
         var zoomEvent = zoomEventTjs.ToZoomEvent();
         var zoomedCamera = _view.Zoom(zoomEvent);
-        var dict = _view.Scene.Bodies.Where(body => !(body is Camera)).Select(body => body.ToBodyTjs()).ToDictionary(x => x.Id, x => x.Frame);
 
-        var sceneState = new SceneStateTjs(zoomedCamera.ToCameraTjs(), dict);
+        var items = _view.Scene
+                         .Bodies
+                         .Where(body => !(body is Camera))
+                         .Select(body => new BodyItemTjs(body.Id, body.Frame.ToFrameTjs()))
+                         .ToArray();
+
+        var sceneState = new SceneStateTjs(zoomedCamera.ToCameraTjs(), items);
 
         return sceneState;
     }

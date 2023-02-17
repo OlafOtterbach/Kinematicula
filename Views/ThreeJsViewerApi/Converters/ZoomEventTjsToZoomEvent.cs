@@ -10,7 +10,7 @@ public static class ZoomEventTjsToZoomEvent
         var zoomEvent = new ZoomEvent
         {
             Delta = zoomEventTjs.Delta,
-            CameraId = zoomEventTjs.Camera.Id,
+            CameraId = zoomEventTjs.CameraId,
             CanvasWidth = zoomEventTjs.CanvasWidth,
             CanvasHeight = zoomEventTjs.CanvasHeight
         };

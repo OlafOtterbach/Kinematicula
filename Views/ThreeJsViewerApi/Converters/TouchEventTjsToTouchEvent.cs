@@ -12,7 +12,7 @@ public static class TouchEventTjsToTouchEvent
             IsBodyTouched = touchEventTjs.IsBodyTouched,
             BodyId = touchEventTjs.BodyId,
             TouchPosition = touchEventTjs.TouchPosition.ToPosition3D(),
-            CameraId = touchEventTjs.Camera.Id,
+            CameraId = touchEventTjs.CameraId,
             CanvasWidth = touchEventTjs.CanvasWidth,
             CanvasHeight = touchEventTjs.CanvasHeight
         };

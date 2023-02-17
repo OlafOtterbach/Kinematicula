@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using ThreeJsViewerApi;
+using ThreeJsViewerApi.EventModel;
 using ThreeJsViewerApi.GraphicsModel;
 
 public class HomeController : Controller
@@ -27,31 +28,31 @@ public class HomeController : Controller
         return Ok(scene);
     }
 
-    //[HttpPost("select")]
-    //public ActionResult<SelectedBodyStateDto> Select([FromBody] SelectEventDto selectEventDto)
-    //{
-    //    var selection = _logicView.SelectBody(selectEventDto);
-    //    return Ok(selection);
-    //}
+    [HttpPost("select")]
+    public ActionResult<SelectedBodyStateTjs> Select([FromBody] SelectEventTjs selectEventTjs)
+    {
+        var selection = _logicView.SelectBody(selectEventTjs);
+        return Ok(selection);
+    }
 
-    //[HttpPost("touch")]
-    //public ActionResult<SceneStateDto> Touch([FromBody] TouchEventDto touchEventDto)
-    //{
-    //    var sceneState = _logicView.Touch(touchEventDto);
-    //    return Ok(sceneState);
-    //}
+    [HttpPost("touch")]
+    public ActionResult<SceneStateTjs> Touch([FromBody] TouchEventTjs touchEventTjs)
+    {
+        var sceneState = _logicView.Touch(touchEventTjs);
+        return Ok(sceneState);
+    }
 
-    //[HttpPost("move")]
-    //public ActionResult<SceneStateDto> Move([FromBody] MoveEventDto moveEventDto)
-    //{
-    //    var sceneState = _logicView.Move(moveEventDto);
-    //    return Ok(sceneState);
-    //}
+    [HttpPost("move")]
+    public ActionResult<SceneStateTjs> Move([FromBody] MoveEventTjs moveEventTjs)
+    {
+        var sceneState = _logicView.Move(moveEventTjs);
+        return Ok(sceneState);
+    }
 
-    //[HttpPost("zoom")]
-    //public ActionResult<SceneStateDto> Zoom([FromBody] ZoomEventDto zoomEventDto)
-    //{
-    //    var sceneState = _logicView.Zoom(zoomEventDto);
-    //    return Ok(sceneState);
-    //}
+    [HttpPost("zoom")]
+    public ActionResult<SceneStateTjs> Zoom([FromBody] ZoomEventTjs zoomEventTjs)
+    {
+        var sceneState = _logicView.Zoom(zoomEventTjs);
+        return Ok(sceneState);
+    }
 }

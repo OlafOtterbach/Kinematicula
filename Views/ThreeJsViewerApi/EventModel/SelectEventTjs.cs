@@ -8,5 +8,5 @@ public class SelectEventTjs
     public double SelectPositionY { get; set; }
     public int CanvasWidth { get; set; }
     public int CanvasHeight { get; set; }
-    public CameraTjs Camera { get; set; }
+    public Guid CameraId { get; set; }
 }

@@ -12,7 +12,7 @@ public static class SelectEventTjsToSelectEvent
         {
             selectPositionX = selectEventTjs.SelectPositionX,
             selectPositionY = selectEventTjs.SelectPositionY,
-            CameraId = selectEventTjs.Camera.Id,
+            CameraId = selectEventTjs.CameraId,
             CanvasWidth = selectEventTjs.CanvasWidth,
             CanvasHeight = selectEventTjs.CanvasHeight
         };

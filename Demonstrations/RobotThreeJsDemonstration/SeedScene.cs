@@ -221,7 +221,7 @@ public static class SeedScene
             ex,
             ez);
 
-        cameraOne.SetCamera(new Position3D(0,0,500), 30.0.ToRadiant(), 45.0.ToRadiant(), 1800.0);
+        cameraOne.SetCamera(new Position3D(0,0,500), 30.0.ToRadiant(), 45.0.ToRadiant(), 2400.0);
 
 
 
