@@ -9,9 +9,9 @@ public static class ConverterBodyToBodyTjs
     public static BodyTjs ToBodyTjs(this Body body)
     {
         var result = ConvertFacesToTrianglesTjsAndVerticesTjs(body.Faces);
-        var edgseTjs = body.Edges.ToEdgesTjs();
+        var(edgePoints, edgeIndices) = body.Edges.ToEdgesTjs();
 
-        BodyTjs bodyTjs = new BodyTjs(body.Id, body.Name, body.Frame.ToFrameTjs(), result.VerticesTjs, result.IndicesTjs, edgseTjs);
+        BodyTjs bodyTjs = new BodyTjs(body.Id, body.Name, body.Frame.ToFrameTjs(), result.VerticesTjs, result.IndicesTjs, edgePoints, edgeIndices);
         return bodyTjs;
     }
 
@@ -82,10 +82,10 @@ public static class ConverterBodyToBodyTjs
         return vertexTjs;
     }
 
-    private static EdgeTjs[] ToEdgesTjs(this Edge[] edges)
+    private static (PositionTjs[] EdgePoints, int[] EdgeIndices) ToEdgesTjs(this Edge[] edges)
     {
         var edgesTjs = edges.Select(edge => edge.ToEdgeTjs()).ToArray();
-        return edgesTjs;
+        return (Array.Empty<PositionTjs>(), Array.Empty<int>());
     }
 
     private static EdgeTjs ToEdgeTjs(this Edge edge)

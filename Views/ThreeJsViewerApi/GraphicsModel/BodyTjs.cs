@@ -6,5 +6,6 @@
         FrameTjs Frame,
         VertexTjs[] Vertices,
         int[] Indices,
-        EdgeTjs[] Edges);
+        PositionTjs[] EdgePoints,
+        int[] EdgeIndices);
 }

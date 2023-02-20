@@ -213,27 +213,16 @@ function addBodiesToSceneTjs(bodies) {
 }
 
 
-function setBodyFrame(bodyTjs, frame) {
-    bodyTjs.matrix.set(
-        frame.A11, frame.A12, frame.A13, frame.A14,
-        frame.A21, frame.A22, frame.A23, frame.A24,
-        frame.A31, frame.A32, frame.A33, frame.A34,
-        frame.A41, frame.A42, frame.A43, frame.A44);
-}
-
-
 function getCamerasTjs(cameras) {
     for (let i = 0; i < cameras.length; i++) {
         var camera = cameras[i];
         const euler = camera.EulerFrame;
 
+        let fac = canvas.width
+        let frustum = 2.0 * Math.sin()
+
         const cameraTjs = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 10000);
-        cameraTjs.position.x = euler.X;
-        cameraTjs.position.y = euler.Y;
-        cameraTjs.position.z = euler.Z;
-        cameraTjs.rotation.x = euler.AngleX;
-        cameraTjs.rotation.y = euler.AngleY;
-        cameraTjs.rotation.z = euler.AngleZ;
+        setCameraFrame(cameraTjs, euler);
 
         const cameraItem = new CameraItem(camera.Id, camera.Name, cameraTjs);
         idAndNameAndCameraTjs.push(cameraItem);
@@ -383,8 +372,29 @@ function UpdateScene(sceneState) {
         let item = sceneState.GraphicsState[i];
         setBodyFrame(idAndBodyTjsDict[item.Id], item.Frame);
     }
+
+    var cameraId = sceneState.Camera.Id;
+    const camera = idAndNameAndCameraTjs.find(function (item) { return item.id === cameraId });
+    setCameraFrame(camera.cameraTjs, sceneState.Camera.EulerFrame);
 }
 
+
+function setBodyFrame(bodyTjs, frame) {
+    bodyTjs.matrix.set(
+        frame.A11, frame.A12, frame.A13, frame.A14,
+        frame.A21, frame.A22, frame.A23, frame.A24,
+        frame.A31, frame.A32, frame.A33, frame.A34,
+        frame.A41, frame.A42, frame.A43, frame.A44);
+}
+
+function setCameraFrame(cameraTjs, eulerFrame) {
+    cameraTjs.position.x = eulerFrame.X;
+    cameraTjs.position.y = eulerFrame.Y;
+    cameraTjs.position.z = eulerFrame.Z;
+    cameraTjs.rotation.x = eulerFrame.AngleX;
+    cameraTjs.rotation.y = eulerFrame.AngleY;
+    cameraTjs.rotation.z = eulerFrame.AngleZ;
+}
 
 
 function sleep(ms) {
@@ -426,3 +436,26 @@ function postData(url, data) {
     });
     return result;
 }
+
+
+/*
+ 			vertices = [
+				new THREE.Vector3(-pos, -pos, -pos),
+				new THREE.Vector3(-pos, -pos,  pos),
+				new THREE.Vector3(-pos,  pos, -pos),
+				new THREE.Vector3(-pos,  pos,  pos),
+				new THREE.Vector3( pos, -pos, -pos),
+				new THREE.Vector3( pos, -pos,  pos),
+				new THREE.Vector3( pos,  pos, -pos),
+				new THREE.Vector3( pos,  pos,  pos),
+			];
+			indices = [0, 2, 2, 6, 6, 4, 4, 0,
+			           1, 3, 3, 7, 7, 5, 5, 1,
+					   0, 1, 2, 3, 4, 5, 6, 7 
+		              ];
+            var materialLine = new THREE.LineBasicMaterial({color: 0x00ff00});
+			var geometryLine = new THREE.BufferGeometry().setFromPoints(vertices);
+			geometryLine.setIndex(new THREE.BufferAttribute(new Uint16Array(indices), 1));
+
+			var line = new THREE.LineSegments(geometryLine, materialLine);
+			cube.add(line);*/
