@@ -218,9 +218,6 @@ function getCamerasTjs(cameras) {
         var camera = cameras[i];
         const euler = camera.EulerFrame;
 
-        let fac = canvas.width
-        let frustum = 2.0 * Math.sin()
-
         const cameraTjs = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 10000);
         setCameraFrame(cameraTjs, euler);
 

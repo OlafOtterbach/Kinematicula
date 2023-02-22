@@ -5,7 +5,7 @@ using ThreeJsViewerApi.GraphicsModel;
 
 public interface IThreeJsViewerLogic
 {
-    SceneTjs GetScene();
+    SceneTjs GetScene(double canvasWidth, double canvasHeight);
 
     SelectedBodyStateTjs SelectBody(SelectEventTjs selectEventTjs);
 

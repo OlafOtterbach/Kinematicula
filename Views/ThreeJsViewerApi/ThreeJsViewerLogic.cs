@@ -15,10 +15,10 @@ public class ThreeJsViewerLogic : IThreeJsViewerLogic
         _view = view;
     }
 
-    public SceneTjs GetScene()
+    public SceneTjs GetScene(double canvasWidth, double canvasHeight)
     {
         var bodiesTjs = _view.Scene.Bodies.Where(body => !(body is Camera)).Select(body => body.ToBodyTjs()).ToArray();
-        var camerasTjs = _view.Scene.Bodies.OfType<Camera>().Select(camera => camera.ToCameraTjs()).ToArray();
+        var camerasTjs = _view.Scene.Bodies.OfType<Camera>().Select(camera => camera.ToCameraTjs(canvasWidth, canvasHeight)).ToArray();
         var sceneTjs = new SceneTjs(bodiesTjs, camerasTjs);
 
         return sceneTjs;
@@ -42,7 +42,7 @@ public class ThreeJsViewerLogic : IThreeJsViewerLogic
                          .Select(body => new BodyItemTjs(body.Id, body.Frame.ToFrameTjs()))
                          .ToArray();
 
-        var sceneState = new SceneStateTjs(touchCamera.ToCameraTjs(), items);
+        var sceneState = new SceneStateTjs(touchCamera.ToCameraTjs(touchEventTjs.CanvasWidth, touchEventTjs.CanvasHeight), items);
 
         return sceneState;
     }
@@ -58,7 +58,7 @@ public class ThreeJsViewerLogic : IThreeJsViewerLogic
                          .Select(body => new BodyItemTjs(body.Id, body.Frame.ToFrameTjs()))
                          .ToArray();
 
-        var sceneState = new SceneStateTjs(rotatedCamera.ToCameraTjs(), items);
+        var sceneState = new SceneStateTjs(rotatedCamera.ToCameraTjs(moveEventTjs.CanvasWidth, moveEventTjs.CanvasHeight), items);
 
         return sceneState;
     }
@@ -75,7 +75,7 @@ public class ThreeJsViewerLogic : IThreeJsViewerLogic
                          .Select(body => new BodyItemTjs(body.Id, body.Frame.ToFrameTjs()))
                          .ToArray();
 
-        var sceneState = new SceneStateTjs(zoomedCamera.ToCameraTjs(), items);
+        var sceneState = new SceneStateTjs(zoomedCamera.ToCameraTjs(zoomEventTjs.CanvasWidth, zoomEventTjs.CanvasHeight), items);
 
         return sceneState;
     }

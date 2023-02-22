@@ -2,6 +2,13 @@
 
 public static class ViewProjection
 {
+    public static double GetFrustumInRadiant(double nearPlane, double canvasWidth, double canvasHeight)
+    {
+        var planeHeight = canvasHeight < canvasWidth ? 1.0 : canvasWidth / canvasHeight;
+        var frustum = 2.0 * Math.Atan(planeHeight / 1.0);
+        return frustum;
+    }
+
     public static Position3D ProjectCanvasToSceneSystem(double canvasX, double canvasY, double canvasWidth, double canvasHeight, double nearPlaneDist, Matrix44D cameraFrame)
     {
         var (x, y) = ViewProjection.ProjectCanvasToCameraPlane(canvasX, canvasY, canvasWidth, canvasHeight);
