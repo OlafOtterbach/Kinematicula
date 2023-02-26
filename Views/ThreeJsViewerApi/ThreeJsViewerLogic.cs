@@ -5,6 +5,7 @@ using Kinematicula.LogicViewing;
 using ThreeJsViewerApi.Converters;
 using ThreeJsViewerApi.EventModel;
 using ThreeJsViewerApi.GraphicsModel;
+using ThreeJsViewerApi.Helpers;
 
 public class ThreeJsViewerLogic : IThreeJsViewerLogic
 {
@@ -34,14 +35,10 @@ public class ThreeJsViewerLogic : IThreeJsViewerLogic
     public SceneStateTjs Touch(TouchEventTjs touchEventTjs)
     {
         var touchEvent = touchEventTjs.ToTouchEvent();
+
         var touchCamera = _view.Touch(touchEvent);
 
-        var items = _view.Scene
-                         .Bodies
-                         .Where(body => !(body is Camera))
-                         .Select(body => new BodyItemTjs(body.Id, body.Frame.ToFrameTjs()))
-                         .ToArray();
-
+        var items = _view.Scene.GetBodyItems();
         var sceneState = new SceneStateTjs(touchCamera.ToCameraTjs(touchEventTjs.CanvasWidth, touchEventTjs.CanvasHeight), items);
 
         return sceneState;
@@ -50,14 +47,10 @@ public class ThreeJsViewerLogic : IThreeJsViewerLogic
     public SceneStateTjs Move(MoveEventTjs moveEventTjs)
     {
         var moveEvent = moveEventTjs.ToMoveEvent();
+
         var rotatedCamera = _view.Move(moveEvent);
 
-        var items = _view.Scene
-                         .Bodies
-                         .Where(body => !(body is Camera))
-                         .Select(body => new BodyItemTjs(body.Id, body.Frame.ToFrameTjs()))
-                         .ToArray();
-
+        var items = _view.Scene.GetBodyItems();
         var sceneState = new SceneStateTjs(rotatedCamera.ToCameraTjs(moveEventTjs.CanvasWidth, moveEventTjs.CanvasHeight), items);
 
         return sceneState;
@@ -67,14 +60,10 @@ public class ThreeJsViewerLogic : IThreeJsViewerLogic
     public SceneStateTjs Zoom(ZoomEventTjs zoomEventTjs)
     {
         var zoomEvent = zoomEventTjs.ToZoomEvent();
+
         var zoomedCamera = _view.Zoom(zoomEvent);
 
-        var items = _view.Scene
-                         .Bodies
-                         .Where(body => !(body is Camera))
-                         .Select(body => new BodyItemTjs(body.Id, body.Frame.ToFrameTjs()))
-                         .ToArray();
-
+        var items = _view.Scene.GetBodyItems();
         var sceneState = new SceneStateTjs(zoomedCamera.ToCameraTjs(zoomEventTjs.CanvasWidth, zoomEventTjs.CanvasHeight), items);
 
         return sceneState;
