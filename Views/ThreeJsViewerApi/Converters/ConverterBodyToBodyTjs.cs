@@ -1,6 +1,7 @@
 ﻿namespace ThreeJsViewerApi.Converters;
 
 using Kinematicula.Graphics;
+using Kinematicula.Mathematics;
 using ThreeJsViewerApi.GraphicsModel;
 using ThreeJsViewerApi.Helpers;
 
@@ -9,7 +10,7 @@ public static class ConverterBodyToBodyTjs
     public static BodyTjs ToBodyTjs(this Body body)
     {
         var result = ConvertFacesToTrianglesTjsAndVerticesTjs(body.Faces);
-        var(edgePoints, edgeIndices) = body.Edges.ToEdgesTjs();
+        var (edgePoints, edgeIndices) = body.Edges.ToEdgesTjs();
 
         BodyTjs bodyTjs = new BodyTjs(body.Id, body.Name, body.Frame.ToFrameTjs(), result.VerticesTjs, result.IndicesTjs, edgePoints, edgeIndices);
         return bodyTjs;
@@ -21,7 +22,7 @@ public static class ConverterBodyToBodyTjs
         var index = 0;
         var trianglesTjs = new List<TriangleTjs>();
         var indices = new List<int>();
-        var vertexDict = new Dictionary<VertexTjs,int>(vertexComparer);
+        var vertexDict = new Dictionary<VertexTjs, int>(vertexComparer);
         foreach (var face in faces)
         {
             var triangles = face.Triangles;
@@ -84,8 +85,23 @@ public static class ConverterBodyToBodyTjs
 
     private static (PositionTjs[] EdgePoints, int[] EdgeIndices) ToEdgesTjs(this Edge[] edges)
     {
-        var edgesTjs = edges.Select(edge => edge.ToEdgeTjs()).ToArray();
-        return (Array.Empty<PositionTjs>(), Array.Empty<int>());
+        var startEndFromEdges = edges.GetPositionsFromEdges().ToList();
+        var positions = startEndFromEdges.Distinct().ToList();
+        var positionIndexDict = positions.ToDictionary(p => p, p => positions.IndexOf(p));
+
+        var edgeIndices = startEndFromEdges.Select(p => positionIndexDict[p]).ToArray();
+        var edgePoints = positions.Select(p => p.ToPositionTjs()).ToArray();
+
+        return (edgePoints, edgeIndices);
+    }
+
+    private static IEnumerable<Position3D> GetPositionsFromEdges(this Edge[] edges)
+    {
+        foreach (var edge in edges)
+        {
+            yield return edge.Start.Position;
+            yield return edge.End.Position;
+        }
     }
 
     private static EdgeTjs ToEdgeTjs(this Edge edge)

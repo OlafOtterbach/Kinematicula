@@ -145,7 +145,7 @@ function createSceneTjs() {
 
     // direction light for abuff
     var lamp = new THREE.DirectionalLight(0xffffff, 1);
-    lamp.position.set(0, 0, 1000);
+    lamp.position.set(0, 0, 10000);
     lamp.rotation.set(new THREE.Euler(0, 0, 0, 'XYZ'));
     lamp.castShadow = true;
     sceneTjs.add(lamp);
@@ -202,6 +202,8 @@ function addBodiesToSceneTjs(bodies) {
         var material = new THREE.MeshPhongMaterial({ vertexColors: true });
         let bodyTjs = new THREE.Mesh(geometry, material);
 
+        addEdgesToMesh(body, bodyTjs);
+
         bodyTjs.matrixAutoUpdate = false;
         const frame = body.Frame;
         setBodyFrame(bodyTjs, frame);
@@ -216,6 +218,25 @@ function addBodiesToSceneTjs(bodies) {
     }
 }
 
+
+function addEdgesToMesh(body, bodyTjs) {
+    let vertices = [];
+    for (const point of body.EdgePoints) {
+        vertices.push(new THREE.Vector3(point.X, point.Y, point.Z));
+    }
+
+    let indices = [];
+    for (const index of body.EdgeIndices) {
+        indices.push(index);
+    }
+
+    var materialLine = new THREE.LineBasicMaterial({ color: 0x00000 });
+    var geometryLine = new THREE.BufferGeometry().setFromPoints(vertices);
+    geometryLine.setIndex(new THREE.BufferAttribute(new Uint16Array(indices), 1));
+    
+    var line = new THREE.LineSegments(geometryLine, materialLine);
+    bodyTjs.add(line);
+}
 
 function getCamerasTjs(cameras) {
     for (let i = 0; i < cameras.length; i++) {
@@ -233,8 +254,9 @@ function getCamerasTjs(cameras) {
 
 function setCurrentCamera(name) {
     const cameraTjs = idAndNameAndCameraTjs.find(function (item) { return item.name === name });
-    if (cameraTjs != null)
+    if (cameraTjs != null) {
         currentCameraTjs = cameraTjs;
+    }
 }
 
 
@@ -439,24 +461,3 @@ function postData(url, data) {
 }
 
 
-/*
- 			vertices = [
-				new THREE.Vector3(-pos, -pos, -pos),
-				new THREE.Vector3(-pos, -pos,  pos),
-				new THREE.Vector3(-pos,  pos, -pos),
-				new THREE.Vector3(-pos,  pos,  pos),
-				new THREE.Vector3( pos, -pos, -pos),
-				new THREE.Vector3( pos, -pos,  pos),
-				new THREE.Vector3( pos,  pos, -pos),
-				new THREE.Vector3( pos,  pos,  pos),
-			];
-			indices = [0, 2, 2, 6, 6, 4, 4, 0,
-			           1, 3, 3, 7, 7, 5, 5, 1,
-					   0, 1, 2, 3, 4, 5, 6, 7 
-		              ];
-            var materialLine = new THREE.LineBasicMaterial({color: 0x00ff00});
-			var geometryLine = new THREE.BufferGeometry().setFromPoints(vertices);
-			geometryLine.setIndex(new THREE.BufferAttribute(new Uint16Array(indices), 1));
-
-			var line = new THREE.LineSegments(geometryLine, materialLine);
-			cube.add(line);*/
