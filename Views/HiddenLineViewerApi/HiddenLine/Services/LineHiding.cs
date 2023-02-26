@@ -5,6 +5,7 @@ using Kinematicula.Mathematics.Extensions;
 using HiddenLineViewerApi.HiddenLine.Model;
 using System.Collections.Generic;
 using System.Linq;
+using Kinematicula.LogicViewing.Mathmatics;
 
 public static class LineHiding
 {

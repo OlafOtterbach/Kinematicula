@@ -3,6 +3,7 @@
 using Kinematicula.Scening;
 using Kinematicula.Graphics;
 using Kinematicula.Mathematics;
+using Kinematicula.LogicViewing.Mathmatics;
 
 public class LinearSensorService : IMoveSensorService
 {

@@ -356,7 +356,7 @@ async function zoom(start, end) {
         let delta = end.y - start.y;
         let zoomEvent = new ZoomEventTjs();
         zoomEvent.cameraId = currentCameraTjs.id;
-        zoomEvent.delta = delta;
+        zoomEvent.delta = delta * 4.0;
         zoomEvent.canvasWidth = canvas.width;
         zoomEvent.canvasHeight = canvas.height;
         let url = encodeURI("http://localhost:5000/zoom");

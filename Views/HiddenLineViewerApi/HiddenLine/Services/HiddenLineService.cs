@@ -1,9 +1,9 @@
 ﻿namespace HiddenLineViewerApi.HiddenLine.Services;
 
 using Kinematicula.Scening;
-using Kinematicula.Mathematics;
 using HiddenLineViewerApi.HiddenLine.Model;
 using Kinematicula.Graphics;
+using Kinematicula.LogicViewing.Mathmatics;
 
 public class HiddenLineService : IHiddenLineService
 {

@@ -1,6 +1,7 @@
 ﻿namespace ThreeJsViewerApi.Converters;
 
 using Kinematicula.Graphics;
+using Kinematicula.LogicViewing.Mathmatics;
 using Kinematicula.Mathematics;
 using ThreeJsViewerApi.GraphicsModel;
 

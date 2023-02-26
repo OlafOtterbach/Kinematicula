@@ -1,7 +1,7 @@
 ﻿namespace HiddenLineViewerApi.HiddenLine.Services;
 
-using Kinematicula.Mathematics;
 using HiddenLineViewerApi.HiddenLine.Model;
+using Kinematicula.LogicViewing.Mathmatics;
 
 public static class CameraPlaneToCanvasProjecting
 {

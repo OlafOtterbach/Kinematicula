@@ -1,26 +1,28 @@
-﻿namespace Kinematicula.Mathematics;
+﻿using Kinematicula.Mathematics;
+
+namespace Kinematicula.LogicViewing.Mathmatics;
 
 public static class ViewProjection
 {
     public static double GetFrustumInRadiant(double nearPlane, double canvasWidth, double canvasHeight)
     {
         var planeHeight = canvasHeight < canvasWidth ? 1.0 : canvasWidth / canvasHeight;
-        var frustum = 2.0 * Math.Atan((planeHeight / 2.0) / 1.0);
+        var frustum = 2.0 * Math.Atan(planeHeight / 2.0 / 1.0);
         return frustum;
     }
 
     public static Position3D ProjectCanvasToSceneSystem(double canvasX, double canvasY, double canvasWidth, double canvasHeight, double nearPlaneDist, Matrix44D cameraFrame)
     {
-        var (x, y) = ViewProjection.ProjectCanvasToCameraPlane(canvasX, canvasY, canvasWidth, canvasHeight);
-        var posCameraSystem = ViewProjection.ProjectCameraPlaneToCameraSystem(x, y, nearPlaneDist);
-        var posSceneSystem = ViewProjection.ProjectCameraSystemToSceneSystem(posCameraSystem, cameraFrame);
+        var (x, y) = ProjectCanvasToCameraPlane(canvasX, canvasY, canvasWidth, canvasHeight);
+        var posCameraSystem = ProjectCameraPlaneToCameraSystem(x, y, nearPlaneDist);
+        var posSceneSystem = posCameraSystem.ProjectCameraSystemToSceneSystem(cameraFrame);
         return posSceneSystem;
     }
 
     public static (double canvasX, double canvasY) ProjectSceneSystemToCanvas(Position3D position, double canvasWidth, double canvasHeight, double nearPlaneDist, Matrix44D cameraFrame)
     {
-        var cameraSystemPos = ProjectSceneSystemToCameraSystem(position, cameraFrame);
-        var (cameraPlaneX, cameraPlaneY) = ProjectCameraSystemToCameraPlane(cameraSystemPos, nearPlaneDist);
+        var cameraSystemPos = position.ProjectSceneSystemToCameraSystem(cameraFrame);
+        var (cameraPlaneX, cameraPlaneY) = cameraSystemPos.ProjectCameraSystemToCameraPlane(nearPlaneDist);
         var (canvasX, canvasY) = ProjectCameraPlaneToCanvas(cameraPlaneX, cameraPlaneY, canvasWidth, canvasHeight);
         return (canvasX, canvasY);
     }
@@ -46,7 +48,7 @@ public static class ViewProjection
     public static (double, double) ProjectCameraSystemToCameraPlane(this Position3D position, double nearPlaneDist)
     {
         double cameraPlaneX = -(nearPlaneDist / position.X) * position.Y;
-        double cameraPlaneY =  (nearPlaneDist / position.X) * position.Z;
+        double cameraPlaneY = nearPlaneDist / position.X * position.Z;
         return (cameraPlaneX, cameraPlaneY);
     }
 
