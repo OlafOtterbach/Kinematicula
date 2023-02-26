@@ -3,5 +3,5 @@
 public record CameraTjs(
     string Name,
     Guid Id,
-    double frustumInDegree,
+    double FrustumInDegree,
     EulerFrameTjs EulerFrame);

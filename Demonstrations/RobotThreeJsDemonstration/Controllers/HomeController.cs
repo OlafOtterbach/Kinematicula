@@ -21,7 +21,7 @@ public class HomeController : Controller
     }
 
     [HttpGet("scene")]
-    public ActionResult<SceneTjs> GetScene(double canvasWidth, double canvasHeight)
+    public ActionResult<SceneTjs> GetScene([FromQuery] int canvasWidth, [FromQuery] int canvasHeight)
     {
         var scene = _logicView.GetScene(canvasWidth, canvasHeight);
 

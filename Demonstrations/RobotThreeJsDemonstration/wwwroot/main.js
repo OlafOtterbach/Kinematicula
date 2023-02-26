@@ -162,7 +162,11 @@ function createSceneTjs() {
 
 async function getSceneFromServer() {
     lock = true;
-    let url = encodeURI("http://localhost:5000/scene");
+
+    let width = canvas.width;
+    let height = canvas.height;//?order_id=1
+
+    let url = encodeURI("http://localhost:5000/scene?canvasWidth=" + width + "&&canvasHeight=" + height);
     let scene = await fetchData(url);
     lock = false;
 
@@ -218,7 +222,7 @@ function getCamerasTjs(cameras) {
         var camera = cameras[i];
         const euler = camera.EulerFrame;
 
-        const cameraTjs = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 10000);
+        const cameraTjs = new THREE.PerspectiveCamera(camera.FrustumInDegree, canvas.width / canvas.height, 1, 10000);
         setCameraFrame(cameraTjs, euler);
 
         const cameraItem = new CameraItem(camera.Id, camera.Name, cameraTjs);

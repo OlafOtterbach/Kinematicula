@@ -82,6 +82,7 @@ public static class SeedScene
             Target = new Position3D(),
         };
         camera.SetCamera(new Position3D(0, 0, 500), 30.0.ToRadiant(), 45.0.ToRadiant(), 2400.0);
+
         scene.AddBody(camera);
 
         //var result = scene.InverseSolver.TrySolve(cubeBody);
@@ -222,25 +223,9 @@ public static class SeedScene
             ez);
 
         cameraOne.SetCamera(new Position3D(0,0,500), 30.0.ToRadiant(), 45.0.ToRadiant(), 2400.0);
-
-
+        //cameraOne.SetCamera(new Position3D(0,0,500), 0.0.ToRadiant(), 90.0.ToRadiant(), 2400.0);
 
         scene.AddBody(cameraOne);
-
-        var cameraTwo = new Camera()
-        {
-            Name = "CameraTwo",
-            NearPlane = 1.0,
-            Target = new Position3D(),
-        };
-        scene.AddBody(cameraTwo);
-
-        //var ez = new Vector3D(0, -1, 1).Normalize();
-
-        //var cameraTwoToWagonFixedConstraint = new FixedConstraint(
-        //    new Anchor(waggon, Matrix44D.CreateTranslation(new Vector3D(0, -1000, 1000))),
-        //    new Anchor(cameraTwo, Matrix44D.CreateCoordinateSystem(new Position3D(), new Vector3D(1, 0, 0), ez)));
-
 
         scene.InitScene();
         return scene;

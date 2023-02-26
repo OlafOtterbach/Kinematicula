@@ -5,7 +5,7 @@ public static class ViewProjection
     public static double GetFrustumInRadiant(double nearPlane, double canvasWidth, double canvasHeight)
     {
         var planeHeight = canvasHeight < canvasWidth ? 1.0 : canvasWidth / canvasHeight;
-        var frustum = 2.0 * Math.Atan(planeHeight / 1.0);
+        var frustum = 2.0 * Math.Atan((planeHeight / 2.0) / 1.0);
         return frustum;
     }
 
