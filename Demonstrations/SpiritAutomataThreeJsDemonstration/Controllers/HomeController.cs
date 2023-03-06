@@ -1,4 +1,4 @@
-﻿namespace RobotThreeJsDemonstration.Controllers;
+﻿namespace SpiritAutomataThreeJsDemonstration.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
 using ThreeJsViewerApi;

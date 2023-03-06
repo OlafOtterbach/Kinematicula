@@ -12,7 +12,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Kinematicula\Kinematicula.csproj" />
     <ProjectReference Include="..\..\Views\ThreeJsViewerApi\ThreeJsViewerApi.csproj" />
-    <ProjectReference Include="..\RobotDemonstration\RobotLib\RobotLib.csproj" />
   </ItemGroup>
 
   <ItemGroup>
