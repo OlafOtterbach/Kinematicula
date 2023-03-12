@@ -1,6 +1,7 @@
 ﻿using Kinematicula.Scening;
 using Kinematicula.Graphics;
 using Kinematicula.Mathematics;
+using Kinematicula.LogicViewing.Mathmatics;
 
 namespace Kinematicula.LogicViewing.Services
 {

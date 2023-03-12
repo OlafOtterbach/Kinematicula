@@ -1,5 +1,6 @@
 ﻿using System;
 using Kinematicula.Graphics;
+using Kinematicula.LogicViewing.Mathmatics;
 using Kinematicula.Mathematics;
 using Kinematicula.Mathematics.Extensions;
 using Kinematicula.Scening;

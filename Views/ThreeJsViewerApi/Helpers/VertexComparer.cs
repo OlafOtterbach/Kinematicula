@@ -1,7 +1,6 @@
-﻿using Kinematicula.Graphics;
-using ThreeJsViewerApi.Model;
+﻿namespace ThreeJsViewerApi.Helpers;
 
-namespace ThreeJsViewerApi.Helpers;
+using ThreeJsViewerApi.GraphicsModel;
 
 public class VertexComparer : IEqualityComparer<VertexTjs>
 {

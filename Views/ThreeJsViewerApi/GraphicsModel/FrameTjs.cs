@@ -1,4 +1,4 @@
-﻿namespace ThreeJsViewerApi.Model;
+﻿namespace ThreeJsViewerApi.GraphicsModel;
 
 public record struct FrameTjs(
     double A11, double A12, double A13, double A14,

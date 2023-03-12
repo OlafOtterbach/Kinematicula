@@ -1,4 +1,4 @@
-﻿namespace ThreeJsViewerApi.Model;
+﻿namespace ThreeJsViewerApi.GraphicsModel;
 
 public record class TriangleTjs(
     int Vertex1,

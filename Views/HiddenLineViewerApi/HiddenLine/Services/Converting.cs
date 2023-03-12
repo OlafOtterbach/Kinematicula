@@ -4,6 +4,7 @@ using Kinematicula.Scening;
 using Kinematicula.Graphics;
 using Kinematicula.Mathematics;
 using HiddenLineViewerApi.HiddenLine.Model;
+using Kinematicula.LogicViewing.Mathmatics;
 
 public static class Converting
 {

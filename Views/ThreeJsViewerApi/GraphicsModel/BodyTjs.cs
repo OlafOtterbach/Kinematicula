@@ -1,4 +1,4 @@
-﻿namespace ThreeJsViewerApi.Model
+﻿namespace ThreeJsViewerApi.GraphicsModel
 {
     public record BodyTjs(
         Guid Id,
@@ -6,5 +6,6 @@
         FrameTjs Frame,
         VertexTjs[] Vertices,
         int[] Indices,
-        EdgeTjs[] Edges);
+        PositionTjs[] EdgePoints,
+        int[] EdgeIndices);
 }

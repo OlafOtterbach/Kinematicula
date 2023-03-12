@@ -27,7 +27,7 @@ public static class CameraExtensions
         var frame = targetTranslation * rotation * translation;
 
         camera.Frame = frame;
-        camera.Target = new Position3D(0.0, 0.0, 0.0);
+        camera.Target = targetPosition;
     }
 
     public static void OrbitXY(this Camera camera, double alpha)

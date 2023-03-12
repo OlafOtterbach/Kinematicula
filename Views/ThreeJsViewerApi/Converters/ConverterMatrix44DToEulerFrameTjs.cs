@@ -2,7 +2,7 @@
 
 using Kinematicula.Mathematics;
 using Kinematicula.Mathematics.Extensions;
-using ThreeJsViewerApi.Model;
+using ThreeJsViewerApi.GraphicsModel;
 
 public static class ConverterMatrix44DToEulerFrameTjs
 {

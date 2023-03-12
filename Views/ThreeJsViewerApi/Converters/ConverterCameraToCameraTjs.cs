@@ -1,13 +1,13 @@
 ﻿namespace ThreeJsViewerApi.Converters;
 
 using Kinematicula.Graphics;
+using Kinematicula.LogicViewing.Mathmatics;
 using Kinematicula.Mathematics;
-using Kinematicula.Mathematics.Extensions;
-using ThreeJsViewerApi.Model;
+using ThreeJsViewerApi.GraphicsModel;
 
 public static class ConverterCameraToCameraTjs
 {
-    public static CameraTjs ToCameraTjs(this Camera camera)
+    public static CameraTjs ToCameraTjs(this Camera camera, double canvasWidth, double canvasHeight)
     {
         var offset = camera.Frame.Offset;
         var ex = camera.Frame.Ex;
@@ -22,11 +22,13 @@ public static class ConverterCameraToCameraTjs
         var ezTjs = (rotY * rotZ * ez).Normalize();
         var frameTjs = Matrix44D.CreateCoordinateSystem(offsetTjs, exTjs, eyTjs, ezTjs);
 
+        var frustumInDegree = ViewProjection.GetFrustumInRadiant(camera.NearPlane, canvasWidth, canvasHeight).ToDegree();
 
         var cameraTjs = new CameraTjs(
             camera.Name,
-            frameTjs.ToEulerFrameTjs(),
-            camera.Frame.ToFrameTjs());
+            camera.Id,
+            frustumInDegree,
+            frameTjs.ToEulerFrameTjs());
 
         return cameraTjs;
     }

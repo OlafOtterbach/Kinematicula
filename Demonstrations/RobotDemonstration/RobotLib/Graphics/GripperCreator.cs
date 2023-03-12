@@ -15,6 +15,7 @@ public class GripperCreator
         var gripperRightSocket = new Anchor(gripper, Matrix44D.CreateTranslation(new Vector3D(0, 0, 50)));
 
         var gripperBody = Cuboid.Create(100, 50, 30);
+        gripperBody.Color = new Color(80, 80, 80);
 
         gripperBody.Name = "gripper-body";
         var gripperBodyPlug = new Anchor(gripperBody, Matrix44D.CreateTranslation(new Vector3D(0, 0, -25)));
@@ -23,6 +24,7 @@ public class GripperCreator
         var fixedGripperBodyToGripperConstraint = new FixedConstraint(gripperSocket, gripperBodyPlug);
 
         var clampLeftBody = Cuboid.Create(10, 50, 30);
+        clampLeftBody.Color = new Color(240, 240, 240);
 
         clampLeftBody.Name = "clamp-left";
         clampLeftBody.AddSensor(new LinearSensor(new Vector3D(1, 0, 0)));
@@ -32,6 +34,7 @@ public class GripperCreator
         var linearClampLeftConstraint = new GripperToClampConstraint(gripperLeftSocket, clampLeftPlug);
 
         var clampRightBody = Cuboid.Create(10, 50, 30);
+        clampRightBody.Color = new Color(240, 240, 240);
         clampRightBody.Name = "clamp-right";
         clampRightBody.AddSensor(new LinearSensor(new Vector3D(1, 0, 0)));
         var clampRightPlug = new Anchor(clampRightBody, Matrix44D.CreateTranslation(new Vector3D(-5, 0, -25)));

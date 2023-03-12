@@ -3,6 +3,7 @@
 using Kinematicula.Graphics;
 using Kinematicula.Graphics.Extensions;
 using Kinematicula.LogicViewing.Extensions;
+using Kinematicula.LogicViewing.Mathmatics;
 using Kinematicula.LogicViewing.Services;
 using Kinematicula.Mathematics;
 using Kinematicula.Scening;

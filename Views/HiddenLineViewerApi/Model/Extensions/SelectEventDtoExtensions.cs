@@ -1,11 +1,10 @@
 ﻿namespace HiddenLineViewerApi;
 
 using Kinematicula.LogicViewing;
-using Kinematicula.Scening;
 
 public static class SelectEventDtoExtensions
 {
-    public static SelectEvent ToSelectEvent(this SelectEventDto selectEventDto, Scene scene)
+    public static SelectEvent ToSelectEvent(this SelectEventDto selectEventDto)
     {
         var selectEvent = new SelectEvent
         {
