@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>Kinematicula</PackageId>
+    <Title>Kinematicula</Title>
+    <Authors>Olaf Otterbach</Authors>
+    <Company>Olaf Otterbach</Company>
+    <Product>Kinematicula</Product>
+    <Description>Kinematic library.</Description>
+    <PackageIcon>Kinematicula.png</PackageIcon>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Kinematicula\Kinematicula.csproj" />
+    <ProjectReference Include="..\Views\HiddenLineViewerApi\HiddenLineViewerApi.csproj" />
+    <ProjectReference Include="..\Views\ThreeJsViewerApi\ThreeJsViewerApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Kinematicula.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

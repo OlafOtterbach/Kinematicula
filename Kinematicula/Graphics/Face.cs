@@ -8,5 +8,7 @@ public class Face
 
     public bool HasFacets { get; set; }
 
-    public Color Color { get; set; }
+#nullable enable
+    public Color? Color { get; set; }
+#nullable disable
 }
