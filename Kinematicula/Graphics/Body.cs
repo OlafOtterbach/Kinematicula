@@ -65,7 +65,7 @@ public class Body : IGraphics, IMementoCreator
         }
     }
 
-    public Color Color { get; set; }
+    public Color EdgeColor { get; set; } = new Color(0, 0, 0);
 
     public virtual IMemento GetMemento()
     {

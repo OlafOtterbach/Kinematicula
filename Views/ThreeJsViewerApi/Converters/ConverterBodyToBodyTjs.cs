@@ -12,8 +12,20 @@ public static class ConverterBodyToBodyTjs
         var result = ConvertFacesToTrianglesTjsAndVerticesTjs(body.Faces);
         var (edgePoints, edgeIndices) = body.Edges.ToEdgesTjs();
 
-        BodyTjs bodyTjs = new BodyTjs(body.Id, body.Name, body.Frame.ToFrameTjs(), result.VerticesTjs, result.IndicesTjs, edgePoints, edgeIndices);
+        BodyTjs bodyTjs = new BodyTjs(body.Id, body.Name, body.Frame.ToFrameTjs(), result.VerticesTjs, result.IndicesTjs, edgePoints, edgeIndices, body.EdgeColor.ToEdgeColorTjs());
         return bodyTjs;
+    }
+
+    private static uint ToEdgeColorTjs(this Color color)
+    {
+        uint alpha = ((uint)(color.Alpha * 255.0)) * 16777216;
+        uint red = (uint)(color.Red * 255.0) * 65536;
+        uint green = (uint)(color.Green * 255.0) * 256;
+        uint blue = (uint)(color.Blue * 255.0);
+
+        uint colorTjs = alpha + red + green + blue;
+
+        return colorTjs;
     }
 
     private static (int[] IndicesTjs, VertexTjs[] VerticesTjs) ConvertFacesToTrianglesTjsAndVerticesTjs(IEnumerable<Face> faces)

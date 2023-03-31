@@ -8,7 +8,5 @@ public class Face
 
     public bool HasFacets { get; set; }
 
-#nullable enable
-    public Color? Color { get; set; }
-#nullable disable
+    public Color Color { get; set; } = new Color(1.0, 1.0, 1.0);
 }

@@ -232,7 +232,8 @@ function addEdgesToMesh(body, bodyTjs) {
         indices.push(index);
     }
 
-    var materialLine = new THREE.LineBasicMaterial({ color: 0x00000 });
+    let edgeColor = body.EdgeColor;
+    var materialLine = new THREE.LineBasicMaterial({ color: edgeColor });
     var geometryLine = new THREE.BufferGeometry().setFromPoints(vertices);
     geometryLine.setIndex(new THREE.BufferAttribute(new Uint16Array(indices), 1));
     

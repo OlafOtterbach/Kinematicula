@@ -42,7 +42,7 @@ public static class Converting
             End = cameraAndBodyFrame * edge.End.Position,
             First = dict.ContainsKey(edge.First.ParentTriangle) ? dict[edge.First.ParentTriangle] : null,
             Second = dict.ContainsKey(edge.Second.ParentTriangle) ? dict[edge.Second.ParentTriangle] : null,
-            Color = edge.Color?.ToColorHL() ?? body.Color?.ToColorHL() ?? 0,
+            Color = body.EdgeColor.ToColorHL(),
             Edge = edge
         };
 

@@ -7,5 +7,6 @@
         VertexTjs[] Vertices,
         int[] Indices,
         PositionTjs[] EdgePoints,
-        int[] EdgeIndices);
+        int[] EdgeIndices,
+        uint EdgeColor);
 }

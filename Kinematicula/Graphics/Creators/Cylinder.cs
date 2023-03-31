@@ -8,6 +8,16 @@ namespace Kinematicula.Graphics.Creators
     {
         public static Body Create(int segments, double radius, double height)
         {
+            return Create(segments, radius, height, new Color(0,0,1));
+        }
+
+        public static Body Create(int segments, double radius, double height, Color color)
+        {
+            return Create(segments, radius, height, color, color, color);
+        }
+
+        public static Body Create(int segments, double radius, double height, Color sheatColor, Color topColor, Color bottomColor)
+        {
             var creator = new GraphicsCreator();
 
             double alpha = 2.0 * Math.PI / segments;
@@ -15,7 +25,7 @@ namespace Kinematicula.Graphics.Creators
             double z0 = -half;
             double z1 = half;
 
-            creator.AddFace(false, false);
+            creator.AddFace(false, false, sheatColor);
             for (int i = 0; i < segments; i++)
             {
                 double x0 = (Math.Sin(i * alpha) * radius);
@@ -30,7 +40,7 @@ namespace Kinematicula.Graphics.Creators
                 creator.AddTriangle(p3, p2, p4);
             }
 
-            creator.AddFace(true, false);
+            creator.AddFace(true, false, topColor);
             for (int i = 0; i < segments; i++)
             {
                 double x0 = (Math.Sin(i * alpha) * radius);
@@ -45,7 +55,7 @@ namespace Kinematicula.Graphics.Creators
                 creator.AddTriangle(p1, p3, p2);
             }
 
-            creator.AddFace(true, false);
+            creator.AddFace(true, false, bottomColor);
             for (int i = 0; i < segments; i++)
             {
                 double x0 = (Math.Sin(i * alpha) * radius);

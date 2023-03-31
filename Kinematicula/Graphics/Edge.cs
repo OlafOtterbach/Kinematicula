@@ -10,6 +10,4 @@ public class Edge
     public CoEdge First { get; set; }
 
     public CoEdge Second { get; set; }
-
-    public Color Color { get; set; }
 }
