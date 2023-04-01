@@ -1,78 +1,73 @@
-﻿using Kinematicula.Graphics.Creators.Creator;
+﻿namespace Kinematicula.Graphics.Creators;
+
+using Kinematicula.Graphics.Creators.Creator;
 using Kinematicula.Mathematics;
 
-namespace Kinematicula.Graphics.Creators
+public static class Cube
 {
-    public static class Cube
+    public static Body Create(double size)
+        => Create(size, new Color(0, 0, 1), new Color(0,0,0));
+        
+
+    public static Body Create(double size, Color color, Color edgeColor)
+        => Create(size, color, color, color, color, color, color, edgeColor);
+
+    public static Body Create(
+        double size,
+        Color colorSouth,
+        Color colorEast,
+        Color colorNorth,
+        Color colorWest,
+        Color colorTop,
+        Color colorBottom,
+        Color edgeColor)
     {
-        public static Body Create(double size)
-        {
-            var body = Create(size, new Color(0, 0, 1));
-            return body;
-        }
+        size = size > 0 ? size / 2.0 : 0.5;
 
-        public static Body Create(double size, Color color)
-        {
-            var body = Create(size, color, color, color, color, color, color);
-            return body;
-        }
+        var p1 = new Position3D(-size, -size, -size);
+        var p2 = new Position3D(size, -size, -size);
+        var p3 = new Position3D(size, -size, size);
+        var p4 = new Position3D(-size, -size, size);
 
-        public static Body Create(
-            double size,
-            Color colorSouth,
-            Color colorEast,
-            Color colorNorth,
-            Color colorWest,
-            Color colorTop,
-            Color colorBottom)
-        {
-            size = size > 0 ? size / 2.0 : 0.5;
+        var p5 = new Position3D(-size, size, -size);
+        var p6 = new Position3D(size, size, -size);
+        var p7 = new Position3D(size, size, size);
+        var p8 = new Position3D(-size, size, size);
 
-            var p1 = new Position3D(-size, -size, -size);
-            var p2 = new Position3D(size, -size, -size);
-            var p3 = new Position3D(size, -size, size);
-            var p4 = new Position3D(-size, -size, size);
+        var creator = new GraphicsCreator();
 
-            var p5 = new Position3D(-size, size, -size);
-            var p6 = new Position3D(size, size, -size);
-            var p7 = new Position3D(size, size, size);
-            var p8 = new Position3D(-size, size, size);
+        // South
+        creator.AddFace(true, false, colorSouth);
+        creator.AddTriangle(p1, p2, p3);
+        creator.AddTriangle(p3, p4, p1);
 
-            var creator = new GraphicsCreator();
+        // East
+        creator.AddFace(true, false, colorEast);
+        creator.AddTriangle(p2, p6, p7);
+        creator.AddTriangle(p7, p3, p2);
 
-            // South
-            creator.AddFace(true, false, colorSouth);
-            creator.AddTriangle(p1, p2, p3);
-            creator.AddTriangle(p3, p4, p1);
+        // North
+        creator.AddFace(true, false, colorNorth);
+        creator.AddTriangle(p6, p5, p8);
+        creator.AddTriangle(p8, p7, p6);
 
-            // East
-            creator.AddFace(true, false, colorEast);
-            creator.AddTriangle(p2, p6, p7);
-            creator.AddTriangle(p7, p3, p2);
+        // West
+        creator.AddFace(true, false, colorWest);
+        creator.AddTriangle(p5, p1, p4);
+        creator.AddTriangle(p4, p8, p5);
 
-            // North
-            creator.AddFace(true, false, colorNorth);
-            creator.AddTriangle(p6, p5, p8);
-            creator.AddTriangle(p8, p7, p6);
+        // Top
+        creator.AddFace(true, false, colorTop);
+        creator.AddTriangle(p4, p3, p7);
+        creator.AddTriangle(p7, p8, p4);
 
-            // West
-            creator.AddFace(true, false, colorWest);
-            creator.AddTriangle(p5, p1, p4);
-            creator.AddTriangle(p4, p8, p5);
+        // Bottom
+        creator.AddFace(true, false, colorBottom);
+        creator.AddTriangle(p2, p1, p5);
+        creator.AddTriangle(p5, p6, p2);
 
-            // Top
-            creator.AddFace(true, false, colorTop);
-            creator.AddTriangle(p4, p3, p7);
-            creator.AddTriangle(p7, p8, p4);
+        var body = creator.CreateBody(edgeColor);
 
-            // Bottom
-            creator.AddFace(true, false, colorBottom);
-            creator.AddTriangle(p2, p1, p5);
-            creator.AddTriangle(p5, p6, p2);
-
-            var body = creator.CreateBody();
-
-            return body;
-        }
+        return body;
     }
 }
