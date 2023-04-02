@@ -17,6 +17,24 @@ public static class Oval
         bool facetted2,
         double length,
         double depth,
+        Matrix44D originFrame)
+    {
+        var faceColor = new Color(0, 0, 1);
+        var edgeColor = new Color(0, 0, 0);
+        return Create(segments1, segments2, radius1, radius2, hasBorder1, hasBorder2, facetted1, facetted2, length, depth, originFrame, faceColor, edgeColor);
+    }
+
+    public static Body Create(
+        int segments1,
+        int segments2,
+        double radius1,
+        double radius2,
+        bool hasBorder1,
+        bool hasBorder2,
+        bool facetted1,
+        bool facetted2,
+        double length,
+        double depth,
         Matrix44D originFrame,
         Color edgeColor)
     {
@@ -192,6 +210,18 @@ public static class Oval
 
 
 
+
+    public static Body Create(
+        int segments,
+        double radius1,
+        double radius2,
+        double length,
+        double depth)
+    {
+        var faceColor = new Color(0, 0, 1);
+        var edgeColor = new Color(0, 0, 0);
+        return Create(segments, radius1, radius2, length, depth, faceColor, edgeColor);
+    }
 
     public static Body Create(
         int segments,
