@@ -18,6 +18,42 @@ public static class Oval
         double length,
         double depth,
         Matrix44D originFrame,
+        Color edgeColor)
+    {
+        var faceColor = new Color(0, 0, 1);
+        return Create(segments1, segments2, radius1, radius2, hasBorder1, hasBorder2, facetted1, facetted2, length, depth, originFrame, faceColor, edgeColor);
+    }
+
+    public static Body Create(
+        int segments1,
+        int segments2,
+        double radius1,
+        double radius2,
+        bool hasBorder1,
+        bool hasBorder2,
+        bool facetted1,
+        bool facetted2,
+        double length,
+        double depth,
+        Matrix44D originFrame,
+        Color faceColor,
+        Color edgeColor)
+    {
+        return Create(segments1, segments2, radius1, radius2, hasBorder1, hasBorder2, facetted1, facetted2, length, depth, originFrame, faceColor, faceColor, faceColor, edgeColor);
+    }
+
+    public static Body Create(
+        int segments1,
+        int segments2,
+        double radius1,
+        double radius2,
+        bool hasBorder1,
+        bool hasBorder2,
+        bool facetted1,
+        bool facetted2,
+        double length,
+        double depth,
+        Matrix44D originFrame,
         Color sheatColor,
         Color topColor,
         Color bottomColor,
@@ -163,6 +199,30 @@ public static class Oval
         double radius2,
         double length,
         double depth,
+        Color edgeColor)
+    {
+        var faceColor = new Color(0, 0, 1);
+        return Create(segments, radius1, radius2, length, depth, faceColor, edgeColor);
+    }
+
+    public static Body Create(
+        int segments,
+        double radius1,
+        double radius2,
+        double length,
+        double depth,
+        Color faceColor,
+        Color edgeColor)
+    {
+        return Create(segments, radius1, radius2, length, depth, faceColor, faceColor, faceColor, edgeColor);
+    }
+
+    public static Body Create(
+        int segments,
+        double radius1,
+        double radius2,
+        double length,
+        double depth,
         Color sheatColor,
         Color topColor,
         Color bottomColor,
@@ -177,9 +237,9 @@ public static class Oval
         return body;
     }
 
-    private static void CreateSideFace(List<Position3D> topLoop, List<Position3D> bottomLoop, GraphicsCreator creator)
+    private static void CreateSideFace(List<Position3D> topLoop, List<Position3D> bottomLoop, GraphicsCreator creator, Color color)
     {
-        creator.AddFace(false, false);
+        creator.AddFace(false, false, color);
 
         var n = topLoop.Count;
         for (var i = 0; i < n; i++)
@@ -193,14 +253,14 @@ public static class Oval
         }
     }
 
-    private static List<Position3D> CreateTopBottomFace(int segments, double radius1, double radius2, double length, double depth, double z, GraphicsCreator creator, bool isTop)
+    private static List<Position3D> CreateTopBottomFace(int segments, double radius1, double radius2, double length, double depth, double z, GraphicsCreator creator, bool isTop, Color color)
     {
         var startAngle = Math.Acos((radius1 - radius2) / length);
         var endAngle = (-startAngle).Modulo2Pi();
         var alpha = (endAngle - startAngle) / segments;
         var sign = isTop ? 1.0 : -1.0;
 
-        creator.AddFace(true, false);
+        creator.AddFace(true, false, color);
         var pointsRadius1 = new List<Position3D>();
         for (int i = 0; i < segments; i++)
         {

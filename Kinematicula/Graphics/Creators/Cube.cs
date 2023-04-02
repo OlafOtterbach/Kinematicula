@@ -7,10 +7,15 @@ public static class Cube
 {
     public static Body Create(double size)
         => Create(size, new Color(0, 0, 1), new Color(0,0,0));
-        
 
-    public static Body Create(double size, Color color, Color edgeColor)
-        => Create(size, color, color, color, color, color, color, edgeColor);
+    public static Body Create(double size, Color edgeColor)
+    {
+        var color = new Color(0, 0, 1);
+        return Create(size, color, edgeColor);
+    }
+
+    public static Body Create(double size, Color faceColor, Color edgeColor)
+        => Create(size, faceColor, faceColor, faceColor, faceColor, faceColor, faceColor, edgeColor);
 
     public static Body Create(
         double size,

@@ -5,6 +5,22 @@ using Kinematicula.Graphics.Creators.Creator;
 
 public static class Floor
 {
+    public static Body Create(int count, double size)
+    {
+        var oddColor = new Color(0.8, 0.8, 0.8);
+        var evenColor = new Color(0.2, 0.2, 0.2);
+        var edgeColor = new Color(0, 0, 0);
+
+        return Create(count, size, oddColor, evenColor, edgeColor);
+    }
+
+    public static Body Create(int count, double size, Color edgeColor)
+    {
+        var oddColor = new Color(0.8, 0.8, 0.8);
+        var evenColor = new Color(0.2, 0.2, 0.2);
+        return Create(count, size, oddColor, evenColor, edgeColor);
+    }
+
     public static Body Create(int count, double size, Color oddColor, Color evenColor, Color edgeColor)
     {
         var creator = new GraphicsCreator();

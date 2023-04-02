@@ -8,9 +8,14 @@ public static class Cylinder
     public static Body Create(int segments, double radius, double height)
         => Create(segments, radius, height, new Color(0, 0, 1), new Color(0, 0, 0));
 
+    public static Body Create(int segments, double radius, double height, Color edgeColor)
+    {
+        var color = new Color(0, 0, 1);
+        return Create(segments, radius, height, color, edgeColor);
+    }
 
-    public static Body Create(int segments, double radius, double height, Color color, Color edgeColor)
-        => Create(segments, radius, height, color, color, color, edgeColor);
+    public static Body Create(int segments, double radius, double height, Color faceColor, Color edgeColor)
+        => Create(segments, radius, height, faceColor, faceColor, faceColor, edgeColor);
 
     public static Body Create(
         int segments,

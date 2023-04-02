@@ -8,9 +8,14 @@ public static class Cuboid
     public static Body Create(double width, double height, double depth)
         => Create(width, height, depth, new Color(0, 0, 1), new Color(0,0,0));
 
+    public static Body Create(double width, double height, double depth, Color edgeColor)
+    {
+        var color = new Color(0, 0, 1);
+        return Create(width, height, depth, color, edgeColor);
+    }
 
-    public static Body Create(double width, double height, double depth, Color color, Color edgeColor)
-        => Create(width, height, depth, color, color, color, color, color, color, edgeColor);
+    public static Body Create(double width, double height, double depth, Color faceColor, Color edgeColor)
+        => Create(width, height, depth, faceColor, faceColor, faceColor, faceColor, faceColor, faceColor, edgeColor);
 
     public static Body Create(
         double width,
