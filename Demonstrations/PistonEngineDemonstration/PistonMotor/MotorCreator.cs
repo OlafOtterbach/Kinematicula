@@ -7,12 +7,12 @@ using Kinematicula.Scening;
 
 public class MotorCreator
 {
-    public static Motor Create(Scene scene)
+    public static Motor Create(Scene scene, Color edgeColor)
     {
         var motor = new Motor();
         motor.Name = "piston motor";
 
-        var wheel1 = Cylinder.Create(16, 150, 50);
+        var wheel1 = Cylinder.Create(16, 150, 50, edgeColor);
         wheel1.Name = "wheel 1";
         motor.AddChild(wheel1);
         wheel1.AddSensor(new CylinderSensor(new Vector3D(0, 0, 1)));
@@ -22,7 +22,7 @@ public class MotorCreator
         var motorToWheel1RotationAxisConstraint = new WheelRotationConstraint(floorAnchor, wheel1AxisAnchor);
         motor.AddAxis(motorToWheel1RotationAxisConstraint);
 
-        var wheel2 = Cylinder.Create(16, 150, 50);
+        var wheel2 = Cylinder.Create(16, 150, 50, edgeColor);
         wheel2.Name = "wheel 2";
         motor.AddChild(wheel2);
         wheel2.AddSensor(new CylinderSensor(new Vector3D(0, 0, 1)));
@@ -32,7 +32,7 @@ public class MotorCreator
                 new Anchor(wheel2, Matrix44D.CreateTranslation(new Vector3D(0, 0, 75))),
                 new Anchor(wheel1, Matrix44D.CreateTranslation(new Vector3D(0, 0, -75))));
 
-        var shaft = Oval.Create(10, 10, 50, 50, false, false, false, false, 300, 100, Matrix44D.Identity);
+        var shaft = Oval.Create(10, 10, 50, 50, false, false, false, false, 300, 100, Matrix44D.Identity, edgeColor);
         shaft.Name = "shaft";
         motor.AddChild(shaft);
 
@@ -42,7 +42,7 @@ public class MotorCreator
         motor.AddAxis(wheel1ToShaftRotationAxisConstraint);
 
         var pistonMounter1
-         = Oval.Create(10, 1, 50, 50, false, true, false, false, 100, 50, Matrix44D.Identity);
+         = Oval.Create(10, 1, 50, 50, false, true, false, false, 100, 50, Matrix44D.Identity, edgeColor);
         pistonMounter1.Name = "piston mounter 1";
         motor.AddChild(pistonMounter1);
         var pistonMounter1RotationAnchor = new Anchor(pistonMounter1, Matrix44D.CreateTranslation(new Vector3D(0, 0, -25)));
@@ -51,14 +51,14 @@ public class MotorCreator
         motor.AddAxis(ShaftToPistonRotationAxisConstraint);
 
         var pistonMounter2
-         = Oval.Create(10, 1, 50, 50, false, true, false, false, 100, 50, Matrix44D.Identity);
+         = Oval.Create(10, 1, 50, 50, false, true, false, false, 100, 50, Matrix44D.Identity, edgeColor);
         pistonMounter2.Name = "piston mounter 2";
         motor.AddChild(pistonMounter2);
         var piston1ToPiston2MounterFixedConstraint
             = new FixedConstraint(new Anchor(pistonMounter1, Matrix44D.CreateTranslation(new Vector3D(0, 0, -200))),
                                   new Anchor(pistonMounter2, Matrix44D.CreateTranslation(new Vector3D(0, 0, -50))));
 
-        var piston = Cylinder.Create(10, 150, 200);
+        var piston = Cylinder.Create(10, 150, 200, edgeColor);
         piston.Name = "piston";
         piston.AddSensor(new LinearSensor(new Vector3D(0, 0, 1)));
         motor.AddChild(piston);

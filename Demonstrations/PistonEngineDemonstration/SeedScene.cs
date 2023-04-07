@@ -18,13 +18,13 @@ public static class SeedScene
         scene.AddInverseSolver(new PistonLinearAxisInverseSolver());
 
         // floor
-        var floor = Floor.Create(10, 100);
+        var floor = Floor.Create(10, 100, new Color(0, 1, 0));
         floor.Name = "Floor";
         scene.AddBody(floor);
         var fixedToWorldConstraint = new FixedConstraint(new Anchor(scene.World, Matrix44D.Identity), new Anchor(floor, Matrix44D.Identity));
 
         // motor
-        var motor = MotorCreator.Create(scene);
+        var motor = MotorCreator.Create(scene, new Color(0, 1, 0));
         scene.AddBody(motor);
         var fixedToFloorConstraint = new FixedConstraint(new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(0, 0, 200))), new Anchor(motor, Matrix44D.Identity));
 
