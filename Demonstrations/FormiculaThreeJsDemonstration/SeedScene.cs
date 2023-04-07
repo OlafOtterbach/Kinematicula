@@ -23,7 +23,7 @@ public static class SeedScene
         scene.AddForwardSolver(new GripperToClampForwardSolver());
 
         // floor
-        var floor = Floor.Create(10, 100);
+        var floor = Floor.Create(10, 100, new Color(0, 0.2, 0), new Color(0, 0, 0), new Color(0, 1, 0));
         floor.Name = "floor";
         scene.AddBody(floor);
         var floorToWorldConstraint = new FixedConstraint(new Anchor(scene.World, Matrix44D.Identity), new Anchor(floor, Matrix44D.Identity));

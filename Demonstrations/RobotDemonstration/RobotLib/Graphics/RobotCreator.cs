@@ -51,7 +51,7 @@ public static class RobotCreator
             faceColor,
             faceColor,
             faceColor,
-            new Color(0.2, 0.2, 0.2));
+            edgeColor);
     }
 
     public static Robot Create(
@@ -181,7 +181,7 @@ public static class RobotCreator
         var rotationAdapterByWrist = new RotationAxisConstraint(wristSocket, adapterPlug, 10.0.ToRadiant(), -360.0.ToRadiant(), 360.0.ToRadiant());
         robot.AddAxis(rotationAdapterByWrist);
 
-        var gripper = GripperCreator.Create();
+        var gripper = GripperCreator.Create(gripperBodyColor, gripperClampColor, edgeColor);
         var gripperPlug = new Anchor(gripper, Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, 1), new Vector3D(0, 0, 1), new Vector3D(-1, 0, 0)));
         robot.AddChild(gripper);
         gripper.Children.First().AddSensor(new PlaneSensor("left mouse button", new Vector3D(0, 1, 0), socketFlex));

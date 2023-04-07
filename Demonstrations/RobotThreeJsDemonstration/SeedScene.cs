@@ -21,12 +21,12 @@ public static class SeedScene
         scene.AddForwardSolver(new GripperToClampForwardSolver());
 
         // floor
-        var floor = Floor.Create(10, 100);
+        var floor = Floor.Create(10, 100, new Color(0, 0.8, 0), new Color(0, 0, 0), new Color(0, 1, 0));
         floor.Name = "Floor";
         scene.AddBody(floor);
         var floorToWorldConstraint = new FixedConstraint(new Anchor(scene.World, Matrix44D.Identity), new Anchor(floor, Matrix44D.Identity));
 
-        var robot = RobotCreator.Create();
+        var robot = RobotCreator.Create(12, 12, 8, new Color(0, 0, 0), new Color(0, 1, 0));
         var fixedRobotToFloorConstraint = new FixedConstraint(
             new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0))),
             new Anchor(robot, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0))));
