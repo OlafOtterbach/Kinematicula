@@ -9,13 +9,73 @@ public static class RobotCreator
 {
     public static Robot Create()
     {
-        const int SEGMENTS1 = 4;
-        const int SEGMENTS2 = 6;
+        return Create(
+            6,
+            6,
+            4,
+            new Color(1.0, 1.0, 1.0),
+            new Color(1.0, 1.0, 1.0),
+            new Color(0.0, 0.0, 1.0),
+            new Color(0.8, 0.8, 0.8),
+            new Color(0.0, 0.0, 1.0),
+            new Color(0.8, 0.8, 0.8),
+            new Color(0.0, 0.0, 1.0),
+            new Color(0.0, 0.0, 1.0),
+            new Color(0.8, 0.8, 0.8),
+            new Color(0.8, 0.8, 0.8),
+            new Color(0.0, 0.0, 0.0),
+            new Color(0.4, 0.4, 0.4),
+            new Color(0.2, 0.2, 0.2));
+    }
 
+    public static Robot Create(
+        int socketSegmentCount,
+        int wheelSegmentCount,
+        int halfWheelSegmentCount,
+        Color faceColor,
+        Color edgeColor)
+    {
+        return Create(
+            socketSegmentCount,
+            wheelSegmentCount,
+            halfWheelSegmentCount,
+            faceColor,
+            faceColor,
+            faceColor,
+            faceColor,
+            faceColor,
+            faceColor,
+            faceColor,
+            faceColor,
+            faceColor,
+            faceColor,
+            faceColor,
+            faceColor,
+            new Color(0.2, 0.2, 0.2));
+    }
+
+    public static Robot Create(
+        int socketSegmentCount,
+        int wheelSegmentCount,
+        int halfWheelSegmentCount,
+        Color socketFixColor,
+        Color socketFlexColor,
+        Color shoulderColor,
+        Color upperarmColor,
+        Color forearmColor,
+        Color socketOfUlnaColor,
+        Color ulnaColor,
+        Color wristSideColor,
+        Color wristColor,
+        Color adapterColor,
+        Color gripperBodyColor,
+        Color gripperClampColor,
+        Color edgeColor)
+    {
         var robot = new Robot();
         var robotSocket = new Anchor(robot, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0)));
 
-        var socketFix = Cylinder.Create(SEGMENTS2, 100, 20, new Color(1.0, 1.0, 1.0), new Color(0.2, 0.2, 0.2));
+        var socketFix = Cylinder.Create(socketSegmentCount, 100, 20, socketFixColor, edgeColor);
         socketFix.Name = "socket-fix";
         var socketFixPlug = new Anchor(socketFix, Matrix44D.CreateTranslation(new Vector3D(0, 0, -10)));
         var socketFixSocket = new Anchor(socketFix, Matrix44D.CreateTranslation(new Vector3D(0, 0, 10)));
@@ -23,7 +83,7 @@ public static class RobotCreator
 
         var fixedSocketToRobotConstraint = new FixedConstraint(robotSocket, socketFixPlug);
 
-        var socketFlex = Cylinder.Create(SEGMENTS2, 100, 20, new Color(1.0, 1.0, 1.0), new Color(0.2, 0.2, 0.2));
+        var socketFlex = Cylinder.Create(socketSegmentCount, 100, 20, socketFlexColor, edgeColor);
         socketFlex.Name = "socket-flex";
         var socketFlexPlug = new Anchor(socketFlex, Matrix44D.CreateTranslation(new Vector3D(0, 0, -10)));
         var socketFlexSocket = new Anchor(socketFlex, Matrix44D.CreateTranslation(new Vector3D(0, 0, 10)));
@@ -33,7 +93,7 @@ public static class RobotCreator
         var rotationSocketFlexBySocketFix = new RotationAxisConstraint(socketFixSocket, socketFlexPlug, 0.0.ToRadiant(), -360.0.ToRadiant(), 360.0.ToRadiant());
         robot.AddAxis(rotationSocketFlexBySocketFix);
 
-        var shoulder = Oval.Create(SEGMENTS1, 1, 50, 50, false, true, false, true, 200, 50, Matrix44D.Identity, new Color(0.0, 0.0, 1.0), new Color(0.2, 0.2, 0.2));
+        var shoulder = Oval.Create(halfWheelSegmentCount, 1, 50, 50, false, true, false, true, 200, 50, Matrix44D.Identity, shoulderColor, edgeColor);
         shoulder.Name = "shoulder";
         var shoulderPlug = new Anchor(shoulder, Matrix44D.CreateCoordinateSystem(new Position3D(200, 0, 0), new Vector3D(0, 1, 0), new Vector3D(-1, 0, 0)));
         var shoulderSocket = new Anchor(shoulder, Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, 25), new Vector3D(-1, 0, 0), new Vector3D(0, 0, -1)));
@@ -42,7 +102,7 @@ public static class RobotCreator
 
         var fixedShoulderToSocketFlexConstraint = new FixedConstraint(socketFlexSocket, shoulderPlug);
 
-        var upperarm = Oval.Create(SEGMENTS1, SEGMENTS1, 50, 25, false, false, false, false, 200, 50, Matrix44D.Identity, new Color(0.8, 0.8, 0.8), new Color(0.2, 0.2, 0.2));
+        var upperarm = Oval.Create(halfWheelSegmentCount, halfWheelSegmentCount, 50, 25, false, false, false, false, 200, 50, Matrix44D.Identity, upperarmColor, edgeColor);
         upperarm.Name = "upperarm";
         var upperarmPlug = new Anchor(upperarm, Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, -25), new Vector3D(1, 0, 0), new Vector3D(0, 0, -1)));
         var upperarmSocket = new Anchor(upperarm, Matrix44D.CreateCoordinateSystem(new Position3D(200, 0, -25), new Vector3D(1, 0, 0), new Vector3D(0, 0, -1)));
@@ -52,7 +112,7 @@ public static class RobotCreator
         var rotationUpperarmByShoulder = new RotationAxisConstraint(shoulderSocket, upperarmPlug, 0.0.ToRadiant(), -360.0.ToRadiant(), 360.0.ToRadiant());
         robot.AddAxis(rotationUpperarmByShoulder);
 
-        var forearm = Oval.Create(SEGMENTS1, 1, 25, 25, false, true, false, true, 100, 50, Matrix44D.Identity, new Color(0.0, 0.0, 1.0), new Color(0.2, 0.2, 0.2));
+        var forearm = Oval.Create(halfWheelSegmentCount, 1, 25, 25, false, true, false, true, 100, 50, Matrix44D.Identity, forearmColor, edgeColor);
         forearm.Name = "forearm";
         var forearmPlug = new Anchor(forearm, Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, -25), new Vector3D(1, 0, 0), new Vector3D(0, 0, 1)));
         var forearmSocket = new Anchor(forearm, Matrix44D.CreateCoordinateSystem(new Position3D(100, 0, 0), new Vector3D(0, 1, 0), new Vector3D(1, 0, 0)));
@@ -62,7 +122,7 @@ public static class RobotCreator
         var rotationforearmByUpperarm = new RotationAxisConstraint(upperarmSocket, forearmPlug, 45.0.ToRadiant(), -360.0.ToRadiant(), 360.0.ToRadiant());
         robot.AddAxis(rotationforearmByUpperarm);
 
-        var socketOfUlna = Cylinder.Create(SEGMENTS2, 30, 20, new Color(0.8, 0.8, 0.8), new Color(0.2, 0.2, 0.2));
+        var socketOfUlna = Cylinder.Create(wheelSegmentCount, 30, 20, socketOfUlnaColor, edgeColor);
         socketOfUlna.Name = "socket-of-ulna";
         var socketOfUlnaPlug = new Anchor(socketOfUlna, Matrix44D.CreateTranslation(new Vector3D(0, 0, -10)));
         var socketOfUlnaSocket = new Anchor(socketOfUlna, Matrix44D.CreateTranslation(new Vector3D(0, 0, 10)));
@@ -72,7 +132,7 @@ public static class RobotCreator
         var rotationUlnaSocketByForearm = new RotationAxisConstraint(forearmSocket, socketOfUlnaPlug, 45.0.ToRadiant(), -360.0.ToRadiant(), 360.0.ToRadiant());
         robot.AddAxis(rotationUlnaSocketByForearm);
 
-        var ulna = Oval.Create(SEGMENTS1, 1, 20, 20, false, true, false, true, 25, 30, Matrix44D.Identity, new Color(0.0, 0.0, 1.0), new Color(0.2, 0.2, 0.2));
+        var ulna = Oval.Create(halfWheelSegmentCount, 1, 20, 20, false, true, false, true, 25, 30, Matrix44D.Identity, ulnaColor, edgeColor);
         ulna.Name = "ulna";
         var ulnaPlug = new Anchor(ulna, Matrix44D.CreateCoordinateSystem(new Position3D(25, 0, 0), new Vector3D(0, 1, 0), new Vector3D(-1, 0, 0)));
         var ulnaLeftSocket = new Anchor(ulna, Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, 15), new Vector3D(1, 0, 0), new Vector3D(0, 0, -1)));
@@ -81,7 +141,7 @@ public static class RobotCreator
 
         var ulnaToUlnaSocket = new FixedConstraint(socketOfUlnaSocket, ulnaPlug);
 
-        var wristLeft = Oval.Create(SEGMENTS1, 1, 20, 20, false, true, false, true, 25, 10, Matrix44D.Identity, new Color(0.0, 0.0, 1.0), new Color(0.2, 0.2, 0.2));
+        var wristLeft = Oval.Create(halfWheelSegmentCount, 1, 20, 20, false, true, false, true, 25, 10, Matrix44D.Identity, wristSideColor, edgeColor);
         wristLeft.Name = "wrist-left";
         var wristLeftPlug = new Anchor(wristLeft, Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, -5), new Vector3D(-1, 0, 0), new Vector3D(0, 0, -1)));
         var wristLeftSocket = new Anchor(wristLeft, Matrix44D.CreateCoordinateSystem(new Position3D(25, 0, 0), new Vector3D(0, 0, -1), new Vector3D(1, 0, 0)));
@@ -90,7 +150,7 @@ public static class RobotCreator
 
         var rotationWristByUlnaLeft = new RotationAxisConstraint(ulnaLeftSocket, wristLeftPlug, 45.0.ToRadiant(), -360.0.ToRadiant(), 360.0.ToRadiant());
 
-        var wristRight = Oval.Create(SEGMENTS1, 1, 20, 20, false, true, false, true, 25, 10, Matrix44D.Identity, new Color(0.0, 0.0, 1.0), new Color(0.2, 0.2, 0.2));
+        var wristRight = Oval.Create(halfWheelSegmentCount, 1, 20, 20, false, true, false, true, 25, 10, Matrix44D.Identity, wristSideColor, edgeColor);
         wristRight.Name = "wrist-right";
         var wristRightPlug = new Anchor(wristRight, Matrix44D.CreateCoordinateSystem(new Position3D(0, 0, -5), new Vector3D(-1, 0, 0), new Vector3D(0, 0, -1)));
         var wristRightSocket = new Anchor(wristRight, Matrix44D.CreateCoordinateSystem(new Position3D(25, 0, 0), new Vector3D(0, 0, -1), new Vector3D(1, 0, 0)));
@@ -100,7 +160,7 @@ public static class RobotCreator
         var rotationWristByUlnaRight = new RotationAxisConstraint(ulnaRightSocket, wristRightPlug, 45.0.ToRadiant(), -360.0.ToRadiant(), 360.0.ToRadiant());
         robot.AddAxis(rotationWristByUlnaRight);
 
-        var wrist = Cylinder.Create(SEGMENTS2, 30, 10, new Color(0.8, 0.8, 0.8), new Color(0.2, 0.2, 0.2));
+        var wrist = Cylinder.Create(halfWheelSegmentCount, 30, 10, wristColor, edgeColor);
         wrist.Name = "wrist";
         var wristPlugLeft = new Anchor(wrist, Matrix44D.CreateTranslation(new Vector3D(-15 - 5, 0, -5)));
         var wristPlugRight = new Anchor(wrist, Matrix44D.CreateTranslation(new Vector3D(15 + 5, 0, -5)));
@@ -111,7 +171,7 @@ public static class RobotCreator
         var fixedwristToWristLeftConstraint = new FixedConstraint(wristLeftSocket, wristPlugLeft);
         var fixedwristToWristRightConstraint = new FixedConstraint(wristRightSocket, wristPlugRight);
 
-        var adapter = Cylinder.Create(SEGMENTS2, 30, 10, new Color(0.8, 0.8, 0.8), new Color(0.2, 0.2, 0.2));
+        var adapter = Cylinder.Create(halfWheelSegmentCount, 30, 10, adapterColor, edgeColor);
         adapter.Name = "adapter";
         adapter.AddSensor(new CylinderSensor(new Vector3D(0, 0, 1)));
         var adapterPlug = new Anchor(adapter, Matrix44D.CreateTranslation(new Vector3D(0, 0, -5)));
