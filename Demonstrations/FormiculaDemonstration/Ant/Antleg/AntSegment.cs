@@ -6,7 +6,7 @@ using Kinematicula.Mathematics;
 
 public static class AntSegment
 {
-    public static Body Create(double width, double height, double depth)
+    public static Body Create(double width, double height, double depth, Color edgeColor)
     {
         width = width > 0 ? width : 1.0;
         height = height > 0 ? height / 2.0 : 0.5;
@@ -53,7 +53,7 @@ public static class AntSegment
         creator.AddTriangle(p2, p1, p5);
         creator.AddTriangle(p5, p6, p2);
 
-        var body = creator.CreateBody();
+        var body = creator.CreateBody(edgeColor);
 
         return body;
     }
