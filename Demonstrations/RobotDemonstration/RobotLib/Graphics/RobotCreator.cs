@@ -31,6 +31,30 @@ public static class RobotCreator
     public static Robot Create(
         int socketSegmentCount,
         int wheelSegmentCount,
+        int halfWheelSegmentCount)
+    {
+        return Create(
+            socketSegmentCount,
+            wheelSegmentCount,
+            halfWheelSegmentCount,
+            new Color(1.0, 1.0, 1.0),
+            new Color(1.0, 1.0, 1.0),
+            new Color(0.0, 0.0, 1.0),
+            new Color(0.8, 0.8, 0.8),
+            new Color(0.0, 0.0, 1.0),
+            new Color(0.8, 0.8, 0.8),
+            new Color(0.0, 0.0, 1.0),
+            new Color(0.0, 0.0, 1.0),
+            new Color(0.8, 0.8, 0.8),
+            new Color(0.8, 0.8, 0.8),
+            new Color(0.0, 0.0, 0.0),
+            new Color(0.4, 0.4, 0.4),
+            new Color(0.2, 0.2, 0.2));
+    }
+
+    public static Robot Create(
+        int socketSegmentCount,
+        int wheelSegmentCount,
         int halfWheelSegmentCount,
         Color faceColor,
         Color edgeColor)
