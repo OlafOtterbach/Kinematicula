@@ -15,14 +15,14 @@ public static class SeedScene
         var scene = new Scene(new DirectForwardConstraintSolver(), new DirectInverseConstraintSolver());
 
         // floor
-        var floor = Floor.Create(10, 100);
+        var floor = Floor.Create(10, 100, new Color(0,0,0));
         floor.Name = "floor";
         scene.AddBody(floor);
         var fixedToWorldConstraint = new FixedConstraint(new Anchor(scene.World, Matrix44D.Identity), new Anchor(floor, Matrix44D.Identity));
 
 
         // first socket
-        var firstSocket = Cube.Create(100);
+        var firstSocket = Cube.Create(100, new Color(0, 0, 0));
         firstSocket.Name = "first socket";
         firstSocket.Frame = Matrix44D.CreateTranslation(new Vector3D(-250, 0, 50));
         scene.AddBody(firstSocket);
@@ -30,7 +30,7 @@ public static class SeedScene
         var fixedFirstSocketToFloor = new FixedConstraint(new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(-250, 0,0))), new Anchor(firstSocket, Matrix44D.CreateTranslation(new Vector3D(0,0,-50))));
 
         //// second socket
-        var secondSocket = Cube.Create(100);
+        var secondSocket = Cube.Create(100, new Color(0, 0, 0));
         secondSocket.Name = "second socket";
         secondSocket.Frame = Matrix44D.CreateTranslation(new Vector3D(250, 0, 50));
         scene.AddBody(secondSocket);
@@ -40,7 +40,7 @@ public static class SeedScene
 
 
         // first shifter
-        var firstShifter = Cuboid.Create(500, 100, 100);
+        var firstShifter = Cuboid.Create(500, 100, 100, new Color(0, 0, 0));
         firstShifter.Name = "first shifter";
         firstShifter.AddSensor(new LinearSensor(new Vector3D(1, 0, 0)));
         scene.AddBody(firstShifter);
@@ -53,7 +53,7 @@ public static class SeedScene
                         200);
 
         // second shifter
-        var secondShifter = Cuboid.Create(500, 100, 100);
+        var secondShifter = Cuboid.Create(500, 100, 100, new Color(0, 0, 0));
         secondShifter.Name = "second shifter";
         secondShifter.AddSensor(new LinearSensor(new Vector3D(1, 0, 0)));
         scene.AddBody(secondShifter);
