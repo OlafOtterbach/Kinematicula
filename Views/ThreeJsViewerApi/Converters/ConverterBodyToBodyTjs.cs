@@ -97,7 +97,7 @@ public static class ConverterBodyToBodyTjs
 
     private static (PositionTjs[] EdgePoints, int[] EdgeIndices) ToEdgesTjs(this Edge[] edges)
     {
-        var startEndFromEdges = edges.GetPositionsFromEdges().ToList();
+        var startEndFromEdges = edges.Where(IsEdgeVisible).GetPositionsFromEdges().ToList();
         var positions = startEndFromEdges.Distinct().ToList();
         var positionIndexDict = positions.ToDictionary(p => p, p => positions.IndexOf(p));
 
@@ -107,21 +107,29 @@ public static class ConverterBodyToBodyTjs
         return (edgePoints, edgeIndices);
     }
 
-    private static IEnumerable<Position3D> GetPositionsFromEdges(this Edge[] edges)
+    private static bool IsEdgeVisible(Edge edge)
+    {
+        var firstFace = edge.First.ParentTriangle.ParentFace;
+        var secondFace = edge.Second.ParentTriangle.ParentFace;
+        if(firstFace == secondFace)
+        {
+            var face = firstFace;
+            if(!face.HasFacets)
+            {
+                // Is inner edge of face and face not facetted
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static IEnumerable<Position3D> GetPositionsFromEdges(this IEnumerable<Edge> edges)
     {
         foreach (var edge in edges)
         {
             yield return edge.Start.Position;
             yield return edge.End.Position;
         }
-    }
-
-    private static EdgeTjs ToEdgeTjs(this Edge edge)
-    {
-        var edgeTjs = new EdgeTjs(
-            new PositionTjs(edge.Start.Position.X, edge.Start.Position.Y, edge.Start.Position.Z),
-            new PositionTjs(edge.End.Position.X, edge.End.Position.Y, edge.End.Position.Z));
-
-        return edgeTjs;
     }
 }
