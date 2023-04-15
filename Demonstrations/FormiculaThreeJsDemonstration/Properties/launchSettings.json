@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "RobotThreeJsDemonstration": {
+    "FormiculaThreeJsDemonstration": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

@@ -104,8 +104,11 @@ init();
 
 async function init() {
     initCanvasAndRenderer();
-    createSceneTjs();
+
     let sceneSrv = await getSceneFromServer();
+    let backgroundColor = sceneSrv.Background;
+
+    createSceneTjs(backgroundColor);
     addBodiesToSceneTjs(sceneSrv.Bodies);
     getCamerasTjs(sceneSrv.Cameras);
     setCurrentCamera("CameraOne");
@@ -138,12 +141,13 @@ function initCanvasAndRenderer() {
 }
 
 
-function createSceneTjs() {
+function createSceneTjs(backgroundColor) {
     sceneTjs = new THREE.Scene();
 
     // ambient light
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.2); // soft white light
     sceneTjs.add(ambientLight);
+    sceneTjs.background = new THREE.Color(backgroundColor);
 
     // direction light for abuff
     var lamp = new THREE.DirectionalLight(0xffffff, 1);
