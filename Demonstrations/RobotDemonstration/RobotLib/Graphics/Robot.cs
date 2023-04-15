@@ -30,6 +30,16 @@ public class Robot : Body
         }
     }
 
+    public void SetAxisAngles(double alpha1, double alpha2, double alpha3, double alpha4, double alpha5, double alpha6)
+    {
+        SetAxisAngle(1, alpha1);
+        SetAxisAngle(2, alpha2);
+        SetAxisAngle(3, alpha3);
+        SetAxisAngle(4, alpha4);
+        SetAxisAngle(5, alpha5);
+        SetAxisAngle(6, alpha6);
+    }
+
     public Gripper Gripper
     {
         get

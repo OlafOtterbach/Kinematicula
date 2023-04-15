@@ -21,12 +21,37 @@ public static class SeedScene
         scene.AddForwardSolver(new GripperToClampForwardSolver());
 
         // floor
-        var floor = Floor.Create(10, 100, new Color(0, 0.8, 0), new Color(0, 0, 0), new Color(0, 1, 0));
+        var floor = Floor.Create(10, 100, new Color(1, 1, 1), new Color(0, 0, 0), new Color(0.2, 0.2, 0.2));
         floor.Name = "Floor";
         scene.AddBody(floor);
         var floorToWorldConstraint = new FixedConstraint(new Anchor(scene.World, Matrix44D.Identity), new Anchor(floor, Matrix44D.Identity));
 
-        var robot = RobotCreator.Create(12, 12, 8, new Color(0, 0, 0), new Color(0, 1, 0));
+        var robot = RobotCreator.Create(
+            12,
+            12,
+            8,
+            false,
+            new Color(1.0, 1.0, 1.0),
+            new Color(1.0, 1.0, 1.0),
+            new Color(0.0, 0.0, 1.0),
+            new Color(0.8, 0.8, 0.8),
+            new Color(0.0, 0.0, 1.0),
+            new Color(0.8, 0.8, 0.8),
+            new Color(0.0, 0.0, 1.0),
+            new Color(0.0, 0.0, 1.0),
+            new Color(0.8, 0.8, 0.8),
+            new Color(0.8, 0.8, 0.8),
+            new Color(0.0, 0.0, 0.0),
+            new Color(0.4, 0.4, 0.4),
+            new Color(0.2, 0.2, 0.2));
+        robot.SetAxisAngles(
+                 0.ToRadiant(),
+                 45.ToRadiant(),
+                 90.ToRadiant(),
+                 0.ToRadiant(),
+                -45.ToRadiant(),
+                 0.ToRadiant());
+
         var fixedRobotToFloorConstraint = new FixedConstraint(
             new Anchor(floor, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0))),
             new Anchor(robot, Matrix44D.CreateTranslation(new Vector3D(0, 0, 0))));

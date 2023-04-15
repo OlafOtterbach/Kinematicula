@@ -129,12 +129,10 @@ function initCanvasAndRenderer() {
     canvas.addEventListener("mousedown", onMouseDown);
     canvas.addEventListener("mouseup", onMouseUp);
 
-
     rendererTjs = new THREE.WebGLRenderer({
         antialias: true,
         canvas: canvas
     });
-
 }
 
 
@@ -144,6 +142,7 @@ function createSceneTjs() {
     // ambient light
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.2); // soft white light
     sceneTjs.add(ambientLight);
+    sceneTjs.background = new THREE.Color(0xffffff);
 
     // direction light for abuff
     var lamp = new THREE.DirectionalLight(0xffffff, 1);

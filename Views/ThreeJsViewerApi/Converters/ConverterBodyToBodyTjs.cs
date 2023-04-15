@@ -120,6 +120,14 @@ public static class ConverterBodyToBodyTjs
                 return false;
             }
         }
+        else
+        {
+            if (!firstFace.HasBorder && !secondFace.HasBorder)
+            {
+                // Is inner edge of face and face not facetted
+                return false;
+            }
+        }
 
         return true;
     }
