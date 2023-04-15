@@ -20,7 +20,7 @@ public class ThreeJsViewerLogic : IThreeJsViewerLogic
     {
         var bodiesTjs = _view.Scene.Bodies.Where(body => !(body is Camera)).Select(body => body.ToBodyTjs()).ToArray();
         var camerasTjs = _view.Scene.Bodies.OfType<Camera>().Select(camera => camera.ToCameraTjs(canvasWidth, canvasHeight)).ToArray();
-        var sceneTjs = new SceneTjs(bodiesTjs, camerasTjs);
+        var sceneTjs = new SceneTjs(bodiesTjs, camerasTjs, _view.Scene.Background.ToColorTjs()); ;
 
         return sceneTjs;
     }

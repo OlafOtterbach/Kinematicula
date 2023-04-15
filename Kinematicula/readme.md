@@ -1,6 +1,13 @@
 # Kinematicula
 
-Simple handling of simple very graphics and kinematics .NET Projects.
+Simple handling of simple graphics and kinematics .NET Projects.
+
+## Tools
+Using three.js file for 3D graphics with hardware support from
+[threejs.org](www.threejs.org).  
+A great library for simple creating 3D graphics.
+It is used in the demonstartion projects with **ThreeJs** in the name.
+
 
 ## Graphics
 

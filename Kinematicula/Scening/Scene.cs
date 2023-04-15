@@ -34,6 +34,8 @@ public class Scene
 
     public IDirectInverseConstraintSolver InverseSolver { get; }
 
+    public Color Background { get; set; } = new Color(0, 0, 0);
+
     public World World => Bodies.OfType<World>().First();
 
     public List<Body> Bodies { get; }

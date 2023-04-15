@@ -15,6 +15,7 @@ public static class SeedScene
     public static Scene CreateAndPopulateScene()
     {
         var scene = new Scene(new DirectForwardConstraintSolver(), new DirectInverseConstraintSolver());
+        scene.Background = new Color(0.8, 0.8, 0.8);
         scene.AddInverseSolver(new RobotInverseSolver(scene.ForwardSolver));
         scene.AddInverseSolver(new GripperToClampInverseSolver());
         scene.AddForwardSolver(new RobotForwardSolver());
