@@ -111,10 +111,16 @@ public static class ConverterBodyToBodyTjs
     {
         var firstFace = edge.First.ParentTriangle.ParentFace;
         var secondFace = edge.Second.ParentTriangle.ParentFace;
+
+        if(firstFace.Color.Green == 1.0)
+        {
+            var a = 1;
+        }
+
         if(firstFace == secondFace)
         {
             var face = firstFace;
-            if(!face.HasFacets)
+            if(!face.HasFacets && edge.First != edge.Second)
             {
                 // Is inner edge of face and face not facetted
                 return false;
