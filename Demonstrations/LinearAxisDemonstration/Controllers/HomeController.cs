@@ -1,7 +1,8 @@
 ﻿namespace LinearAxisDemo.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
-using HiddenLineViewerApi;
+using Kinematicula.Views.HiddenLineViewerApi;
+using Kinematicula.Views.HiddenLineViewerApi.Model;
 
 public class HomeController : Controller
 {

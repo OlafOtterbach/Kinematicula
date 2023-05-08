@@ -1,7 +1,8 @@
 ﻿namespace TelescopeLinearTowerDemonstration.Controllers;
 
+using Kinematicula.Views.HiddenLineViewerApi;
+using Kinematicula.Views.HiddenLineViewerApi.Model;
 using Microsoft.AspNetCore.Mvc;
-using HiddenLineViewerApi;
 
 public class HomeController : Controller
 {
