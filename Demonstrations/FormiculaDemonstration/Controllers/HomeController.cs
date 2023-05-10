@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Kinematicula.Views.HiddenLineViewerApi;
+using Kinematicula.Views.HiddenLineViewerApi.Model;
 
 public class HomeController : Controller
 {

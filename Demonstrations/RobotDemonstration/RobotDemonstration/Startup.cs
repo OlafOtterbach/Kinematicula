@@ -1,9 +1,5 @@
 namespace RobotDemonstration;
 
-using HiddenLineViewerApi;
-using HiddenLineViewerApi.HiddenLine;
-using HiddenLineViewerApi.HiddenLine.Services;
-using Kinematicula.LogicViewing;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +7,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Kinematicula.LogicViewing;
+using Kinematicula.Views.HiddenLineViewerApi;
+using Kinematicula.Views.HiddenLineViewerApi.HiddenLine;
+using Kinematicula.Views.HiddenLineViewerApi.HiddenLine.Services;
 
 public class Startup
 {

@@ -1,9 +1,9 @@
 ﻿namespace RobotThreeJsDemonstration.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
-using ThreeJsViewerApi;
-using ThreeJsViewerApi.EventModel;
-using ThreeJsViewerApi.GraphicsModel;
+using Kinematicula.Views.ThreeJsViewerApi;
+using Kinematicula.Views.ThreeJsViewerApi.EventModel;
+using Kinematicula.Views.ThreeJsViewerApi.GraphicsModel;
 
 public class HomeController : Controller
 {

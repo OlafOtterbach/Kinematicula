@@ -8,7 +8,7 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Kinematicula.LogicViewing;
-using ThreeJsViewerApi;
+using Kinematicula.Views.ThreeJsViewerApi;
 
 public class Startup
 {
