@@ -10,6 +10,7 @@
     <PackageIcon>Kinematicula.png</PackageIcon>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,7 +20,15 @@
   </ItemGroup>
 
   <ItemGroup>
-	<None Include="LICENSE" Pack="true" PackagePath="" />
+	<None Include="..\Kinematicula.png">
+	  <Pack>True</Pack>
+	  <PackagePath>\</PackagePath>
+	</None>
+	<None Include="..\README.md">
+	  <Pack>True</Pack>
+	  <PackagePath>\</PackagePath>
+	</None>
+	<None Include="..\LICENSE" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>
