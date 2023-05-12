@@ -3,6 +3,7 @@
 Simple handling of simple graphics and kinematics for .NET Projects.
 
 ## Demonstrations
+The demonstratin apps could be found on the repository [Kinematicula](https://github.com/OlafOtterbach/Kinematicula)
 Added demonstration apps with hidden line graphics and ThreeJs graphics.
 The ThreeJs demonstrations are realised by the amazing three.js library
 for simple realizing hardware supported web gl graphics.

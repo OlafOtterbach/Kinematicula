@@ -10,6 +10,10 @@
     <PackageIcon>Kinematicula.png</PackageIcon>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <RepositoryUrl>https://github.com/OlafOtterbach/Kinematicula</RepositoryUrl>
+    <PackageTags>kinematics 3d graphics  .net</PackageTags>
+    <PackageProjectUrl>https://github.com/OlafOtterbach/Kinematicula</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +23,14 @@
   </ItemGroup>
 
   <ItemGroup>
+	<None Include="..\Kinematicula.png">
+	  <Pack>True</Pack>
+	  <PackagePath>\</PackagePath>
+	</None>
+	<None Include="..\README.md">
+	  <Pack>True</Pack>
+	  <PackagePath>\</PackagePath>
+	</None>
 	<None Include="LICENSE" Pack="true" PackagePath="" />
   </ItemGroup>
 
