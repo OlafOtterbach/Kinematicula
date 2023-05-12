@@ -4,13 +4,17 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
-    <Version>$(VersionPrefix)0.0.1-alpha</Version>
+    <Version>0.0.1</Version>
     <Authors>Olaf Otterbach</Authors>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageIcon>Kinematicula.png</PackageIcon>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Description>Kinematicula</Description>
+    <PackageProjectUrl>https://github.com/OlafOtterbach/Kinematicula</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/OlafOtterbach/Kinematicula</RepositoryUrl>
+    <PackageTags>kinematics 3d graphics .net</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
