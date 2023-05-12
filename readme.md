@@ -2,8 +2,15 @@
 
 Simple handling of simple graphics and kinematics for .NET Projects.
 
+## Tools
+Using three.js file for 3D graphics with hardware support from
+[threejs.org](www.threejs.org).  
+A great library for simple creating 3D graphics.
+It is used in the demonstartion projects with **ThreeJs** in the name.
+
 ## Demonstrations
 Added demonstration apps with hidden line graphics and ThreeJs graphics.
+The demonstartions are in the repository [Kinematicula](https://github.com/OlafOtterbach/Kinematicula).
 The ThreeJs demonstrations are realised by the amazing three.js library
 for simple realizing hardware supported web gl graphics.
 
