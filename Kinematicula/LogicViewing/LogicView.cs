@@ -5,6 +5,7 @@ using Kinematicula.Graphics.Extensions;
 using Kinematicula.LogicViewing.Extensions;
 using Kinematicula.LogicViewing.Mathmatics;
 using Kinematicula.LogicViewing.Services;
+using Kinematicula.LogicViewing.Services.Sensors;
 using Kinematicula.Mathematics;
 using Kinematicula.Scening;
 

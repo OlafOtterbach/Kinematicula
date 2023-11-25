@@ -1,4 +1,4 @@
-﻿namespace Kinematicula.LogicViewing.Services;
+﻿namespace Kinematicula.LogicViewing.Services.Sensors;
 
 using Kinematicula.Scening;
 using Kinematicula.Graphics;
