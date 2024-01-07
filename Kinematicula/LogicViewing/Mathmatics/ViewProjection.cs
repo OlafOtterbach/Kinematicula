@@ -11,6 +11,20 @@ public static class ViewProjection
         return frustum;
     }
 
+    public static double GetHorizontalAngle(double nearPlane, double canvasWidth, double canvasHeight)
+    {
+        var planeWidth = canvasWidth < canvasHeight ? 1.0 : canvasWidth / canvasHeight;
+        var angle = 2.0 * Math.Atan((planeWidth / 2.0) / nearPlane);
+        return angle;
+    }
+
+    public static double GetVerticalAngle(double nearPlane, double canvasWidth, double canvasHeight)
+    {
+        var planeHeight = canvasHeight < canvasWidth ? 1.0 : canvasHeight / canvasWidth;
+        var angle = 2.0 * Math.Atan((planeHeight / 2.0) / nearPlane);
+        return angle;
+    }
+
     public static Position3D ProjectCanvasToSceneSystem(double canvasX, double canvasY, double canvasWidth, double canvasHeight, double nearPlaneDist, Matrix44D cameraFrame)
     {
         var (x, y) = ProjectCanvasToCameraPlane(canvasX, canvasY, canvasWidth, canvasHeight);

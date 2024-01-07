@@ -4,13 +4,13 @@ using Kinematicula.Mathematics;
 
 public static class DistanceMathmatics
 {
-    public static Position3D MinDistanceToPlane(this IEnumerable<Position3D> positions, Position3D offsetPlane, Vector3D normalPlane)
+    public static Position3D MinDistanceToPlane(this IEnumerable<Position3D> positions, Plane plane)
     {
 
         (double Distance, Position3D Position) firstAcc = new(double.MaxValue, new Position3D());
         var minPosition
             = positions.AsParallel()
-                       .Aggregate(firstAcc, (acc, pos) => acc.AccumulateMinDistanceAndPositionToPlane(pos, offsetPlane, normalPlane));
+                       .Aggregate(firstAcc, (acc, pos) => acc.AccumulateMinDistanceAndPositionToPlane(pos, plane));
 
         return minPosition.Position;
     }
@@ -19,10 +19,9 @@ public static class DistanceMathmatics
     AccumulateMinDistanceAndPositionToPlane(
         this (double Distance, Position3D Position) acc,
         Position3D position,
-        Position3D offsetPlane,
-        Vector3D normalPlane)
+        Plane plane)
     {
-        var distance = DistancePositionToPlane(position, offsetPlane, normalPlane);
+        var distance = plane.DistancePositionToPlane(position);
         if(distance < acc.Distance)
         {
             acc = (distance, position);
@@ -31,14 +30,14 @@ public static class DistanceMathmatics
         return acc;
     }
 
-    public static double DistancePositionToPlane(this Position3D position, Position3D offsetPlane, Vector3D normalPlane)
+    public static double DistancePositionToPlane(this Plane plane, Position3D position)
     {
-        var nx = normalPlane.X;
-        var ny = normalPlane.Y;
-        var nz = normalPlane.Z;
-        var x = offsetPlane.X;
-        var y = offsetPlane.Y;
-        var z = offsetPlane.Z;
+        var nx = plane.Normal.X;
+        var ny = plane.Normal.Y;
+        var nz = plane.Normal.Z;
+        var x = plane.Offset.X;
+        var y = plane.Offset.Y;
+        var z = plane.Offset.Z;
         var px = position.X;
         var py = position.Y;
         var pz = position.Z;
@@ -47,16 +46,19 @@ public static class DistanceMathmatics
         return dist;
     }
 
-    public static Matrix44D GetNonIntersectionDistanceOfBoundedBox(this BoundedBox boundedBox, double cameraAngle)
+    public static Matrix44D GetNonIntersectionDistanceOfBoundedBox(
+        this BoundedBox boundedBox,
+        double cameraAngleHorizontal,
+        double cameraAngleVertical)
     {
         // Get position vor minima Y or maxima Y for no collision with view
-        var heightXy1 = GetNonIntersectionDistance(boundedBox.MinY, cameraAngle);
-        var heightXy2 = GetNonIntersectionDistance(boundedBox.MaxY, cameraAngle);
+        var heightXy1 = GetNonIntersectionDistance(boundedBox.MinY, cameraAngleHorizontal);
+        var heightXy2 = GetNonIntersectionDistance(boundedBox.MaxY, cameraAngleHorizontal);
         var heightXy = Math.Max(heightXy1, heightXy2);
 
         // Get position vor minima Z or maxima Z for no collision with view
-        var heightXz1 = GetNonIntersectionDistance(boundedBox.MinZ, cameraAngle);
-        var heightXz2 = GetNonIntersectionDistance(boundedBox.MaxZ, cameraAngle);
+        var heightXz1 = GetNonIntersectionDistance(boundedBox.MinZ, cameraAngleVertical);
+        var heightXz2 = GetNonIntersectionDistance(boundedBox.MaxZ, cameraAngleVertical);
         var heightXz = Math.Max(heightXz1, heightXz2);
 
         // Get position vor Y or Z for no collision with view
@@ -70,13 +72,13 @@ public static class DistanceMathmatics
         return translation;
     }
 
-    //   |\        / view sight
+    // --|\        / view sight
     //   | \alpha /
     //  h|  \    /
     //   |   \  /
     //   |beta\/   with beta = 90° - alpha/2.0
     // --|------------------------------------------------
-    //   | w
+    //   |  w  |
     private static double GetNonIntersectionDistance(double position, double cameraAngle)
     {
         var w = Math.Abs(position);
@@ -84,5 +86,4 @@ public static class DistanceMathmatics
 
         return h;
     }
-
 }
