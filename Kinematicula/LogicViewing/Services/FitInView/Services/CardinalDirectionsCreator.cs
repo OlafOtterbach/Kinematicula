@@ -4,9 +4,9 @@ using Kinematicula.Mathematics;
 
 public static class CardinalDirectionsCreator
 {
-    public static Plane CreateWest(Matrix44D cameraFrame, double cameraAngle)
+    public static Plane CreateWest(Matrix44D cameraFrame, double angleBetweenWestAndEastPlane)
     {
-        var rotation = Matrix44D.CreateRotation(cameraFrame.Offset, cameraFrame.Ez, (cameraAngle + Math.PI) / 2.0);
+        var rotation = Matrix44D.CreateRotation(cameraFrame.Offset, cameraFrame.Ez, (angleBetweenWestAndEastPlane + Math.PI) / 2.0);
         var planeNormal = rotation * cameraFrame.Ex;
         var planeOffset = cameraFrame.Offset;
 

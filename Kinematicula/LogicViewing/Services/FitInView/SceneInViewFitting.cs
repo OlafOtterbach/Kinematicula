@@ -14,14 +14,24 @@ public static class SceneInViewFitting
         var cameraSystem = cameraFrame.Inverse();
         var pointCloude = scene.Bodies.GetPointCloude(cameraSystem).ToList();
 
-        // gettin point cloud translated before the vie frustum without intersecting it.
+        // getting point cloud translated to position in the view frustum without intersecting it.
         var boundedBox = pointCloude.GetBoundedBox();
-        var horicontalAngle = ViewProjection.GetHorizontalAngle(nearPlane, canvasWidth, canvasHeight);
-        var verticalAngle = ViewProjection.GetVerticalAngle(nearPlane, canvasWidth, canvasHeight);
-        var translation = boundedBox.GetNonIntersectionDistanceOfBoundedBox(horicontalAngle, verticalAngle);
+        var angleBetweenWestAndEastPlane = ViewProjection.GetHorizontalAngle(nearPlane, canvasWidth, canvasHeight);
+        var angleBetweenNorthAndSouthPlane = ViewProjection.GetVerticalAngle(nearPlane, canvasWidth, canvasHeight);
+        var translation = boundedBox.GetNonIntersectionDistanceOfBoundedBox(angleBetweenWestAndEastPlane, angleBetweenNorthAndSouthPlane);
         pointCloude = pointCloude.AsParallel().Select(p => translation * p).ToList();
 
         // getting frustum planes
+        var planeWest = CardinalDirectionsCreator.CreateWest(cameraSystem, angleBetweenWestAndEastPlane);
+        var planeEast = CardinalDirectionsCreator.CreateWest(cameraSystem, angleBetweenWestAndEastPlane);
+        var planeNorth = CardinalDirectionsCreator.CreateWest(cameraSystem, angleBetweenNorthAndSouthPlane);
+        var planeSouth = CardinalDirectionsCreator.CreateWest(cameraSystem, angleBetweenNorthAndSouthPlane);
+
+        // get minimal distant position to every cardinal plane
+        var minPositionWest = pointCloude.MinDistanceToPlane(planeWest);
+        var minPositionEast = pointCloude.MinDistanceToPlane(planeEast);
+        var minPositionNorth = pointCloude.MinDistanceToPlane(planeNorth);
+        var minPositionSouth = pointCloude.MinDistanceToPlane(planeSouth);
 
 
     }
