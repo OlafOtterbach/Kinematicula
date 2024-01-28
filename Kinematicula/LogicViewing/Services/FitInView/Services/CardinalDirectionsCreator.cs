@@ -4,43 +4,59 @@ using Kinematicula.Mathematics;
 
 public static class CardinalDirectionsCreator
 {
-    public static Plane CreateWest(Matrix44D cameraFrame, double angleBetweenWestAndEastPlane)
+    public static Plane3D CreateWest(double angleBetweenWestAndEastPlane)
     {
-        var rotation = Matrix44D.CreateRotation(cameraFrame.Offset, cameraFrame.Ez, (angleBetweenWestAndEastPlane + Math.PI) / 2.0);
-        var planeNormal = rotation * cameraFrame.Ex;
-        var planeOffset = cameraFrame.Offset;
+        var cameraOffset = new Position3D(0.0, 0.0, 0.0);
+        var cameraDirection = new Vector3D(1.0, 0.0, 0.0);
+        var cameraUp = new Vector3D(0.0, 0.0, 1.0);
 
-        var plane = new Plane(planeOffset, planeNormal);
+        var rotation = Matrix44D.CreateRotation(cameraOffset, cameraUp, (angleBetweenWestAndEastPlane + Math.PI) / 2.0);
+        var planeNormal = rotation * cameraDirection;
+        var planeOffset = cameraOffset;
+
+        var plane = new Plane3D(planeOffset, planeNormal);
         return plane;
     }
 
-    public static Plane CreateEast(Matrix44D cameraFrame, double cameraAngle)
+    public static Plane3D CreateEast(double angleBetweenWestAndEastPlane)
     {
-        var rotation = Matrix44D.CreateRotation(cameraFrame.Offset, cameraFrame.Ez, -(cameraAngle + Math.PI) / 2.0);
-        var planeNormal = rotation * cameraFrame.Ex;
-        var planeOffset = cameraFrame.Offset;
+        var cameraOffset = new Position3D(0.0, 0.0, 0.0);
+        var cameraDirection = new Vector3D(1.0, 0.0, 0.0);
+        var cameraUp = new Vector3D(0.0, 0.0, 1.0);
 
-        var plane = new Plane(planeOffset, planeNormal);
+        var rotation = Matrix44D.CreateRotation(cameraOffset, cameraUp, -(angleBetweenWestAndEastPlane + Math.PI) / 2.0);
+        var planeNormal = rotation * cameraDirection;
+        var planeOffset = cameraOffset;
+
+        var plane = new Plane3D(planeOffset, planeNormal);
         return plane;
     }
 
-    public static Plane CreateSouth(Matrix44D cameraFrame, double cameraAngle)
+    public static Plane3D CreateSouth(double cameraAngle)
     {
-        var rotation = Matrix44D.CreateRotation(cameraFrame.Offset, cameraFrame.Ey, (cameraAngle + Math.PI) / 2.0);
-        var planeNormal = rotation * cameraFrame.Ex;
-        var planeOffset = cameraFrame.Offset;
+        var cameraOffset = new Position3D(0.0, 0.0, 0.0);
+        var cameraDirection = new Vector3D(1.0, 0.0, 0.0);
+        var cameraLeft = new Vector3D(0.0, 1.0, 0.0);
 
-        var plane = new Plane(planeOffset, planeNormal);
+        var rotation = Matrix44D.CreateRotation(cameraOffset, cameraLeft, (cameraAngle + Math.PI) / 2.0);
+        var planeNormal = rotation * cameraDirection;
+        var planeOffset = cameraOffset;
+
+        var plane = new Plane3D(planeOffset, planeNormal);
         return plane;
     }
 
-    public static Plane CreateNorth(Matrix44D cameraFrame, double cameraAngle)
+    public static Plane3D CreateNorth(double cameraAngle)
     {
-        var rotation = Matrix44D.CreateRotation(cameraFrame.Offset, cameraFrame.Ey, -(cameraAngle + Math.PI) / 2.0);
-        var planeNormal = rotation * cameraFrame.Ex;
-        var planeOffset = cameraFrame.Offset;
+        var cameraOffset = new Position3D(0.0, 0.0, 0.0);
+        var cameraDirection = new Vector3D(1.0, 0.0, 0.0);
+        var cameraLeft = new Vector3D(0.0, 1.0, 0.0);
 
-        var plane = new Plane(planeOffset, planeNormal);
+        var rotation = Matrix44D.CreateRotation(cameraOffset, cameraLeft, -(cameraAngle + Math.PI) / 2.0);
+        var planeNormal = rotation * cameraDirection;
+        var planeOffset = cameraOffset;
+
+        var plane = new Plane3D(planeOffset, planeNormal);
         return plane;
     }
 }

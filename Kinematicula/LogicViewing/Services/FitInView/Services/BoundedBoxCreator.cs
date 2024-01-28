@@ -32,7 +32,7 @@ public static class BoundedBoxCreator
         {
             MinX = Math.Min(first.MinX, pos.X),
             MinY = Math.Min(first.MinY, pos.Y),
-            MinZ = Math.Min(first.MinY, pos.Z),
+            MinZ = Math.Min(first.MinZ, pos.Z),
             MaxX = Math.Max(first.MaxX, pos.X),
             MaxY = Math.Max(first.MaxY, pos.Y),
             MaxZ = Math.Max(first.MaxZ, pos.Z),

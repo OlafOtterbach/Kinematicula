@@ -1,10 +1,11 @@
 ﻿namespace Kinematicula.LogicViewing.Services.FitInView.Services;
 
 using Kinematicula.Mathematics;
+using Kinematicula.Mathematics.Extensions;
 
 public static class DistanceMathmatics
 {
-    public static Position3D MinDistanceToPlane(this IEnumerable<Position3D> positions, Plane plane)
+    public static Position3D MinDistanceToPlane(this IEnumerable<Position3D> positions, Plane3D plane)
     {
 
         (double Distance, Position3D Position) firstAcc = new(double.MaxValue, new Position3D());
@@ -19,9 +20,9 @@ public static class DistanceMathmatics
     AccumulateMinDistanceAndPositionToPlane(
         this (double Distance, Position3D Position) acc,
         Position3D position,
-        Plane plane)
+        Plane3D plane)
     {
-        var distance = plane.DistancePositionToPlane(position);
+        var distance = plane.PositiveRelativeDistanceTo(position);
         if(distance < acc.Distance)
         {
             acc = (distance, position);
@@ -30,21 +31,6 @@ public static class DistanceMathmatics
         return acc;
     }
 
-    public static double DistancePositionToPlane(this Plane plane, Position3D position)
-    {
-        var nx = plane.Normal.X;
-        var ny = plane.Normal.Y;
-        var nz = plane.Normal.Z;
-        var x = plane.Offset.X;
-        var y = plane.Offset.Y;
-        var z = plane.Offset.Z;
-        var px = position.X;
-        var py = position.Y;
-        var pz = position.Z;
-        var direction = (px - x) * nx + (py - y) * ny + (pz - z) * nz;
-        var dist = Math.Abs(direction);
-        return dist;
-    }
 
     public static Matrix44D GetNonIntersectionDistanceOfBoundedBox(
         this BoundedBox boundedBox,
@@ -82,7 +68,7 @@ public static class DistanceMathmatics
     private static double GetNonIntersectionDistance(double position, double cameraAngle)
     {
         var w = Math.Abs(position);
-        var h = w / (Math.PI / 2 - cameraAngle / 2);
+        var h = w * Math.Tan(Math.PI / 2 - cameraAngle / 2);
 
         return h;
     }

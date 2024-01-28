@@ -21,11 +21,11 @@ public static class SceneInViewFitting
         var translation = boundedBox.GetNonIntersectionDistanceOfBoundedBox(angleBetweenWestAndEastPlane, angleBetweenNorthAndSouthPlane);
         pointCloude = pointCloude.AsParallel().Select(p => translation * p).ToList();
 
-        // getting frustum planes
-        var planeWest = CardinalDirectionsCreator.CreateWest(cameraSystem, angleBetweenWestAndEastPlane);
-        var planeEast = CardinalDirectionsCreator.CreateWest(cameraSystem, angleBetweenWestAndEastPlane);
-        var planeNorth = CardinalDirectionsCreator.CreateWest(cameraSystem, angleBetweenNorthAndSouthPlane);
-        var planeSouth = CardinalDirectionsCreator.CreateWest(cameraSystem, angleBetweenNorthAndSouthPlane);
+       // getting frustum planes
+        var planeWest = CardinalDirectionsCreator.CreateWest(angleBetweenWestAndEastPlane);
+        var planeEast = CardinalDirectionsCreator.CreateWest(angleBetweenWestAndEastPlane);
+        var planeNorth = CardinalDirectionsCreator.CreateWest(angleBetweenNorthAndSouthPlane);
+        var planeSouth = CardinalDirectionsCreator.CreateWest(angleBetweenNorthAndSouthPlane);
 
         // get minimal distant position to every cardinal plane
         var minPositionWest = pointCloude.MinDistanceToPlane(planeWest);
@@ -33,6 +33,17 @@ public static class SceneInViewFitting
         var minPositionNorth = pointCloude.MinDistanceToPlane(planeNorth);
         var minPositionSouth = pointCloude.MinDistanceToPlane(planeSouth);
 
+        // get horizontal position of point cloud
+        var distanceWestToEastinHorizontalDirection = Math.Abs(minPositionEast.Y - minPositionWest.Y);
+        var distanceWestToEastInCameraDirection = Math.Abs(minPositionEast.X - minPositionWest.X);
+        var distancePlaneToMinPositionInHorizontalDirection = distanceWestToEastInCameraDirection * Math.Tan(angleBetweenWestAndEastPlane);
+
+        var widthBetweenWestAndEast = distancePlaneToMinPositionInHorizontalDirection + distanceWestToEastinHorizontalDirection;
+        var heightForWestEastPlane = (widthBetweenWestAndEast / 2.0) / (Math.Tan(angleBetweenWestAndEastPlane));
+
+        //var horizontalTranslation
+        //    = minPositionEast.X < minPositionWest
+        //    ? 
 
     }
 
