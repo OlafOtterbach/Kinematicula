@@ -38,61 +38,67 @@ public static class SceneInViewFitting
         //      widthBetweenWestAndEast
         //   |-------------------------|
         //   
-        //    \---|       |-----------/
-        //     \  |       |          /
-        //      \ |       |         /
-        //       \--------|        /
-        //        \       |       /
-        //         \      |      /
-        //          \     |     /
-        //           \    |    /
-        //            \   |x  /
-        //             \  |  /
-        //              \ | /
-        //               \|/
-        //      y <-------O
+        //    \---|       |-----------/   ---
+        //     \  |       |          /     |
+        //      \@|       |         /      |
+        //       \--------|        /       |
+        //        \       |       /        |
+        //         \      |      /         |
+        //          \    /|\    /          |
+        //           \    |    /           |
+        //            \   |x  /            |
+        //             \--|  /             |
+        //              \@| /              |
+        //               \|/               |
+        //     +y <-------O               ---
+        //              camera
+        //
+        // @ = angleBetweenWestAndEastPlane / 2.0
         //
         var distanceWestToEastinHorizontalDirection = Math.Abs(minPositionEast.Y - minPositionWest.Y);
         var distanceWestToEastInCameraDirection = Math.Abs(minPositionEast.X - minPositionWest.X);
-        var distancePlaneToMinPositionInHorizontalDirection = distanceWestToEastInCameraDirection * Math.Tan(angleBetweenWestAndEastPlane);
+        var distancePlaneToMinPositionInHorizontalDirection = distanceWestToEastInCameraDirection * Math.Tan(angleBetweenWestAndEastPlane / 2.0);
 
         var widthBetweenWestAndEast = distancePlaneToMinPositionInHorizontalDirection + distanceWestToEastinHorizontalDirection;
-        var heightForWestEastPlanes = (widthBetweenWestAndEast / 2.0) / (Math.Tan(angleBetweenWestAndEastPlane));
+        var heightForWestEastPlanes = (widthBetweenWestAndEast / 2.0) / (Math.Tan(angleBetweenWestAndEastPlane / 2.0));
 
-        Vector3D horizontalTranslation;
-        if(minPositionWest.X < minPositionEast.X)
+        Vector3D yTranslationWestEast;
+        if (minPositionWest.X < minPositionEast.X)
         {
-            var newPositionEast = new Position3D(heightForWestEastPlanes, -widthBetweenWestAndEast, minPositionEast.Z);
-            horizontalTranslation = newPositionEast - minPositionEast;
+            // west is nearer to camera
+            var newPositionEast = new Position3D(minPositionEast.X, -widthBetweenWestAndEast / 2.0, minPositionEast.Z);
+            yTranslationWestEast = newPositionEast - minPositionEast;
         }
         else
         {
-            var newPositionWest = new Position3D(heightForWestEastPlanes, widthBetweenWestAndEast, minPositionWest.Z);
-            horizontalTranslation = newPositionWest - minPositionWest;
+            // east is nearer to camera
+            var newPositionWest = new Position3D(minPositionEast.X, widthBetweenWestAndEast / 2.0, minPositionWest.Z);
+            yTranslationWestEast = newPositionWest - minPositionWest;
         }
 
 
-        // get vertical position of point cloud
+        // get vertical position of point cloud analog west and east plane.
         var distanceNorthToSouthinHorizontalDirection = Math.Abs(minPositionNorth.Z - minPositionSouth.Z);
 
         var distanceNorthToSouthInCameraDirection = Math.Abs(minPositionEast.X - minPositionWest.X);
-        var distancePlaneToMinPositionInVerticalDirection = distanceNorthToSouthInCameraDirection * Math.Tan(angleBetweenNorthAndSouthPlane);
+        var distancePlaneToMinPositionInVerticalDirection = distanceNorthToSouthInCameraDirection * Math.Tan(angleBetweenNorthAndSouthPlane / 2.0);
 
         var widthBetweenNorthAndSouth = distancePlaneToMinPositionInVerticalDirection + distanceNorthToSouthinHorizontalDirection;
-        var heightForNorthSouthPlanes = (widthBetweenNorthAndSouth / 2.0) / (Math.Tan(angleBetweenNorthAndSouthPlane));
+        var heightForNorthSouthPlanes = (widthBetweenNorthAndSouth / 2.0) / (Math.Tan(angleBetweenNorthAndSouthPlane / 2.0));
 
-        Vector3D verticalTranslation;
+        Vector3D zTranslationNorthSouth;
         if (minPositionNorth.X < minPositionSouth.X)
         {
-            var newPositionSouth = new Position3D(heightForNorthSouthPlanes, minPositionSouth.Y , -widthBetweenNorthAndSouth);
-            verticalTranslation = newPositionSouth - minPositionSouth;
+            var newPositionSouth = new Position3D(minPositionSouth.X, minPositionSouth.Y , -widthBetweenNorthAndSouth / 2.0);
+            zTranslationNorthSouth = newPositionSouth - minPositionSouth;
         }
         else
         {
-            var newPositionWest = new Position3D(heightForNorthSouthPlanes, minPositionNorth.Y, widthBetweenNorthAndSouth);
-            horizontalTranslation = newPositionWest - minPositionWest;
+            var newPositionNorth = new Position3D(minPositionSouth.X, minPositionNorth.Y, widthBetweenNorthAndSouth / 2.0);
+            zTranslationNorthSouth = newPositionNorth - minPositionNorth;
         }
 
+        // ToDo: var verticalTranslation = 
 
     }
 
