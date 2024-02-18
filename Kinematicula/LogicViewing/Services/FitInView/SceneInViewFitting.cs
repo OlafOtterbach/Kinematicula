@@ -34,16 +34,65 @@ public static class SceneInViewFitting
         var minPositionSouth = pointCloude.MinDistanceToPlane(planeSouth);
 
         // get horizontal position of point cloud
+        //        
+        //      widthBetweenWestAndEast
+        //   |-------------------------|
+        //   
+        //    \---|       |-----------/
+        //     \  |       |          /
+        //      \ |       |         /
+        //       \--------|        /
+        //        \       |       /
+        //         \      |      /
+        //          \     |     /
+        //           \    |    /
+        //            \   |x  /
+        //             \  |  /
+        //              \ | /
+        //               \|/
+        //      y <-------O
+        //
         var distanceWestToEastinHorizontalDirection = Math.Abs(minPositionEast.Y - minPositionWest.Y);
         var distanceWestToEastInCameraDirection = Math.Abs(minPositionEast.X - minPositionWest.X);
         var distancePlaneToMinPositionInHorizontalDirection = distanceWestToEastInCameraDirection * Math.Tan(angleBetweenWestAndEastPlane);
 
         var widthBetweenWestAndEast = distancePlaneToMinPositionInHorizontalDirection + distanceWestToEastinHorizontalDirection;
-        var heightForWestEastPlane = (widthBetweenWestAndEast / 2.0) / (Math.Tan(angleBetweenWestAndEastPlane));
+        var heightForWestEastPlanes = (widthBetweenWestAndEast / 2.0) / (Math.Tan(angleBetweenWestAndEastPlane));
 
-        //var horizontalTranslation
-        //    = minPositionEast.X < minPositionWest
-        //    ? 
+        Vector3D horizontalTranslation;
+        if(minPositionWest.X < minPositionEast.X)
+        {
+            var newPositionEast = new Position3D(heightForWestEastPlanes, -widthBetweenWestAndEast, minPositionEast.Z);
+            horizontalTranslation = newPositionEast - minPositionEast;
+        }
+        else
+        {
+            var newPositionWest = new Position3D(heightForWestEastPlanes, widthBetweenWestAndEast, minPositionWest.Z);
+            horizontalTranslation = newPositionWest - minPositionWest;
+        }
+
+
+        // get vertical position of point cloud
+        var distanceNorthToSouthinHorizontalDirection = Math.Abs(minPositionNorth.Z - minPositionSouth.Z);
+
+        var distanceNorthToSouthInCameraDirection = Math.Abs(minPositionEast.X - minPositionWest.X);
+        var distancePlaneToMinPositionInVerticalDirection = distanceNorthToSouthInCameraDirection * Math.Tan(angleBetweenNorthAndSouthPlane);
+
+        var widthBetweenNorthAndSouth = distancePlaneToMinPositionInVerticalDirection + distanceNorthToSouthinHorizontalDirection;
+        var heightForNorthSouthPlanes = (widthBetweenNorthAndSouth / 2.0) / (Math.Tan(angleBetweenNorthAndSouthPlane));
+
+        Vector3D verticalTranslation;
+        if (minPositionNorth.X < minPositionSouth.X)
+        {
+            var newPositionSouth = new Position3D(heightForNorthSouthPlanes, minPositionSouth.Y , -widthBetweenNorthAndSouth);
+            verticalTranslation = newPositionSouth - minPositionSouth;
+        }
+        else
+        {
+            var newPositionWest = new Position3D(heightForNorthSouthPlanes, minPositionNorth.Y, widthBetweenNorthAndSouth);
+            horizontalTranslation = newPositionWest - minPositionWest;
+        }
+
 
     }
 
