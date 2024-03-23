@@ -104,6 +104,17 @@ public static class SceneInViewFitting
     public static void FitInView(this Scene scene, Camera camera, double canvasWidth, double canvasHeight)
     {
         // getting point cloude in camera coordinate system
+        //
+        //                               .
+        //                             .  .
+        //                         .  .   .
+        //     .  .  .              .   .
+        //    .  .   .                .
+        //      .  .                 |
+        //    /           =>         _
+        //  / /                     | |
+        // /_/                      |_|
+        //
         var M_CameraSystem = camera.Frame.Inverse();
         var pointCloudInCameraSystem = scene.Bodies.GetPointCloude(M_CameraSystem);
 
@@ -112,12 +123,37 @@ public static class SceneInViewFitting
         var angleBetweenTopAndBottomPlane = ViewProjection.GetVerticalAngle(camera.NearPlane, canvasWidth, canvasHeight);
 
         // getting point cloud translated to position in the view frustum without intersecting it.
+        //
+        //                                  .       
+        //   \             /         \       .    ./
+        //    \           /           \ .   .   . /                     
+        //     \         /             \         /             
+        //      \  .    /      =>       \       /              
+        //       \   . /  .              \     /                
+        //      . \ . / .                 \   /                 
+        //         \ /                     \ /                
+        //          O                       O
+        //
+
         var (pointCloudInViewFrustum, translationInViewFrustum) = TranslatePointCloudeInViewFrustum(
                                                                     pointCloudInCameraSystem,
                                                                     angleBetweenLeftAndRightPlane,
                                                                     angleBetweenTopAndBottomPlane);
 
         // getting minimal distant points of the point cloud to frustum view planes.
+        //   
+        //                               dw
+        //               |----------------------------------------|
+        //       
+        //                        .                w = w2      .     
+        //                  .            |------------------------O P2 right  --
+        //                      .    .   |     .              .                |
+        //                     .         |   .          .                      |
+        //                               |                                     | dh
+        //                 -             |    .          -                     |
+        //                     w1        |                                     |
+        //       left P1 O---------------|                                    --
+        //
         var (left, right, top, bottom) = GetExtremasOfPointCloud(
             pointCloudInViewFrustum,
             angleBetweenLeftAndRightPlane,
@@ -148,6 +184,9 @@ public static class SceneInViewFitting
         //  get move in camera direction to fit in frustum view 
         var tx = (h_h > h_v) ? h_h - p_h.X : h_v - p_v.X;
         var MX = Matrix44D.CreateTranslation(new Vector3D(tx, 0.0, 0.0));
+
+
+        var T = (MX * MZ * MY * translationInViewFrustum * M_CameraSystem).Inverse();
     }
 
     public static IEnumerable<Position3D> GetPointCloudeInCameraSystem(Scene scene, Camera camera)
