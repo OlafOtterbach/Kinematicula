@@ -1,4 +1,4 @@
-﻿namespace Kinematicula.LogicViewing.Services.FitInView.Services;
+﻿namespace Kinematicula.Mathematics;
 public struct BoundedBox
 {
     public double MinX { get; set; }

@@ -56,10 +56,10 @@ public class DistanceMathmaticsTests
 
         // Assert
         var translated = positions.Select(p => mat * p).ToList();
-        var planeWest = CardinalDirectionsCreator.CreateWest(horizontalAngle);
-        var planeEast = CardinalDirectionsCreator.CreateWest(horizontalAngle);
-        var planeNorth = CardinalDirectionsCreator.CreateWest(verticalAngle);
-        var planeSouth = CardinalDirectionsCreator.CreateWest(verticalAngle);
+        var planeWest = FrustumViewPlanes.CreateWest(horizontalAngle);
+        var planeEast = FrustumViewPlanes.CreateWest(horizontalAngle);
+        var planeNorth = FrustumViewPlanes.CreateWest(verticalAngle);
+        var planeSouth = FrustumViewPlanes.CreateWest(verticalAngle);
 
         // All Positions in frustum of the four planes.
         Assert.True(translated.All(p => planeWest.DistanceTo(p) <= 0.0));

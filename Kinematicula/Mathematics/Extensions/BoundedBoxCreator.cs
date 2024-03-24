@@ -1,4 +1,4 @@
-﻿namespace Kinematicula.LogicViewing.Services.FitInView.Services;
+﻿namespace Kinematicula.Mathematics.Extensions;
 
 using Kinematicula.Mathematics;
 
@@ -7,7 +7,7 @@ public static class BoundedBoxCreator
     public static BoundedBox GetBoundedBox(this IEnumerable<Position3D> positions)
     {
         var first = CreateBaseBoundedBox();
-        var boundedBox = positions.AsParallel().Aggregate(first, (acc,pos) => MergeToBoundedBox(acc, pos));
+        var boundedBox = positions.AsParallel().Aggregate(first, (acc, pos) => MergeToBoundedBox(acc, pos));
         return boundedBox;
     }
 

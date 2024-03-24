@@ -2,7 +2,7 @@
 
 using Kinematicula.Mathematics;
 
-public static class CardinalDirectionsCreator
+public static class FrustumViewPlanes
 {
     public static Plane3D CreateWest(double angleBetweenWestAndEastPlane)
     {

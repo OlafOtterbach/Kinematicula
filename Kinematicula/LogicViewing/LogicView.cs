@@ -5,6 +5,7 @@ using Kinematicula.Graphics.Extensions;
 using Kinematicula.LogicViewing.Extensions;
 using Kinematicula.LogicViewing.Mathmatics;
 using Kinematicula.LogicViewing.Services;
+using Kinematicula.LogicViewing.Services.FitInView;
 using Kinematicula.LogicViewing.Services.Sensors;
 using Kinematicula.Mathematics;
 using Kinematicula.Scening;
@@ -93,5 +94,16 @@ public class LogicView : ILogicView
         var beta = -(360.0 * pixelDeltaY / verticalPixelFor360Degree).ToRadiant();
         camera.OrbitXY(alpha);
         camera.OrbitXZ(beta);
+    }
+
+    public Camera FitIn(Guid cameraId, int canvasWidth, int canvasHeight)
+    {
+        var camera = Scene.GetCamera(cameraId);
+
+        Scene.FitInView(camera, canvasWidth, canvasHeight);
+
+        Scene.UpdateCamera(camera);
+
+        return camera;
     }
 }
