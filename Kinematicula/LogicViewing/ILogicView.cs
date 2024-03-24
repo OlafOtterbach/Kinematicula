@@ -17,6 +17,6 @@ namespace Kinematicula.LogicViewing
 
         Camera Zoom(ZoomEvent zoomEvent);
 
-        Camera FitIn(Guid cameraId, int CanvasWidth, int CanvasHeight);
+        Camera FitIn(Guid cameraId, int canvasWidth, int canvasHeight);
     }
 }

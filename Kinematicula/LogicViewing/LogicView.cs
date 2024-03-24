@@ -86,16 +86,6 @@ public class LogicView : ILogicView
         return camera;
     }
 
-    private void Orbit(Camera camera, double pixelDeltaX, double pixelDeltaY, int canvasWidth, int canvasHeight)
-    {
-        var horicontalPixelFor360Degree = canvasWidth;
-        var verticalPixelFor360Degree = canvasHeight;
-        var alpha = -(360.0 * pixelDeltaX / horicontalPixelFor360Degree).ToRadiant();
-        var beta = -(360.0 * pixelDeltaY / verticalPixelFor360Degree).ToRadiant();
-        camera.OrbitXY(alpha);
-        camera.OrbitXZ(beta);
-    }
-
     public Camera FitIn(Guid cameraId, int canvasWidth, int canvasHeight)
     {
         var camera = Scene.GetCamera(cameraId);
@@ -105,5 +95,15 @@ public class LogicView : ILogicView
         Scene.UpdateCamera(camera);
 
         return camera;
+    }
+
+    private void Orbit(Camera camera, double pixelDeltaX, double pixelDeltaY, int canvasWidth, int canvasHeight)
+    {
+        var horicontalPixelFor360Degree = canvasWidth;
+        var verticalPixelFor360Degree = canvasHeight;
+        var alpha = -(360.0 * pixelDeltaX / horicontalPixelFor360Degree).ToRadiant();
+        var beta = -(360.0 * pixelDeltaY / verticalPixelFor360Degree).ToRadiant();
+        camera.OrbitXY(alpha);
+        camera.OrbitXZ(beta);
     }
 }

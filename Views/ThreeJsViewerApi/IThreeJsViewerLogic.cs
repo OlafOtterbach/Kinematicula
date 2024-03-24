@@ -14,4 +14,6 @@ public interface IThreeJsViewerLogic
     SceneStateTjs Move(MoveEventTjs moveEventTjs);
 
     SceneStateTjs Zoom(ZoomEventTjs zoomEventTjs);
+
+    SceneStateTjs FitIn(Guid cameraId, int canvasWidth, int canvasHeight);
 }

@@ -68,4 +68,14 @@ public class ThreeJsViewerLogic : IThreeJsViewerLogic
 
         return sceneState;
     }
+
+    public SceneStateTjs FitIn(Guid cameraId, int canvasWidth, int canvasHeight)
+    {
+        var fitInCamera = _view.FitIn(cameraId, canvasWidth, canvasHeight);
+
+        var items = _view.Scene.GetBodyItems();
+        var sceneState = new SceneStateTjs(fitInCamera.ToCameraTjs(canvasWidth, canvasHeight), items);
+
+        return sceneState;
+    }
 }
