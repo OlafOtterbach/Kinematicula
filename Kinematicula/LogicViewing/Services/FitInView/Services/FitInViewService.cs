@@ -167,14 +167,14 @@ public static class FitInViewService
         //   tz = w' - z(P')
         //
         //
-        var dw_v = Abs(top.Y - bottom.Y);
+        var dw_v = Abs(top.Z - bottom.Z);
         var dh_v = Abs(top.X - bottom.X);
         var dl_v = dh_v * Tan(angleBetweenTopAndBottomPlane / 2.0);
         var sign_v = top.X > bottom.X ? +1 : -1;
         var w_v = sign_v * (dw_v + dl_v) / 2.0;
         var h_v = w_v / Tan(angleBetweenTopAndBottomPlane / 2.0);
-        var p_v = left.X > right.X ? left : right;
-        var tz_v = w_v - p_v.Y;
+        var p_v = top.X > bottom.X ? top : bottom;
+        var tz_v = w_v - p_v.Z;
         var MZ = Matrix44D.CreateTranslation(new Vector3D(0.0, 0.0, tz_v));
 
         //  get move in camera direction to fit in frustum view
@@ -220,9 +220,9 @@ public static class FitInViewService
     {
         // getting frustum planes
         var planeLeft = FrustumViewPlanes.CreateWest(angleBetweenLeftAndRightPlane);
-        var planeRight = FrustumViewPlanes.CreateWest(angleBetweenLeftAndRightPlane);
-        var planeTop = FrustumViewPlanes.CreateWest(angleBetweenTopAndBottomPlane);
-        var planeBottom = FrustumViewPlanes.CreateWest(angleBetweenTopAndBottomPlane);
+        var planeRight = FrustumViewPlanes.CreateEast(angleBetweenLeftAndRightPlane);
+        var planeTop = FrustumViewPlanes.CreateNorth(angleBetweenTopAndBottomPlane);
+        var planeBottom = FrustumViewPlanes.CreateSouth(angleBetweenTopAndBottomPlane);
 
         // get minimal distant position to every cardinal plane
         var minPositionLeft = pointCloud.MinDistanceToPlane(planeLeft);

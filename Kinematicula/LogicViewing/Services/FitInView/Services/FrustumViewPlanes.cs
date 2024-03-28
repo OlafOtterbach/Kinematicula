@@ -11,7 +11,7 @@ public static class FrustumViewPlanes
         var cameraUp = new Vector3D(0.0, 0.0, 1.0);
 
         var rotation = Matrix44D.CreateRotation(cameraOffset, cameraUp, (angleBetweenWestAndEastPlane + Math.PI) / 2.0);
-        var planeNormal = rotation * cameraDirection;
+        var planeNormal = (rotation * cameraDirection).Normalize();
         var planeOffset = cameraOffset;
 
         var plane = new Plane3D(planeOffset, planeNormal);
@@ -25,7 +25,7 @@ public static class FrustumViewPlanes
         var cameraUp = new Vector3D(0.0, 0.0, 1.0);
 
         var rotation = Matrix44D.CreateRotation(cameraOffset, cameraUp, -(angleBetweenWestAndEastPlane + Math.PI) / 2.0);
-        var planeNormal = rotation * cameraDirection;
+        var planeNormal = (rotation * cameraDirection).Normalize();
         var planeOffset = cameraOffset;
 
         var plane = new Plane3D(planeOffset, planeNormal);
@@ -39,7 +39,7 @@ public static class FrustumViewPlanes
         var cameraLeft = new Vector3D(0.0, 1.0, 0.0);
 
         var rotation = Matrix44D.CreateRotation(cameraOffset, cameraLeft, (cameraAngle + Math.PI) / 2.0);
-        var planeNormal = rotation * cameraDirection;
+        var planeNormal = (rotation * cameraDirection).Normalize();
         var planeOffset = cameraOffset;
 
         var plane = new Plane3D(planeOffset, planeNormal);
@@ -53,7 +53,7 @@ public static class FrustumViewPlanes
         var cameraLeft = new Vector3D(0.0, 1.0, 0.0);
 
         var rotation = Matrix44D.CreateRotation(cameraOffset, cameraLeft, -(cameraAngle + Math.PI) / 2.0);
-        var planeNormal = rotation * cameraDirection;
+        var planeNormal = (rotation * cameraDirection).Normalize();
         var planeOffset = cameraOffset;
 
         var plane = new Plane3D(planeOffset, planeNormal);
