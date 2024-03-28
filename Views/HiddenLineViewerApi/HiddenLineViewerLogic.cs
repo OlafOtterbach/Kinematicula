@@ -75,10 +75,11 @@ public class HiddenLineViewerLogic : IHiddenLineViewerLogic
         return sceneState;
     }
 
-    public SceneStateDto FitIn(Guid cameraId, int canvasWidth, int canvasHeight)
+    public SceneStateDto FitIn(FitInEventDto fitInEventDto)
     {
-        var fitInCamera = _view.FitIn(cameraId, canvasWidth, canvasHeight);
-        var lines = _hiddenLineService.GetHiddenLineGraphics(_view.Scene, fitInCamera, canvasWidth, canvasHeight).ToColoredLines();
+        var fitInEvent = fitInEventDto.ToFitInEvent();
+        var fitInCamera = _view.FitIn(fitInEvent);
+        var lines = _hiddenLineService.GetHiddenLineGraphics(_view.Scene, fitInCamera, fitInEvent.CanvasWidth, fitInEvent.CanvasHeight).ToColoredLines();
         var sceneState = new SceneStateDto()
         {
             Camera = fitInCamera.ToCameraDto(),

@@ -86,11 +86,11 @@ public class LogicView : ILogicView
         return camera;
     }
 
-    public Camera FitIn(Guid cameraId, int canvasWidth, int canvasHeight)
+    public Camera FitIn(FitInEvent fitInEvent)
     {
-        var camera = Scene.GetCamera(cameraId);
+        var camera = Scene.GetCamera(fitInEvent.CameraId);
 
-        Scene.FitInView(camera, canvasWidth, canvasHeight);
+        Scene.FitInView(camera, fitInEvent.CanvasWidth, fitInEvent.CanvasHeight);
 
         Scene.UpdateCamera(camera);
 

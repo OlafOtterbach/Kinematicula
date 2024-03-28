@@ -7,5 +7,5 @@ public interface IHiddenLineViewerLogic
     SceneStateDto Touch(TouchEventDto touchEventDto);
     SceneStateDto Move(MoveEventDto moveEventDto);
     SceneStateDto Zoom(ZoomEventDto zoomEventDto);
-    SceneStateDto FitIn(Guid cameraId, int canvasWidth, int canvasHeight);
+    SceneStateDto FitIn(FitInEventDto fitInEventDto);
 }
