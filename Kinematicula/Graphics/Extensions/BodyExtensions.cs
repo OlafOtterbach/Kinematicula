@@ -14,35 +14,19 @@ public static class BodyExtensions
         }
     }
 
-    public static IEnumerable<Position3D> GetPointCloude(this IEnumerable<Body> bodies)
+    public static IEnumerable<Position3D> GetPointCloud(this IEnumerable<Body> bodies, Matrix44D transform)
     {
-        return bodies.GetPointCloude(Matrix44D.Identity);
+        var allBodies = bodies.SelectMany(body => body.GetBodyAndDescendants()).ToList();
+        return GetPointCloudFromBodies(allBodies, transform);
     }
 
-    public static IEnumerable<Position3D> GetPointCloude(this Body body)
+    private static IEnumerable<Position3D> GetPointCloudFromBodies(this IEnumerable<Body> bodies, Matrix44D transform)
     {
-        return body.GetPointCloude(Matrix44D.Identity);
-    }
-
-    public static IEnumerable<Position3D> GetPointCloude(this IEnumerable<Body> bodies, Matrix44D transform)
-    {
-        var allBodies = bodies.SelectMany(body => body.GetBodyAndDescendants());
-        return GetPointCloudeFromBodies(allBodies, transform);
-    }
-
-    public static IEnumerable<Position3D> GetPointCloude(this Body body, Matrix44D transform)
-    {
-        var bodies = body.GetBodyAndDescendants();
-        return GetPointCloudeFromBodies(bodies, transform);
-    }
-
-    private static IEnumerable<Position3D> GetPointCloudeFromBodies(this IEnumerable<Body> bodies, Matrix44D transform)
-    {
-        var points = bodies.AsParallel().SelectMany(body => body.GetPointCloudeFromBody(transform));
+        var points = bodies.AsParallel().SelectMany(body => body.GetPointCloudFromBody(transform));
         return points;
     }
 
-    private static IEnumerable<Position3D> GetPointCloudeFromBody(this Body body, Matrix44D transform)
+    private static IEnumerable<Position3D> GetPointCloudFromBody(this Body body, Matrix44D transform)
     {
         var matrix = transform * body.Frame;
         var points = body.Points.AsParallel().Select(p => matrix * p.Position);

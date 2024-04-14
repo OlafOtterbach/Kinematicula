@@ -1,11 +1,8 @@
 ﻿namespace Kinematicula.LogicViewing.Services.FitInView.Services;
 
-using Kinematicula.Graphics;
-using Kinematicula.Graphics.Extensions;
 using Kinematicula.LogicViewing.Mathmatics;
 using Kinematicula.Mathematics;
 using Kinematicula.Mathematics.Extensions;
-using Kinematicula.Scening;
 using static Math;
 
 public static class FitInViewService
@@ -15,7 +12,7 @@ public static class FitInViewService
         double nearPlane,
         double canvasWidth,
         double canvasHeight,
-        IEnumerable<Position3D> pointCloudInCameraSystem)
+        List<Position3D> pointCloudInCameraSystem)
     {
         // getting point cloude in camera coordinate system
         //
@@ -193,15 +190,9 @@ public static class FitInViewService
         return T;
     }
 
-    public static IEnumerable<Position3D> GetPointCloudeInCameraSystem(Scene scene, Camera camera)
-    {
-        var cameraSystem = camera.Frame.Inverse();
-        var pointCloud = scene.Bodies.GetPointCloude(cameraSystem);
-        return pointCloud;
-    }
-
-    public static (IEnumerable<Position3D> PointCloud, Matrix44D Translation) TranslatePointCloudeInViewFrustum(
-        IEnumerable<Position3D> pointCloud,
+    public static (IEnumerable<Position3D> PointCloud, Matrix44D Translation) 
+    TranslatePointCloudeInViewFrustum(
+        List<Position3D> pointCloud,
         double angleBetweenLeftAndRightPlane,
         double angleBetweenTopAndBottomPlane)
     {

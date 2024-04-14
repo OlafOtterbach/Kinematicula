@@ -22,7 +22,7 @@ public static class SceneInViewFitting
         // /_/                      |_|
         //
         var cameraSystem = camera.Frame.Inverse();
-        var pointCloudInCameraSystem = scene.Bodies.GetPointCloude(cameraSystem);
+        var pointCloudInCameraSystem = scene.Bodies.GetPointCloud(cameraSystem).ToList();
 
         var transformation = FitInViewService.FitInView(
             camera.Frame,
