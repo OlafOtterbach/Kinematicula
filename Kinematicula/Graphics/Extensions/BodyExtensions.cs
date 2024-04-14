@@ -14,15 +14,16 @@ public static class BodyExtensions
         }
     }
 
-    public static IEnumerable<Position3D> GetPointCloud(this IEnumerable<Body> bodies, Matrix44D transform)
+    public static List<Position3D> GetPointCloud(this IEnumerable<Body> bodies, Matrix44D transform)
     {
         var allBodies = bodies.SelectMany(body => body.GetBodyAndDescendants()).ToList();
-        return GetPointCloudFromBodies(allBodies, transform);
+        var pointCloud =  GetPointCloudFromBodies(allBodies, transform);
+        return pointCloud;
     }
 
-    private static IEnumerable<Position3D> GetPointCloudFromBodies(this IEnumerable<Body> bodies, Matrix44D transform)
+    private static List<Position3D> GetPointCloudFromBodies(this IEnumerable<Body> bodies, Matrix44D transform)
     {
-        var points = bodies.AsParallel().SelectMany(body => body.GetPointCloudFromBody(transform));
+        var points = bodies.AsParallel().SelectMany(body => body.GetPointCloudFromBody(transform)).ToList();
         return points;
     }
 
