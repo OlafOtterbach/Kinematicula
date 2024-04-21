@@ -24,7 +24,7 @@ public static class FitInViewService
         //      .  .                 |
         //    /           =>         _
         //  / /                     | |
-        // /_/                      |_|
+        // /_/ Camera               |_| Camera
         //
         var M_CameraSystem = cameraFrame.Inverse();
 
@@ -136,11 +136,11 @@ public static class FitInViewService
         var dw_h = Abs(left.Y - right.Y);
         var dh_h = Abs(left.X - right.X);
         var dl_h = dh_h * Tan(angleBetweenLeftAndRightPlane / 2.0);
-        var sign_h = left.X > right.X ? +1 : -1;
-        var w_h = sign_h * (dw_h + dl_h) / 2.0;
+        var w_h = (dw_h + dl_h) / 2.0;
         var h_h = w_h / Tan(angleBetweenLeftAndRightPlane / 2.0);
         var p_h = left.X > right.X ? left : right;
-        var ty_h = w_h - p_h.Y;
+        var sign_h = left.X > right.X ? +1 : -1;
+        var ty_h = sign_h * w_h - p_h.Y;
         var MY = Matrix44D.CreateTranslation(new Vector3D(0.0, ty_h, 0.0));
 
         // get vertical move to fit in frustum view
@@ -167,11 +167,11 @@ public static class FitInViewService
         var dw_v = Abs(top.Z - bottom.Z);
         var dh_v = Abs(top.X - bottom.X);
         var dl_v = dh_v * Tan(angleBetweenTopAndBottomPlane / 2.0);
-        var sign_v = top.X > bottom.X ? +1 : -1;
-        var w_v = sign_v * (dw_v + dl_v) / 2.0;
+        var w_v = (dw_v + dl_v) / 2.0;
         var h_v = w_v / Tan(angleBetweenTopAndBottomPlane / 2.0);
         var p_v = top.X > bottom.X ? top : bottom;
-        var tz_v = w_v - p_v.Z;
+        var sign_v = top.X > bottom.X ? +1 : -1;
+        var tz_v = sign_v * w_v - p_v.Z;
         var MZ = Matrix44D.CreateTranslation(new Vector3D(0.0, 0.0, tz_v));
 
         //  get move in camera direction to fit in frustum view
