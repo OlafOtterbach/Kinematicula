@@ -178,7 +178,9 @@ public static class FitInViewService
         //
         //   tx = (h > h') ? h - x(P) : h' - x(P')
         //
-        var tx = (h_h > h_v) ? h_h - p_h.X : h_v - p_v.X;
+        var deltaHx = h_h - p_h.X;
+        var deltaVx = h_v - p_v.X;
+        var tx = deltaHx > deltaVx ? deltaHx : deltaVx;
         var MX = Matrix44D.CreateTranslation(new Vector3D(tx, 0.0, 0.0));
 
         // get the camera translation.
