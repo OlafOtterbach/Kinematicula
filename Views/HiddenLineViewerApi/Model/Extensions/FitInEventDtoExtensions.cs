@@ -8,9 +8,9 @@ public static class FitInEventDtoExtensions
     {
         var fitInEvent = new FitInEvent
         {
-            CameraId = fitInEventDto.Camera.Id,
-            CanvasWidth = fitInEventDto.CanvasWidth,
-            CanvasHeight = fitInEventDto.CanvasHeight
+            CameraId = fitInEventDto.camera.Id,
+            CanvasWidth = fitInEventDto.canvasWidth,
+            CanvasHeight = fitInEventDto.canvasHeight
         };
 
         return fitInEvent;

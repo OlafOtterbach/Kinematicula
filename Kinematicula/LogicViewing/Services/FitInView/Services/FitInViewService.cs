@@ -31,6 +31,10 @@ public static class FitInViewService
         // getting angles between frustum virew planes
         var angleBetweenLeftAndRightPlane = ViewProjection.GetHorizontalAngle(nearPlane, canvasWidth, canvasHeight);
         var angleBetweenTopAndBottomPlane = ViewProjection.GetVerticalAngle(nearPlane, canvasWidth, canvasHeight);
+        var angleBetweenLeftAndRightPlaneDegree = angleBetweenLeftAndRightPlane.ToDegree();
+        var angleBetweenTopAndBottomPlaneDegree = angleBetweenTopAndBottomPlane.ToDegree();
+
+
 
         // getting point cloud translated to position in the view frustum without intersecting it.
         //

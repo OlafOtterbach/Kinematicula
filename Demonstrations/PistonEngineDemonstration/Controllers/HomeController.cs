@@ -51,4 +51,11 @@ public class HomeController : Controller
         var sceneState = _logicView.Zoom(zoomEventDto);
         return Ok(sceneState);
     }
+
+    [HttpPost("fit-in")]
+    public ActionResult<SceneStateDto> FitIn([FromBody] FitInEventDto fitInEventDto)
+    {
+        var sceneState = _logicView.FitIn(fitInEventDto);
+        return Ok(sceneState);
+    }
 }
