@@ -22,7 +22,7 @@ public static class ConverterCameraToCameraTjs
         var ezTjs = (rotY * rotZ * ez).Normalize();
         var frameTjs = Matrix44D.CreateCoordinateSystem(offsetTjs, exTjs, eyTjs, ezTjs);
 
-        var frustumInDegree = ViewProjection.GetFrustumInRadiant(camera.NearPlane, canvasWidth, canvasHeight).ToDegree();
+        var frustumInDegree = ViewProjection.GetVerticalAngle(camera.NearPlane, canvasWidth, canvasHeight).ToDegree();
 
         var cameraTjs = new CameraTjs(
             camera.Name,

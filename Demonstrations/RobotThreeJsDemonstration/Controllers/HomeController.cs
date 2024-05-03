@@ -1,6 +1,7 @@
 ﻿namespace RobotThreeJsDemonstration.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
+using System;
 using ThreeJsViewerApi;
 using ThreeJsViewerApi.EventModel;
 using ThreeJsViewerApi.GraphicsModel;
@@ -53,6 +54,13 @@ public class HomeController : Controller
     public ActionResult<SceneStateTjs> Zoom([FromBody] ZoomEventTjs zoomEventTjs)
     {
         var sceneState = _logicView.Zoom(zoomEventTjs);
+        return Ok(sceneState);
+    }
+
+    [HttpPost("fit-in")]
+    public ActionResult<SceneStateTjs> FitIn([FromBody] FitInEventTjs fitInEventTjs)
+    {
+        var sceneState = _logicView.FitIn(fitInEventTjs);
         return Ok(sceneState);
     }
 }

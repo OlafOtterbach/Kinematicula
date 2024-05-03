@@ -4,7 +4,7 @@ using Kinematicula.Mathematics;
 using Kinematicula.Mathematics.Extensions;
 using Kinematicula.Scening;
 
-namespace Kinematicula.LogicViewing.Services
+namespace Kinematicula.LogicViewing.Services.Sensors
 {
     public class CylinderSensorService : IMoveSensorService
     {

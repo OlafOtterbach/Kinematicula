@@ -68,6 +68,12 @@ function ZoomEventDto() {
     this.bodyStates = null;
 }
 
+function FitInEventDto() {
+    this.canvasWidth = 0;
+    this.canvasHeight = 0;
+    this.camera = null;
+}
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -110,6 +116,10 @@ function onMouseMoved(event) {
             }
         }
     }
+}
+
+function onFitIn() {
+    fitIn();
 }
 
 function onContextMenu(event) {
@@ -198,6 +208,20 @@ async function zoom(start, end) {
         let sceneState = await postData(url, zoomEvent);
         drawScene(sceneState);
         currentMousePosition = end;
+        lock = false;
+    }
+}
+
+async function fitIn() {
+    if (!lock) {
+        lock = true;
+        let fitInEvent = new FitInEventDto();
+        fitInEvent.camera = currentCamera;
+        fitInEvent.canvasWidth = canvas.width;
+        fitInEvent.canvasHeight = canvas.height;
+        let url = encodeURI("http://localhost:5000/fit-in");
+        let sceneState = await postData(url, fitInEvent);
+        drawScene(sceneState);
         lock = false;
     }
 }
@@ -311,3 +335,4 @@ function postData(url, data) {
     });
     return result;
 }
+

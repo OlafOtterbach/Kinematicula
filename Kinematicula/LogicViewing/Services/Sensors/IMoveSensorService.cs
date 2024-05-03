@@ -1,7 +1,7 @@
 ﻿using Kinematicula.Scening;
 using Kinematicula.Graphics;
 
-namespace Kinematicula.LogicViewing.Services
+namespace Kinematicula.LogicViewing.Services.Sensors
 {
     public interface IMoveSensorService
     {

@@ -5,6 +5,8 @@ using Kinematicula.Graphics.Extensions;
 using Kinematicula.LogicViewing.Extensions;
 using Kinematicula.LogicViewing.Mathmatics;
 using Kinematicula.LogicViewing.Services;
+using Kinematicula.LogicViewing.Services.FitInView;
+using Kinematicula.LogicViewing.Services.Sensors;
 using Kinematicula.Mathematics;
 using Kinematicula.Scening;
 
@@ -79,6 +81,17 @@ public class LogicView : ILogicView
         var dy = zoomEvent.Delta * 2.0;
 
         camera.Zoom(dy);
+        Scene.UpdateCamera(camera);
+
+        return camera;
+    }
+
+    public Camera FitIn(FitInEvent fitInEvent)
+    {
+        var camera = Scene.GetCamera(fitInEvent.CameraId);
+
+        Scene.FitInView(camera, fitInEvent.CanvasWidth, fitInEvent.CanvasHeight);
+
         Scene.UpdateCamera(camera);
 
         return camera;

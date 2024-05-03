@@ -68,4 +68,16 @@ public class ThreeJsViewerLogic : IThreeJsViewerLogic
 
         return sceneState;
     }
+
+    public SceneStateTjs FitIn(FitInEventTjs fitInEventTjs)
+    {
+        var fitInEvent = fitInEventTjs.ToFitInEvent();
+
+        var fitInCamera = _view.FitIn(fitInEvent);
+
+        var items = _view.Scene.GetBodyItems();
+        var sceneState = new SceneStateTjs(fitInCamera.ToCameraTjs(fitInEventTjs.CanvasWidth, fitInEventTjs.CanvasHeight), items);
+
+        return sceneState;
+    }
 }

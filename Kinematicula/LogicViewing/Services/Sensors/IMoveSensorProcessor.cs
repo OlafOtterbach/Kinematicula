@@ -1,6 +1,6 @@
 ﻿using Kinematicula.Scening;
 
-namespace Kinematicula.LogicViewing.Services
+namespace Kinematicula.LogicViewing.Services.Sensors
 {
     public interface IMoveSensorProcessor
     {

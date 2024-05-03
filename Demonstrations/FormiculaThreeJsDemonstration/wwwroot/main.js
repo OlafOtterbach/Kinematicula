@@ -55,6 +55,12 @@ function ZoomEventTjs() {
     this.bodyStates = null;
 }
 
+function FitInEventTjs() {
+    this.canvasWidth = 0;
+    this.canvasHeight = 0;
+    this.cameraId = "00000000-0000-0000-0000-000000000000";
+}
+
 function CameraItem(id, name, cameraTjs) {
     this.id = id;
     this.name = name;
@@ -307,6 +313,10 @@ function onMouseMoved(event) {
     }
 }
 
+function onFitIn() {
+    fitIn();
+}
+
 function onContextMenu(event) {
     event.preventDefault();
     return false;
@@ -396,6 +406,19 @@ async function zoom(start, end) {
     }
 }
 
+async function fitIn() {
+    if (!lock) {
+        lock = true;
+        let fitInEvent = new FitInEventTjs();
+        fitInEvent.cameraId = currentCameraTjs.id;
+        fitInEvent.canvasWidth = canvas.width;
+        fitInEvent.canvasHeight = canvas.height;
+        let url = encodeURI("http://localhost:5000/fit-in");
+        let sceneState = await postData(url, fitInEvent);
+        UpdateScene(sceneState);
+        lock = false;
+    }
+}
 
 function UpdateScene(sceneState) {
     for (let i = 0; i < sceneState.GraphicsState.length; i++) {
