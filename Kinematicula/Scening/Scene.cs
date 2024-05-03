@@ -70,6 +70,8 @@ public class Scene
                 freezedScene.ResetScene();
                 InverseSolver.TrySolve(body);
             }
+
+            ForwardSolver.Solve(World);
         }
     }
 
