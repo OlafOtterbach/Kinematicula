@@ -1,4 +1,4 @@
-﻿namespace RobotThreeJsDemonstration;
+﻿namespace FormiculaThreeJsDemonstration;
 
 using FormiculaDemonstration.Ant;
 using Kinematicula.Graphics;
