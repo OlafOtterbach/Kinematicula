@@ -38,7 +38,6 @@ public class DirectInverseConstraintSolver : IDirectInverseConstraintSolver
 
     public bool TrySolve(Body startBody)
     {
-        Console.WriteLine("Start");
         var result = TrySolve(startBody, null, 1);
 
         return result;
