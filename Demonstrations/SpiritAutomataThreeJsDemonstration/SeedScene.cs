@@ -146,6 +146,10 @@ public static class SeedScene
         cameraOne.SetCamera(new Position3D(0,0,500), 30.0.ToRadiant(), 45.0.ToRadiant(), 2400.0);
         //cameraOne.SetCamera(new Position3D(0,0,500), 0.0.ToRadiant(), 90.0.ToRadiant(), 2400.0);
 
+        cameraOne.SetCameraToOrigin(0.0.ToRadiant(), 0.0.ToRadiant(), 100.0);
+
+        //        Camera startCamera = Camera.Create().SetCameraToOrigin(-230.0.ToRadiant(), 30.0.ToRadiant(), 100.0);
+
         scene.AddBody(cameraOne);
 
         scene.InitScene();
